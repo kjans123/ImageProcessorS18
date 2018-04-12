@@ -1,10 +1,11 @@
 # ImageProcessorS18 &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE) 
-## ONLINE README: put online readme link here
 
+## ONLINE README: put online readme link here
 
 ### Description
 
 * Insert repo description here
+* Maybe some screenshots if we're feeling fancy
 
 ### Getting Started
 
