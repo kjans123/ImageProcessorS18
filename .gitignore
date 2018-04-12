@@ -1,0 +1,12 @@
+__pycache__
+env
+db
+.pytest_cache/
+.venv*
+*env*
+*venv*
+*.venv
+*cache*
+*.pytest_cache
+_build/
+_build/*

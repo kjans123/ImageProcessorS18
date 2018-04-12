@@ -1,0 +1,14 @@
+numpy
+scipy
+pandas
+ipython
+matplotlib
+pytest
+pytest-pep8
+pytest-cov
+flask
+gunicorn
+pymodm
+flask-cors
+scikit-image
+
