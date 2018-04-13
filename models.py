@@ -1,5 +1,6 @@
 from pymodm import fields, MongoModel
 
+
 class User(MongoModel):
     """"defines database schema. For every user_id, there are 4 values,
         each of which are associated with the number of times the user

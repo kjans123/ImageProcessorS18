@@ -5,6 +5,7 @@ import datetime
 """"module that defines how data is stored to our database
 """
 
+
 def create_user(email):
 
     """"function that creates user with specified email. Inputs blank or 0
@@ -13,10 +14,11 @@ def create_user(email):
     :param email: takes as input user email
     :returns: new user in database
     """
-    u = models.User(email,0,0,0,0,'Empty','no_date')
+    u = models.User(email, 0, 0, 0, 0, 'Empty', 'no_date')
     u.save()
 
-def save_image(user_email,image_num):
+
+def save_image(user_email, image_num):
 
     """"function that creates link for uploaded image. Stores link
         and new timestamp in database.
@@ -33,6 +35,7 @@ def save_image(user_email,image_num):
     user.stored_pic_dates.append(datetime.datetime.now())
     user.save()
 
+
 def add_histo(user_email):
 
     """"function that adds one to number of times a particular user
@@ -47,6 +50,7 @@ def add_histo(user_email):
     new_count = old_count + 1
     user.num_histo_times = new_count
     user.save()
+
 
 def add_contr(user_email):
 
@@ -63,6 +67,7 @@ def add_contr(user_email):
     user.num_contr_times = new_count
     user.save()
 
+
 def add_log(user_email):
 
     """"function that adds one to number of times a particular user
@@ -77,6 +82,7 @@ def add_log(user_email):
     new_count = old_count + 1
     user.num_log_times = new_count
     user.save()
+
 
 def add_rever(user_email):
 
