@@ -6,15 +6,19 @@ import datetime
 """
 
 
-def create_user(email):
+def create_user(user_email):
 
-    """"function that creates user with specified email. Inputs blank or 0
-        variables for all associated fields.
+    """"function that creates user with specified email.
+        Inputs initial image link (/0.jpg) and datetime of user creation.
+        Also enters 0 for all for all process count fields.
 
     :param email: takes as input user email
     :returns: new user in database
     """
-    u = models.User(email, 0, 0, 0, 0, 'Empty', 'no_date')
+    u = models.User(user_email, 0, 0, 0, 0, [], [])
+    new_link = '/images/'+str(user_email)+'/'+str(0)+'.jpg'
+    u.stored_pic.append(new_link)
+    u.stored_pic_dates.append(datetime.datetime.now())
     u.save()
 
 
@@ -30,7 +34,7 @@ def save_image(user_email, image_num):
               stored on the VCM and associated time stamp
     """
     user = models.User.objects.raw({"_id": user_email}).first()
-    new_link = '/images/'+str(user_email)+str(image_num)+'.jpg'
+    new_link = '/images/'+str(user_email)+'/'+str(image_num)+'.jpg'
     user.stored_pic.append(new_link)
     user.stored_pic_dates.append(datetime.datetime.now())
     user.save()
@@ -98,3 +102,14 @@ def add_rever(user_email):
     new_count = old_count + 1
     user.num_rever_times = new_count
     user.save()
+
+
+def print_user(user_email):
+    user = models.User.objects.raw({"_id": user_email}).first()
+    print(user.user_email)
+    print(user.num_histo_times)
+    print(user.num_contr_times)
+    print(user.num_log_times)
+    print(user.num_rever_times)
+    print(user.stored_pic)
+    print(user.stored_pic_dates)
