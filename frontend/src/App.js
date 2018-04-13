@@ -4,6 +4,8 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem'
 
 var styles = {
     "backgroundStyle": {
@@ -28,9 +30,21 @@ var styles = {
         "marginTop": "30px",
         "width": "180px",
     },
+    "selectFieldStyle": {
+        "width": "150px",
+    },
 }
 
 class App extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+          value: 1,
+      };
+    }
+
+    handleChange = (event, index, value) => this.setState({value});
+
   render() {
     return (
       <body style={styles.backgroundStyle}>
@@ -45,6 +59,12 @@ class App extends React.Component {
           <TextField
               style={styles.textFieldStyle}
               placeholder="Enter your email address"/>
+          <SelectField
+            floatingLabelText="Processing Technique"
+            value={this.state.value}
+            onChange={this.handleChange}
+          >
+            <MenuItem value={1} primaryText
       </Paper>
     </body>
     );
