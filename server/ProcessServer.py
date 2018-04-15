@@ -4,6 +4,7 @@ from pymodm import connect
 import datetime
 from timeConvert import str2time, time2str
 from checkListOfString import check_list_of_string
+from check_for_user import Check_For_User
 
 app = Flask(__name__)
 CORS(app)
@@ -18,18 +19,28 @@ def welcome():
 @app.route("/process", methods=["POST"])
 def process():
     """Function that processes the pre-processed image.
-
-    :raises ValueError: Error raised for incorrect json format
-    :raises TypeError: Error raised if values provided are incorrect type
     """
     info = request.get_json()
     # Make sure the json received is correct
     try:
         email = info["user_email"]
+    except KeyError:
+        return jsonify("no email input"), 400
+        print("No email input")
+    check_email = Check_For_User(email)
+    if check_email.user_exists is False:
+        return jsonify(str(email) + " was not found. Please re-enter"), 400
+        print(str(email) + " was not found. Please re-enter")
+    try:
         pre_img = info["pre_b64_string"]
+    except KeyError:
+        return jsonify("no pre_image input"), 400
+        print("Please provide pre_image base64 string")
+    try:
         method = info["proc_method"]
-    except ValueError:
-        print("Please provide the correct json format!")
+    except KeyError:
+        return jsonify("no proc_method input"), 400
+        print("no processing method selected")
 
     try:
         isinstance(email, str)
