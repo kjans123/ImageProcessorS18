@@ -67,64 +67,109 @@ def process():
                 # remember we need to identify by __id or something
                 # instead of adding with just email
                 #add_hist from main.py
-            new_info = {
-                "user_email": email,
-                "proc_method": method,
-                "pre_b64_string": pre_img,
-                "post_b64_string": post_img, #last processed image
-                "action_time": time2str(current_time)
-            }
             # save processed b64 string
+                # adds to the list of processed image strings in b64
             processed_list.append(post_img)
-            # adds to the list of processed image strings in b64
-            # need to add this list into some tmp folder
-            return jsonify(new_info)
+            if i == len(pre_img) - 1:  # last image in list
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img,
+                    "post_b64_string": post_img, #last processed image
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time)
+                }
+                # need to add this list into some tmp folder
+                # create_tmp function with json
+                # input is (processed_list)
+                return jsonify(new_info)
         elif method == "stretch":
             # Add function for contrast stretching
+            # input is pre_img (depending on scikit or whatever,
+                # may need to convert format then back to a b64 image string)
+                # output is post_img
+            #post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
-            new_info = {
-                "user_email": email,
-                "proc_method": method,
-                "pre_b64_string": pre_img,
-                "post_b64_string": post_img,
-                "action_time": time2str(current_time)
-            }
+                # remember we need to identify by __id or something
+                # instead of adding with just email
+                #add_hist from main.py
             # save processed b64 string
+                # adds to the list of processed image strings in b64
             processed_list.append(post_img)
-            # adds to the list of processed image strings in b64
-            # need to add this list into some tmp folder
-            return jsonify(new_info)
+            if i == len(pre_img) - 1:  # last image in list
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img,
+                    "post_b64_string": post_img, #last processed image
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time)
+                }
+                # need to add this list into some tmp folder
+                # create_tmp function with json
+                # input is (processed_list)
+             
         elif method == "logcomp":
             # Add function for log compression
+            # input is pre_img (depending on scikit or whatever,
+                # may need to convert format then back to a b64 image string)
+                # output is post_img
+            #post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
-            new_info = {
-                "user_email": email,
-                "proc_method": method,
-                "pre_b64_string": pre_img,
-                "post_b64_string": post_img,
-                "action_time": time2str(current_time)
-            }
+                # remember we need to identify by __id or something
+                # instead of adding with just email
+                #add_hist from main.py
             # save processed b64 string
+                # adds to the list of processed image strings in b64
             processed_list.append(post_img)
-            # adds to the list of processed image strings in b64
-            # need to add this list into some tmp folder
-            return jsonify(new_info)
+            if i == len(pre_img) - 1:  # last image in list
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img,
+                    "post_b64_string": post_img, #last processed image
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time)
+                }
+                # need to add this list into some tmp folder
+                # create_tmp function with json
+                # input is (processed_list)
+             
         elif method == "reverse":
             # Add function for reverse video
+            # input is pre_img (depending on scikit or whatever,
+                # may need to convert format then back to a b64 image string)
+                # output is post_img
+            #post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
-            new_info = {
-                "user_email": email,
-                "proc_method": method,
-                "pre_b64_string": pre_img,
-                "post_b64_string": post_img,
-                "action_time": time2str(current_time)
-            }
+                # remember we need to identify by __id or something
+                # instead of adding with just email
+                #add_hist from main.py
             # save processed b64 string
+                # adds to the list of processed image strings in b64
             processed_list.append(post_img)
-            # adds to the list of processed image strings in b64
-            # need to add this list into some tmp folder
-            return jsonify(new_info)
+            if i == len(pre_img) - 1:  # last image in list
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img,
+                    "post_b64_string": post_img, #last processed image
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time)
+                }
+                # need to add this list into some tmp folder
+                # create_tmp function with json
+                # input is (processed_list)
 
 
 @app.route("/download", process=["GET"])
 def download():
+    # access tmp folder and output
