@@ -3,6 +3,7 @@ from flask_cors import CORS
 from pymodm import connect
 import datetime
 from timeConvert import str2time, time2str
+from checkListOfString import check_list_of_string
 
 app = Flask(__name__)
 CORS(app)
@@ -32,7 +33,7 @@ def process():
 
     try:
         isinstance(email, str)
-        isinstance(pre_img, str)
+        check_list_of_string(pre_img)
         isinstance(method, str)
     except TypeError:
         print("Please provide information in string format!")
