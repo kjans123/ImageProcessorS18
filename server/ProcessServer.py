@@ -40,32 +40,62 @@ def process():
     # if cases that will direct to the correct processing method
     # it would be better to import these methods from a separate file
     current_time = datetime.datetime.now()
-    if pre_img == "histeq":
-        # Add function for histogram equalization
-            # input is pre_img (depending on scikit or whatever,
-            # may need to convert format then back to a b64 image string)
-            # output is post_img
-        #post_img = FOOBAR
-        # Once complete, save user action to database
-            # remember we need to identify by __id or something
-            # instead of adding with just email
-        new_info = {
-            "user_email": email,
-            "proc_method": method,
-            "pre_b64_string": pre_img,
-            "post_b64_string": post_img,
-            "action_time": time2str(current_time)
-        }
-        return jsonify(new_info)
-    elif pre_img == "stretch":
-        # Add function for contrast stretching
-        # Once complete, save user action to database
-    elif pre_img == "logcomp":
-        # Add function for log compression
-        # Once complete, save user action to database
-    elif pre_img == "reverse":
-        # Add function for reverse video
-        # Once complete, save user action to database
+    for i, img in enumerate(pre_img):
+        # for loop to go through all images
+        # save user image with correct number
+            # check for last image # under the user_email
+            # add i + 1 to that number
+        if method == "histeq":
+            # Add function for histogram equalization
+                # input is pre_img (depending on scikit or whatever,
+                # may need to convert format then back to a b64 image string)
+                # output is post_img
+            #post_img = FOOBAR NOW, post_img should be list of strings
+            # Once complete, save user action to database
+                # remember we need to identify by __id or something
+                # instead of adding with just email
+            new_info = {
+                "user_email": email,
+                "proc_method": method,
+                "pre_b64_string": pre_img,
+                "post_b64_string": post_img,
+                "action_time": time2str(current_time)
+            }
+            # save processed b64 string
+            return jsonify(new_info)
+        elif method == "stretch":
+            # Add function for contrast stretching
+            # Once complete, save user action to database
+            new_info = {
+                "user_email": email,
+                "proc_method": method,
+                "pre_b64_string": pre_img,
+                "post_b64_string": post_img,
+                "action_time": time2str(current_time)
+            }
+            return jsonify(new_info)
+        elif method == "logcomp":
+            # Add function for log compression
+            # Once complete, save user action to database
+            new_info = {
+                "user_email": email,
+                "proc_method": method,
+                "pre_b64_string": pre_img,
+                "post_b64_string": post_img,
+                "action_time": time2str(current_time)
+            }
+            return jsonify(new_info)
+        elif method == "reverse":
+            # Add function for reverse video
+            # Once complete, save user action to database
+            new_info = {
+                "user_email": email,
+                "proc_method": method,
+                "pre_b64_string": pre_img,
+                "post_b64_string": post_img,
+                "action_time": time2str(current_time)
+            }
+            return jsonify(new_info)
 
 
 @app.route("/download", process=["GET"])
