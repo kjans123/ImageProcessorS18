@@ -55,8 +55,8 @@ def process():
     for i, img in enumerate(pre_img):
         # for loop to go through all images
         # save user image with correct number
-            # check for last image # under the user_email
-            # add i + 1 to that number
+        # add method from main.py
+        # save_image
         if method == "histeq":
             # Add function for histogram equalization
                 # input is pre_img (depending on scikit or whatever,
@@ -66,6 +66,7 @@ def process():
             # Once complete, save user action to database
                 # remember we need to identify by __id or something
                 # instead of adding with just email
+                #add_hist from main.py
             new_info = {
                 "user_email": email,
                 "proc_method": method,
@@ -74,6 +75,9 @@ def process():
                 "action_time": time2str(current_time)
             }
             # save processed b64 string
+            processed_list.append(post_img)
+            # adds to the list of processed image strings in b64
+            # need to add this list into some tmp folder
             return jsonify(new_info)
         elif method == "stretch":
             # Add function for contrast stretching
@@ -85,6 +89,10 @@ def process():
                 "post_b64_string": post_img,
                 "action_time": time2str(current_time)
             }
+            # save processed b64 string
+            processed_list.append(post_img)
+            # adds to the list of processed image strings in b64
+            # need to add this list into some tmp folder
             return jsonify(new_info)
         elif method == "logcomp":
             # Add function for log compression
@@ -96,6 +104,10 @@ def process():
                 "post_b64_string": post_img,
                 "action_time": time2str(current_time)
             }
+            # save processed b64 string
+            processed_list.append(post_img)
+            # adds to the list of processed image strings in b64
+            # need to add this list into some tmp folder
             return jsonify(new_info)
         elif method == "reverse":
             # Add function for reverse video
@@ -107,6 +119,10 @@ def process():
                 "post_b64_string": post_img,
                 "action_time": time2str(current_time)
             }
+            # save processed b64 string
+            processed_list.append(post_img)
+            # adds to the list of processed image strings in b64
+            # need to add this list into some tmp folder
             return jsonify(new_info)
 
 
