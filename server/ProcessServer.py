@@ -65,10 +65,7 @@ def process():
     elif pre_img == "reverse":
         # Add function for reverse video
         # Once complete, save user action to database
-    else:
-        print("How the heck did you get here? The dropdown should have inputted the correct
-              string.")
-
-    # return json as specified in google doc
 
 
+@app.route("/download", process=["GET"])
+def download():
