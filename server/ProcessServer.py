@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymodm import connect
 import datetime
+from timeConvert import str2time, time2str
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +17,7 @@ def welcome():
 @app.route("/process", methods=["POST"])
 def process():
     """Function that processes the pre-processed image.
-    
+
     :raises ValueError: Error raised for incorrect json format
     :raises TypeError: Error raised if values provided are incorrect type
     """
@@ -37,14 +38,33 @@ def process():
         print("Please provide information in string format!")
     # if cases that will direct to the correct processing method
     # it would be better to import these methods from a separate file
+    current_time = datetime.datetime.now()
     if pre_img == "histeq":
         # Add function for histogram equalization
+            # input is pre_img (depending on scikit or whatever,
+            # may need to convert format then back to a b64 image string)
+            # output is post_img
+        #post_img = FOOBAR
+        # Once complete, save user action to database
+            # remember we need to identify by __id or something
+            # instead of adding with just email
+        new_info = {
+            "user_email": email,
+            "proc_method": method,
+            "pre_b64_string": pre_img,
+            "post_b64_string": post_img,
+            "action_time": time2str(current_time)
+        }
+        return jsonify(new_info)
     elif pre_img == "stretch":
         # Add function for contrast stretching
+        # Once complete, save user action to database
     elif pre_img == "logcomp":
         # Add function for log compression
+        # Once complete, save user action to database
     elif pre_img == "reverse":
         # Add function for reverse video
+        # Once complete, save user action to database
     else:
         print("How the heck did you get here? The dropdown should have inputted the correct
               string.")
