@@ -112,7 +112,7 @@ def process():
                 # need to add this list into some tmp folder
                 # create_tmp function with json
                 # input is (processed_list)
-             
+                return jsonify(new_info)
         elif method == "logcomp":
             # Add function for log compression
             # input is pre_img (depending on scikit or whatever,
@@ -140,7 +140,7 @@ def process():
                 # need to add this list into some tmp folder
                 # create_tmp function with json
                 # input is (processed_list)
-             
+                return jsonify(new_info)
         elif method == "reverse":
             # Add function for reverse video
             # input is pre_img (depending on scikit or whatever,
@@ -168,8 +168,11 @@ def process():
                 # need to add this list into some tmp folder
                 # create_tmp function with json
                 # input is (processed_list)
+                return jsonify(new_info)
 
 
 @app.route("/download", process=["GET"])
 def download():
     # access tmp folder and output
+    # output = wherever tmp folder is
+    return jsonify(output)
