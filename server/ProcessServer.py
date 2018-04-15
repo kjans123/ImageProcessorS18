@@ -40,6 +40,7 @@ def process():
     # if cases that will direct to the correct processing method
     # it would be better to import these methods from a separate file
     current_time = datetime.datetime.now()
+    processed_list = []; # this is the list of strings of processed images
     for i, img in enumerate(pre_img):
         # for loop to go through all images
         # save user image with correct number
@@ -58,7 +59,7 @@ def process():
                 "user_email": email,
                 "proc_method": method,
                 "pre_b64_string": pre_img,
-                "post_b64_string": post_img,
+                "post_b64_string": post_img, #last processed image
                 "action_time": time2str(current_time)
             }
             # save processed b64 string
