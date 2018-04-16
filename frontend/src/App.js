@@ -96,7 +96,7 @@ class App extends React.Component {
           Previous processes:
           <br></br>
           <p style={styles.containerStyle} align="center">
-          Insert pics and histograms here as a table
+          Insert pics and histograms here as a material ui table
           </p>
           Uploaded:
           <br></br>
