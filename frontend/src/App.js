@@ -73,7 +73,7 @@ class App extends React.Component {
               placeholder="Enter your email address"/>
           <div>
           <br></br>
-          *Select Field will go here once material-ui stops bugging*
+          *Select field will go here once material-ui stops bugging*
           {/*<SelectField
             floatingLabelText="Processing Technique"
             value={this.state.value}
