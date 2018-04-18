@@ -4,8 +4,8 @@ import os
 import shutil
 
 def make_tmp(dictionary):
-    logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
+    #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin make_tmp')
     #given json format data, create tmp folder
     jsonData = json.dumps(dictionary)
@@ -22,8 +22,8 @@ def make_tmp(dictionary):
         json.dump(jsonData, outfile)
 
 def access_tmp():
-    logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
+    #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin access_tmp')
     # access tmp folder and output json data
     path = 'tmp/data.json'
@@ -33,4 +33,7 @@ def access_tmp():
         logging.info('Open json file in tmp folder')
         data = json.load(infile)
         logging.info('Read in data from json')
-        return data
+    # this creates a string! We need to convert this string
+    # into the dictionary
+    dict_object = json.loads(data)
+    return dict_object
