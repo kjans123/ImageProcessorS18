@@ -17,12 +17,20 @@ def make_tmp(dictionary):
         logging.info('Remove directory')
     os.makedirs(path)
     logging.info('Create directory')
-    with open('tmp/ .json', 'w') as outfile:
+    with open('tmp/data.json', 'w') as outfile:
+        logging.info('Write file called data.json in tmp folder')
         json.dump(jsonData, outfile)
 
-def access_tmp(path):
+def access_tmp():
     logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin access_tmp')
-    #given path, access tmp folder and output json data
-    pass
+    # access tmp folder and output json data
+    path = 'tmp/data.json'
+    # if not checked in front end, move below into try/except
+    # to check for that the tmp folder exists
+    with open(path, 'r') as infile:
+        logging.info('Open json file in tmp folder')
+        data = json.load(infile)
+        logging.info('Read in data from json')
+        return data
