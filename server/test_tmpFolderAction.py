@@ -18,8 +18,17 @@ def test_make_tmp():
 
 
 def test_access_tmp():
-    pass
-
+    # make_tmp has been tested
+    dictionary = {
+        "a": 1,
+        "b": "hello",
+        "c": 45.2,
+        "hi": [1, 3, 2]
+    }
+    make_tmp(dictionary)
+    dict_object = access_tmp()
+    assert sum(dict_object["hi"]) == 6
+    assert isinstance(dict_object, dict)
 
 # if we want to check that tmp folder exists
 # as in this is not done via frontend,
