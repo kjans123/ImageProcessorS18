@@ -5,8 +5,12 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-{/*import SelectField from 'material-ui/SelectField';*/}
-{/*import MenuItem from 'material-ui/MenuItem';*/}
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Input, { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Select from 'material-ui/Select';
 
 var styles = {
     "backgroundStyle": {
@@ -44,6 +48,18 @@ var styles = {
         "borderStyle": "solid",
         "borderColor": "#001A57",
         "padding": "1em",
+    },
+    "formStyle": {
+        "width": "200px",
+    },
+    "formStyle2": {
+        "width": "100px",
+    },
+    "errorStyle": {
+        "marginTop": "20px",
+        "marginBottom": "20px",
+        "backgroundColor": "#E83635",
+        "color": "white"
     }
 }
 
@@ -51,13 +67,32 @@ class App extends React.Component {
     constructor() {
       super();
       this.state = {
-          value: 1,
+          age: '',
+          name: 'hai',
+          "userID": "",
+          "errorText": "",
       };
     }
 
-    handleChange = (event, index, value) => this.setState({value});
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value});
+    }
+
+    onTextFieldChange = (event) => {
+        this.setState({"userID": event.target.value});
+        if (event.target.value.includes(" ")) {
+            this.setState({"errorText": "Invalid email: No spaces allowed"})
+        } else if (event.target.value.includes(".")) {
+            this.setState({"errorText": ""})
+        } else if (event.target.value.includes("@")) {
+            this.setState({"errorText": ""})
+        } else {
+            this.setState({"errorText": "Invalid email: example@address.com"})
+        }
+    }
 
   render() {
+      const { classes } = this.props
     return (
       <body style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
@@ -69,25 +104,40 @@ class App extends React.Component {
       </AppBar>
       <Paper position="static" style={styles.paperStyle}>
           <TextField
+              value={this.state.userID}
               style={styles.textFieldStyle}
-              placeholder="Enter your email address"/>
+              placeholder="Enter your email address"
+              onChange={this.onTextFieldChange}/>
+          <div style={styles.errorStyle}>
+            {this.state.errorText}
+          </div>
           <div>
           <br></br>
-          *Select field will go here once material-ui stops bugging*
-          {/*<SelectField
-            floatingLabelText="Processing Technique"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            <MenuItem value={1} primaryText="Histogram Equalization" />
-            <MenuItem value={2} primaryText="Contrast Stretching" />
-            <MenuItem value={3} primaryText="Log Compression" />
-            <MenuItem value={4} primaryText="Reverse Video" />
-          </SelectField>*/}
+          <form autoComplete="off">
+            <FormControl style={styles.formStyle}>
+            <InputLabel><b>Processing Technique</b></InputLabel>
+            <Select
+                value={this.state.age}
+                onChange={this.handleChange}
+                inputProps={{
+                    name: 'age',
+                    id: 'age-simple',
+                }}
+                >
+                <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Histogram Equalization</MenuItem>
+              <MenuItem value={20}>Contrast Stretching</MenuItem>
+              <MenuItem value={30}>Log Compression</MenuItem>
+              <MenuItem value={40}>Reverse Video</MenuItem>
+            </Select>
+            </FormControl>
+          </form>
           </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}>
-              Select Image
+              PROCESS
           </Button>
           </div>
           <p style={styles.containerStyle} align="left">
@@ -104,16 +154,25 @@ class App extends React.Component {
           <br></br>
           Size:
           </p>
-          Download as *Select field will go here*
-          {/*<SelectField
-            floatingLabelText="File type"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            <MenuItem value={1} primaryText="JPEG" />
-            <MenuItem value={2} primaryText="PNG" />
-            <MenuItem value={3} primaryText="TIFF" />
-          </SelectField>*/}
+          Download as: &ensp;
+            <FormControl style={styles.formStyle2}>
+            <InputLabel><b>File Type</b></InputLabel>
+            <Select
+                value={this.state.age}
+                onChange={this.handleChange}
+                inputProps={{
+                    name: 'age',
+                    id: 'age-simple',
+                }}
+                >
+                <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>JPEG</MenuItem>
+              <MenuItem value={20}>PNG</MenuItem>
+              <MenuItem value={30}>TIFF</MenuItem>
+            </Select>
+            </FormControl>
           <div>
           <Button variant="raised" style={styles.buttonStyle}>
               Download
