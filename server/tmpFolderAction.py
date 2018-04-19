@@ -4,13 +4,17 @@ import os
 import shutil
 
 def make_tmp(dictionary):
+    """Makes a json file in a tmp folder
+
+    :param dictionary: dict object with post-processed image in b64 string format
+    """
     #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
     #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin make_tmp')
     #given json format data, create tmp folder
     jsonData = json.dumps(dictionary)
     logging.info('Create the json data from a dictionary')
-    path = 'tmp/' #edit this path later!!!!!!!!
+    path = 'tmp/'
     if os.path.exists(path):
         logging.info('Check for path that exists')
         shutil.rmtree(path)
