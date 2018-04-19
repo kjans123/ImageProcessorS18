@@ -25,8 +25,8 @@ class Check_For_User:
         import datetime
         connect("mongodb://vcm-3594.vm.duke.edu:27017/image_process_app")
         try:
-            user = models.User.objects.raw({"_id": self.input_email}).first()
+            user = models.User.objects.raw({"_id": self.user_email}).first()
             self.user_exists = True
         except:
-            print((str(self.input_email) + " was not found. Please re-enter"))
+            print((str(self.user_email) + " was not found. Please re-enter"))
             self.user_exists = False
