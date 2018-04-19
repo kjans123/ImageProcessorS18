@@ -84,7 +84,8 @@ def convert_image_to_np_array(base64image):
         with open('temp.JPG', 'wb') as f:
             f.write(s)
             i = Image.open('temp.JPG')
-            a = np.asarray(i)
+            a = np.asarray(i,dtype=np.float64)
+            a = np.true_divide(a, 255)
         os.remove('temp.JPG')
         a_type = a.dtype
         shape_tuple = a.shape
@@ -121,12 +122,13 @@ def convert_processed_np_array_to_base64(npArray):
         import PIL
         from PIL import Image
         import os
+        from skimage import img_as_ubyte
         h = np.array([])
-        if (npArray is None or npArray.all() == [] or npArray == "" or
-                npArray.all() == h):
+        if (npArray is None or npArray.all() == h):
             logging.warning("numpy array is EMPTY")
             raise ValueError("empty numpy array")
-        img = Image.fromarray(npArray)
+        img = img_as_ubyte(npArray)
+        img = Image.fromarray(img)
         img.save('temp.JPG')
         img64 = encode_image_string('temp.JPG')
         os.remove('temp.JPG')
