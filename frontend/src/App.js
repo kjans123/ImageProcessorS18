@@ -11,6 +11,9 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
+import ReactDOM from 'react-dom';
+import DropzoneComponent from 'react-dropzone-component';
+import {UploadField} from '@navjobs/upload';
 
 var styles = {
     "backgroundStyle": {
@@ -23,7 +26,23 @@ var styles = {
         "backgroundColor": "#001A57",
     },
     "paperStyle": {
-        "height": "3000px",
+        "height": "440px",
+        "width": "1000px",
+        "marginLeft": "200px",
+        "marginTop": "30px",
+        "textAlign": "center",
+        "display": "inline-block",
+        "padding": "10px",
+    },
+    "paperStyle2": {
+        "height": "190px",
+        "width": "325px",
+        "display": "inline-block",
+        "padding": "10px",
+        "backgroundColor": "#001A57"
+    },
+    "paperStyle3": {
+        "height": "500px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -32,11 +51,8 @@ var styles = {
         "padding": "10px",
     },
     "textFieldStyle": {
-        "marginTop": "30px",
+        "marginTop": "10px",
         "width": "180px",
-    },
-    "selectFieldStyle": {
-        "width": "150px",
     },
     "buttonStyle": {
         "backgroundColor": "#001A57",
@@ -48,6 +64,7 @@ var styles = {
         "borderStyle": "solid",
         "borderColor": "#001A57",
         "padding": "1em",
+        "color": "#001A57",
     },
     "formStyle": {
         "width": "200px",
@@ -59,23 +76,41 @@ var styles = {
         "marginTop": "20px",
         "marginBottom": "20px",
         "backgroundColor": "#E83635",
-        "color": "white"
-    }
+        "color": "white",
+    },
+    "headerStyle": {
+        "border": "3px",
+        "borderStyle": "solid",
+        "borderColor": "white",
+        "color": "white",
+    },
+    "upFieldStyle": {
+        "backgroundColor": "gray",
+        "color": "white",
+        "height": "100px",
+    },
 }
 
 class App extends React.Component {
     constructor() {
       super();
       this.state = {
-          age: '',
-          name: 'hai',
           "userID": "",
           "errorText": "",
+          "processingTechnique": "",
+          "currentImageString": "",
+          "downloadExt": "",
+
       };
     }
 
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value});
+    handleProcessChange = (event) => {
+        this.setState({"processingTechnique": event.target.value});
+        console.log(this.state.processingTechnique);
+    }
+
+    handleFileChange = (event) => {
+        this.setState({"downloadExt": event.target.value});
     }
 
     onTextFieldChange = (event) => {
@@ -91,8 +126,17 @@ class App extends React.Component {
         }
     }
 
+    onUpload = (files) => {
+        const reader = new FileReader()
+        const file = files[0]
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            console.log(reader.result);
+            this.setState({currentImageString: reader.result});
+        }
+    }
+
   render() {
-      const { classes } = this.props
     return (
       <body style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
@@ -111,35 +155,39 @@ class App extends React.Component {
           <div style={styles.errorStyle}>
             {this.state.errorText}
           </div>
+          <Paper position="static" style={styles.paperStyle2}>
+            <h3 style={styles.headerStyle}>Upload your image below</h3>
+            <UploadField onFiles={this.onUpload} align="center">
+                <div style={styles.upFieldStyle}>
+                Upload JPEG or .zip of JPEGs here
+                </div>
+            </UploadField>
+          </Paper>
           <div>
           <br></br>
-          <form autoComplete="off">
             <FormControl style={styles.formStyle}>
-            <InputLabel><b>Processing Technique</b></InputLabel>
+            <InputLabel style={{"color": "#001A57"}}><b>Processing Technique</b></InputLabel>
             <Select
-                value={this.state.age}
-                onChange={this.handleChange}
-                inputProps={{
-                    name: 'age',
-                    id: 'age-simple',
-                }}
+                value={this.state.processingTechnique}
+                onChange={this.handleProcessChange}
                 >
                 <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Histogram Equalization</MenuItem>
-              <MenuItem value={20}>Contrast Stretching</MenuItem>
-              <MenuItem value={30}>Log Compression</MenuItem>
-              <MenuItem value={40}>Reverse Video</MenuItem>
+              <MenuItem value={"Histogram Equalization"}>Histogram Equalization</MenuItem>
+              <MenuItem value={"Contrast Stretching"}>Contrast Stretching</MenuItem>
+              <MenuItem value={"Log Compression"}>Log Compression</MenuItem>
+              <MenuItem value={"Reverse Video"}>Reverse Video</MenuItem>
             </Select>
             </FormControl>
-          </form>
           </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}>
               PROCESS
           </Button>
           </div>
+      </Paper>
+      <Paper style={styles.paperStyle3}>
           <p style={styles.containerStyle} align="left">
           User:
           <br></br>
@@ -154,25 +202,23 @@ class App extends React.Component {
           <br></br>
           Size:
           </p>
+          <div style={{"color": "#001A57"}}>
           Download as: &ensp;
             <FormControl style={styles.formStyle2}>
-            <InputLabel><b>File Type</b></InputLabel>
+            <InputLabel style={{"color": "#001A57"}}><b>File Type</b></InputLabel>
             <Select
-                value={this.state.age}
-                onChange={this.handleChange}
-                inputProps={{
-                    name: 'age',
-                    id: 'age-simple',
-                }}
+                value={this.state.downloadExt}
+                onChange={this.handleFileChange}
                 >
                 <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>JPEG</MenuItem>
-              <MenuItem value={20}>PNG</MenuItem>
-              <MenuItem value={30}>TIFF</MenuItem>
+              <MenuItem value={"JPEG"}>JPEG</MenuItem>
+              <MenuItem value={"PNG"}>PNG</MenuItem>
+              <MenuItem value={"TIFF"}>TIFF</MenuItem>
             </Select>
             </FormControl>
+          </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}>
               Download
