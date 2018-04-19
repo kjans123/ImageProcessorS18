@@ -37,7 +37,7 @@ def encode_image_string(filename):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.log",
+    logging.basicConfig(filename="back_end.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
@@ -68,7 +68,7 @@ def convert_image_to_np_array(base64image):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.log",
+    logging.basicConfig(filename="back_end.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
@@ -84,7 +84,7 @@ def convert_image_to_np_array(base64image):
         with open('temp.JPG', 'wb') as f:
             f.write(s)
             i = Image.open('temp.JPG')
-            a = np.asarray(i,dtype=np.float64)
+            a = np.asarray(i, dtype=np.float64)
             a = np.true_divide(a, 255)
         os.remove('temp.JPG')
         a_type = a.dtype
@@ -113,7 +113,7 @@ def convert_processed_np_array_to_base64(npArray):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.log",
+    logging.basicConfig(filename="back_end.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:

@@ -5,10 +5,10 @@ def test_base64base64_conv_numpy():
     import numpy as np
     imgString = encode_image_string('haha.JPG')
     a, a_type, m, w, z = convert_image_to_np_array(imgString)
-    assert str(a_type) == 'uint8'
-    assert a[9, 10, 2] == 13
-    assert a[1, 1, 1] == 17
-    assert a[3569, 5290, 2] == 9
+    assert str(a_type) == 'float64'
+    assert a[9, 10, 2] == 0.050980392156862744
+    assert a[1, 1, 1] == 0.06666666666666667
+    assert a[3569, 5290, 2] == 0.03529411764705882
     assert m == 3570
     assert w == 5291
     assert z == 3
