@@ -37,7 +37,7 @@ def encode_image_string(filename):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.txt",
+    logging.basicConfig(filename="base64_conv_numpy.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
@@ -68,7 +68,7 @@ def convert_image_to_np_array(base64image):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.txt",
+    logging.basicConfig(filename="base64_conv_numpy.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
@@ -112,7 +112,7 @@ def convert_processed_np_array_to_base64(npArray):
     """
     import logging
     str1 = logging.DEBUG
-    logging.basicConfig(filename="base64_conv_numpy.txt",
+    logging.basicConfig(filename="base64_conv_numpy.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
@@ -134,5 +134,5 @@ def convert_processed_np_array_to_base64(npArray):
         return img64
     except ImportError:
         print("base64/numpy/PIL/os packages not found. Check virtualenv")
-        msg = 'base64/numpy/PIL/os packages not found. Check virtualenv'
-        logging.warning(msg)
+        msgg = 'base64/numpy/PIL/os packages not found. Check virtualenv'
+        logging.warning(msgg)
