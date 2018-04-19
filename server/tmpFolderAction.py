@@ -9,8 +9,8 @@ def make_tmp(dictionary):
 
     :param dictionary: dict object with post-processed image in b64 string format
     """
-    #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    logging.basicConfig(filename='back_end.log', mt='%(asctime)s \
+    %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin make_tmp')
     # given json format data, create tmp folder
     jsonData = json.dumps(dictionary)
@@ -28,8 +28,8 @@ def make_tmp(dictionary):
 
 
 def access_tmp():
-    # logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    # %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    logging.basicConfig(filename='back_end.log', mt='%(asctime)s \
+     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin access_tmp')
     # access tmp folder and output json data
     path = 'tmp/data.json'

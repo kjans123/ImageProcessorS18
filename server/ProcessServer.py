@@ -5,6 +5,8 @@ import datetime
 from timeConvert import str2time, time2str
 from checkListOfString import check_list_of_string
 from check_for_user import Check_For_User
+from tmpFolderAction import make_tmp, access_tmp
+import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +23,13 @@ def welcome():
 @app.route("/process", methods=["POST"])
 def process():
     """Function that processes the pre-processed image.
+
+    :returns: json with information to display pre- and post- \
+            processed images
     """
+    logging.basicConfig(filename='back_end.log', mt='%(asctime)s \
+    %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    logging.info("Begin app route to /process")
     info = request.get_json()
     # Make sure the json received is correct
     try:
@@ -159,16 +167,17 @@ def process():
             if i == len(pre_img) - 1:  # last image in list
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
+                logging.info("Create json to be sent to frontend for preview")
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img,  # last processed image
+                    "post_b64_string": post_img,  # last processed image, edit this if we display
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }
-                # need to add this list into some tmp folder
                 # create_tmp function with json
+                make_tmp(new_info)
                 # input is (processed_list)
                 return jsonify(new_info)
 
@@ -176,5 +185,5 @@ def process():
 @app.route("/download", process=["GET"])
 def download():
     # access tmp folder and output
-    # output = wherever tmp folder is
+    output = access_tmp()
     return jsonify(output)
