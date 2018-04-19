@@ -3,14 +3,15 @@ import logging
 import os
 import shutil
 
+
 def make_tmp(dictionary):
-    #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    # logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
+    # %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin make_tmp')
-    #given json format data, create tmp folder
+    # given json format data, create tmp folder
     jsonData = json.dumps(dictionary)
     logging.info('Create the json data from a dictionary')
-    path = 'tmp/' #edit this path later!!!!!!!!
+    path = 'tmp/'  # edit this path later!!!!!!!!
     if os.path.exists(path):
         logging.info('Check for path that exists')
         shutil.rmtree(path)
@@ -21,9 +22,10 @@ def make_tmp(dictionary):
         logging.info('Write file called data.json in tmp folder')
         json.dump(jsonData, outfile)
 
+
 def access_tmp():
-    #logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
-    #%(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
+    # logging.basicConfig(filename='tmpFolderAction.log', mt='%(asctime)s \
+    # %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin access_tmp')
     # access tmp folder and output json data
     path = 'tmp/data.json'

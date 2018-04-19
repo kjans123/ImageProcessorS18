@@ -1,0 +1,15 @@
+INFO 04/18/2018 02:51:14 PM success: converted image to base64
+INFO 04/18/2018 02:51:16 PM success: base64 image converted to np array
+INFO 04/18/2018 02:51:18 PM success: converted image to base64
+INFO 04/18/2018 02:51:18 PM success: numpy array converted to base64 string
+INFO 04/18/2018 08:12:59 PM success: converted image to base64
+INFO 04/18/2018 08:13:01 PM success: base64 image converted to np array
+INFO 04/18/2018 08:13:02 PM success: converted image to base64
+INFO 04/18/2018 08:13:02 PM success: numpy array converted to base64 string
+INFO 04/18/2018 08:22:34 PM success: converted image to base64
+INFO 04/18/2018 08:22:55 PM success: base64 image converted to np array
+INFO 04/18/2018 08:38:41 PM success: converted image to base64
+INFO 04/18/2018 08:47:01 PM success: converted image to base64
+INFO 04/18/2018 08:47:03 PM success: base64 image converted to np array
+INFO 04/18/2018 08:47:04 PM success: converted image to base64
+INFO 04/18/2018 08:47:04 PM success: numpy array converted to base64 string

@@ -10,11 +10,13 @@ app = Flask(__name__)
 CORS(app)
 connect("mongodb://vcm-3594.vm.duke.edu:27017/image_process_app")
 
+
 @app.route("/", methods=["GET"])
 def welcome():
     """ Function that greets the user on the main page!
     """
     return "Welcome to CrunchWrap Pizza Image Processor!"
+
 
 @app.route("/process", methods=["POST"])
 def process():
@@ -51,7 +53,7 @@ def process():
     # if cases that will direct to the correct processing method
     # it would be better to import these methods from a separate file
     current_time = datetime.datetime.now()
-    processed_list = []; # this is the list of strings of processed images
+    processed_list = []   # this is the list of strings of processed images
     for i, img in enumerate(pre_img):
         # for loop to go through all images
         # save user image with correct number
@@ -62,11 +64,11 @@ def process():
                 # input is pre_img (depending on scikit or whatever,
                 # may need to convert format then back to a b64 image string)
                 # output is post_img
-            #post_img = FOOBAR NOW, post_img should be list of strings
+            # post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
                 # remember we need to identify by __id or something
                 # instead of adding with just email
-                #add_hist from main.py
+                # add_hist from main.py
             # save processed b64 string
                 # adds to the list of processed image strings in b64
             processed_list.append(post_img)
@@ -77,7 +79,7 @@ def process():
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img, #last processed image
+                    "post_b64_string": post_img,  # last processed image
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }
@@ -90,11 +92,11 @@ def process():
             # input is pre_img (depending on scikit or whatever,
                 # may need to convert format then back to a b64 image string)
                 # output is post_img
-            #post_img = FOOBAR NOW, post_img should be list of strings
+            # post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
                 # remember we need to identify by __id or something
                 # instead of adding with just email
-                #add_hist from main.py
+                # add_hist from main.py
             # save processed b64 string
                 # adds to the list of processed image strings in b64
             processed_list.append(post_img)
@@ -105,7 +107,7 @@ def process():
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img, #last processed image
+                    "post_b64_string": post_img,  # last processed image
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }
@@ -118,11 +120,11 @@ def process():
             # input is pre_img (depending on scikit or whatever,
                 # may need to convert format then back to a b64 image string)
                 # output is post_img
-            #post_img = FOOBAR NOW, post_img should be list of strings
+            # post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
                 # remember we need to identify by __id or something
                 # instead of adding with just email
-                #add_hist from main.py
+                # add_hist from main.py
             # save processed b64 string
                 # adds to the list of processed image strings in b64
             processed_list.append(post_img)
@@ -133,7 +135,7 @@ def process():
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img, #last processed image
+                    "post_b64_string": post_img,  # last processed image
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }
@@ -146,11 +148,11 @@ def process():
             # input is pre_img (depending on scikit or whatever,
                 # may need to convert format then back to a b64 image string)
                 # output is post_img
-            #post_img = FOOBAR NOW, post_img should be list of strings
+            # post_img = FOOBAR NOW, post_img should be list of strings
             # Once complete, save user action to database
                 # remember we need to identify by __id or something
                 # instead of adding with just email
-                #add_hist from main.py
+                # add_hist from main.py
             # save processed b64 string
                 # adds to the list of processed image strings in b64
             processed_list.append(post_img)
@@ -161,7 +163,7 @@ def process():
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img, #last processed image
+                    "post_b64_string": post_img,  # last processed image
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }

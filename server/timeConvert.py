@@ -8,6 +8,7 @@ def time2str(dt):
     """
     return dt.isoformat()
 
+
 def str2time(strtime):
     """Function that converts string to datetime object
 

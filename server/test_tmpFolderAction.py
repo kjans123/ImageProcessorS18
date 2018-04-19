@@ -2,6 +2,7 @@
 import json
 from tmpFolderAction import access_tmp, make_tmp
 
+
 def test_make_tmp():
     dictionary = {
         "a": 1,
