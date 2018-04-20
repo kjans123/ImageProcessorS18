@@ -27,7 +27,7 @@ def process():
     :returns: json with information to display pre- and post- \
             processed images
     """
-    logging.basicConfig(filename='back_end.log', mt='%(asctime)s \
+    logging.basicConfig(filename='back_end.log', format='%(asctime)s \
     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info("Begin app route to /process")
     info = request.get_json()
