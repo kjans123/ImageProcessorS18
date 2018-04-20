@@ -14,6 +14,7 @@ import Select from 'material-ui/Select';
 import ReactDOM from 'react-dom';
 import DropzoneComponent from 'react-dropzone-component';
 import {UploadField} from '@navjobs/upload';
+import axios from 'axios';
 
 var styles = {
     "backgroundStyle": {
@@ -106,7 +107,6 @@ class App extends React.Component {
 
     handleProcessChange = (event) => {
         this.setState({"processingTechnique": event.target.value});
-        console.log(this.state.processingTechnique);
     }
 
     handleFileChange = (event) => {
@@ -134,6 +134,16 @@ class App extends React.Component {
             console.log(reader.result);
             this.setState({currentImageString: reader.result});
         }
+    }
+
+    postData = () => {
+        var urlString = "http://vcm-3594.vm.duke.edu:5000/api/heart_rate/get_data/"
+        var data = {
+            "user_email": this.state.userID,
+            "b64_string": this.state.currentImageString,
+            "proc_method": this.state.processingTechnique,
+        }
+        console.log(data)
     }
 
   render() {
@@ -182,7 +192,8 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}>
+          <Button variant="raised" style={styles.buttonStyle}
+              onClick={this.postData}>
               PROCESS
           </Button>
           </div>
