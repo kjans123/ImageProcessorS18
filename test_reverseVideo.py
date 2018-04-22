@@ -7,6 +7,7 @@ def test_reverseVid():
         testText = tester.read()
     assert inverted_string == testText
 
+
 def test_exceptions():
     import pytest
     from reverseVideo import reverseVid

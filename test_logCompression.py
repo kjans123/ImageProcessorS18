@@ -7,6 +7,7 @@ def test_logCompression():
         testText = tester.read()
     assert logCompressed_string == testText
 
+
 def test_exceptions():
     import pytest
     from logCompression import logComp

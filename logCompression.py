@@ -15,7 +15,8 @@ def logComp(b64_string):
         logging.warning("Empty input given. Please provide base64 string")
         raise ValueError("No base64 string")
     try:
-        from base64_conv_numpy import convert_image_to_np_array, convert_processed_np_array_to_base64
+        from base64_conv_numpy import (convert_image_to_np_array,
+                                       convert_processed_np_array_to_base64)
         import numpy as np
     except ImportError:
         note = "Packages from numpy and base64_conv_numpy.py not found"
