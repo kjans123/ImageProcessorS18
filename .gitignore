@@ -11,3 +11,4 @@ db
 _build/
 _build/*
 *.log
+*tmp/*

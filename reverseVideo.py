@@ -1,14 +1,19 @@
 def reverseVid(b64_string):
-    """Function that processes images via Reverse Video
+    """Function that inputs one base64 string and processes
+       via Reverse Video. Outputs the processed base64 string
 
     :param b64_string: base 64 pre-processed image string
     :returns post_b64: base 64 post-processed image string
     :raises ImportError: raises error if skimage or base64_conv_numpy.py not found
+    :raises ValueError: raises error if the input string is empty
     """
     import logging
     logging.basicConfig(filename="back_end.log",
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p')
+    if b64_string == "" or b64_string is None:
+        logging.warning("Empty input given. Please provide base64 string")
+        raise ValueError("No base64 string")
     try:
         from base64_conv_numpy import convert_image_to_np_array, convert_processed_np_array_to_base64
         from skimage import util
