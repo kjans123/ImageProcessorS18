@@ -19,10 +19,10 @@ def reverseVid(b64_string):
         logging.warning(note)
     array, a_type, m, w, z = convert_image_to_np_array(b64_string)
     logging.info("Convert b64 to numpy array")
-    inverted = np.invert(array)
-    # if this doesn't work, just check what kind of
-    # data is in here and subtract each thing from 255
+    # data is in here and subtract each thing from 1
+    one_matrix = np.ones(array.shape)
+    inverted = one_matrix - array
     logging.info("Numpy array processed by Reverse Video")
-    post_b64 = convert_processed_np_array_to_base64
+    post_b64 = convert_processed_np_array_to_base64(inverted)
     logging.info("Processed array converted back to base64")
     return post_b64
