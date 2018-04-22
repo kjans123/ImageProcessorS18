@@ -16,10 +16,9 @@ def reverseVid(b64_string):
         raise ValueError("No base64 string")
     try:
         from base64_conv_numpy import convert_image_to_np_array, convert_processed_np_array_to_base64
-        from skimage import util
         import numpy as np
     except ImportError:
-        note = "Packages from numpy, scikit, and base64_conv_numpy.py not found"
+        note = "Packages from numpy and base64_conv_numpy.py not found"
         print(note)
         logging.warning(note)
     array, a_type, m, w, z = convert_image_to_np_array(b64_string)
