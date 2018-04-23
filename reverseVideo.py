@@ -4,7 +4,8 @@ def reverseVid(b64_string):
 
     :param b64_string: base 64 pre-processed image string
     :returns post_b64: base 64 post-processed image string
-    :raises ImportError: raises error if skimage or base64_conv_numpy.py not found
+    :raises ImportError: raises error if skimage or base64_conv_numpy.py
+                         not found
     :raises ValueError: raises error if the input string is empty
     """
     import logging
@@ -15,11 +16,11 @@ def reverseVid(b64_string):
         logging.warning("Empty input given. Please provide base64 string")
         raise ValueError("No base64 string")
     try:
-        from base64_conv_numpy import convert_image_to_np_array, convert_processed_np_array_to_base64
-        from skimage import util
+        from base64_conv_numpy import (convert_image_to_np_array,
+                                       convert_processed_np_array_to_base64)
         import numpy as np
     except ImportError:
-        note = "Packages from numpy, scikit, and base64_conv_numpy.py not found"
+        note = "Packages from numpy and base64_conv_numpy.py not found"
         print(note)
         logging.warning(note)
     array, a_type, m, w, z = convert_image_to_np_array(b64_string)
