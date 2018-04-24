@@ -1,11 +1,11 @@
 def test_contr_stretch():
     from contr_strech import contr_stretch
     from base64_conv_numpy import encode_image_string
-    imageString = encode_image_string("haha.JPG")
-    proc_image_string = contr_stretch(imageString)
-    with open('Output2.txt', 'r') as testFile:
-        dataString = testFile.read()
-    assert str(proc_image_string) == dataString
+    import numpy as np
+    imageString = encode_image_string("tiny.jpg")
+    proc_image_Array = contr_stretch(imageString)
+    dataArray = np.load('contr_test.npy')
+    assert proc_image_Array.all() == dataArray.all()
 
 
 def test_correctExcp():
