@@ -5,7 +5,7 @@ def contr_stretch(base64String):
         values in 40th and 95th percentile respectively.
 
     :param base64string: takes as input a JPG base64 string from app front-end
-    :returns imgString: returns a post-processed JPG img as base64 string
+    :returns imgArray: returns a post-processed JPG img as numpy array
     :raises ValueError: raises Value Error if base64 string is empty
     :raises ImportError: raises Import Error if numpy or scikit packages
                          are not found. Also raises Import Error if
@@ -27,12 +27,12 @@ def contr_stretch(base64String):
                 raise ValueError("empty base64String")
             imgArray, a_type, m, w, z = convert_image_to_np_array(base64String)
             v1, v2 = np.percentile(imgArray, (0.4, 95))
-            imgC = exposure.rescale_intensity(imgArray, in_range=(v1, v2))
-            imgString = convert_processed_np_array_to_base64(imgC)
-            print(imgString)
-            m = "success: processed (contr. str.) img and returned as base64"
+            imgArray = exposure.rescale_intensity(imgArray, in_range=(v1, v2))
+            # imgString = convert_processed_np_array_to_base64(imgC)
+            np.save('contr_test', imgArray)
+            m = "success: processed (contr str) img and returned as np array"
             logging.info(m)
-            return imgString
+            return imgArray
         except ImportError:
             msg = 'base64_conv_numpy module not found.'
             print(msg)
@@ -41,3 +41,4 @@ def contr_stretch(base64String):
         msgg = 'scikit/numpy packages not found. Check virtualenv'
         print(msgg)
         logging.warning(msgg)
+
