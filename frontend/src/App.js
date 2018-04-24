@@ -26,8 +26,12 @@ var styles = {
         "marginBottom": "10px",
         "backgroundColor": "#001A57",
     },
+    "appBarStyle2": {
+        "marginBottom": "10px",
+        "backgroundColor": "#A1B70D",
+    },
     "paperStyle": {
-        "height": "460px",
+        "height": "500px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -36,14 +40,14 @@ var styles = {
         "padding": "10px",
     },
     "paperStyle2": {
-        "height": "190px",
+        "height": "180px",
         "width": "325px",
         "display": "inline-block",
         "padding": "10px",
         "backgroundColor": "#001A57"
     },
     "paperStyle3": {
-        "height": "500px",
+        "height": "1000px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -165,6 +169,13 @@ class App extends React.Component {
           </Toolbar>
       </AppBar>
       <Paper position="static" style={styles.paperStyle}>
+        <AppBar position="static" style={styles.appBarStyle}>
+            <Toolbar>
+                <Typography variant="title" color="inherit">
+                    Welcome User
+                </Typography>
+            </Toolbar>
+        </AppBar>
           <TextField
               value={this.state.userID}
               style={styles.textFieldStyle}
@@ -174,7 +185,13 @@ class App extends React.Component {
             {this.state.errorText}
           </div>
           <Paper position="static" style={styles.paperStyle2}>
-            <h3 style={styles.headerStyle}>Upload your image below</h3>
+          <AppBar position="static" style={styles.appBarStyle2}>
+              <Toolbar>
+                  <Typography variant="title" color="inherit">
+                      Upload image below
+                  </Typography>
+              </Toolbar>
+          </AppBar>
             <UploadField onFiles={this.onUpload} align="center">
                 <div style={styles.upFieldStyle}>
                 Upload JPEG or .zip of JPEGs here
@@ -209,6 +226,13 @@ class App extends React.Component {
           </div>
       </Paper>
       <Paper style={styles.paperStyle3}>
+      <AppBar position="static" style={styles.appBarStyle}>
+          <Toolbar>
+              <Typography variant="title" color="inherit">
+                  Processed Output
+              </Typography>
+          </Toolbar>
+      </AppBar>
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userOutput}</font>
           <br></br>
