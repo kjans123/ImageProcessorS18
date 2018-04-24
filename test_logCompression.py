@@ -1,11 +1,11 @@
 def test_logCompression():
     from logCompression import logComp
-    from base64_conv_numpy import encode_image_string as enc
-    img = enc("haha.JPG")
-    logCompressed_string = str(logComp(img))
-    with open('testLogCompression.txt', 'r') as tester:
-        testText = tester.read()
-    assert logCompressed_string == testText
+    from base64_conv_numpy import encode_image_string as enco
+    import numpy as np
+    img = enco("tiny.jpg")
+    logCompressed_array = logComp(img)
+    dataArray = np.load('log_test.npy')
+    assert dataArray.all() == logCompressed_array.all()
 
 
 def test_exceptions():

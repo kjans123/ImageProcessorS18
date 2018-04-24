@@ -1,11 +1,11 @@
 def test_reverseVid():
     from reverseVideo import reverseVid
-    from base64_conv_numpy import encode_image_string as enc
-    img = enc("haha.JPG")
-    inverted_string = str(reverseVid(img))
-    with open('testInvert.txt', 'r') as tester:
-        testText = tester.read()
-    assert inverted_string == testText
+    from base64_conv_numpy import encode_image_string as enco
+    import numpy as np
+    img = enco("tiny.jpg")
+    dataArray = np.load('rev_test.npy')
+    reveVid_array = reverseVid(img)
+    assert reveVid_array.all() == dataArray.all()
 
 
 def test_exceptions():

@@ -1,4 +1,4 @@
-def test_base64base64_conv_numpy():
+def test_base64_conv_numpy():
     from base64_conv_numpy import convert_image_to_np_array
     from base64_conv_numpy import convert_processed_np_array_to_base64
     from base64_conv_numpy import encode_image_string
