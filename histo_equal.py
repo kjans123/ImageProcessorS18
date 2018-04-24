@@ -4,7 +4,7 @@ def histo_equal(base64String):
         channel in the img array.
 
     :param base64string: takes as input a JPG base64 string from app front-end
-    :returns img64: returns a post-processed JPG img as base64 string
+    :returns imgArray: returns a post-processed JPG img as numpy array
     :raises ValueError: raises Value Error if base64 string is empty
     :raises ImportError: raises Import Error if numpy or scikit packages
                          are not found. Also raises Import Error if
@@ -27,12 +27,13 @@ def histo_equal(base64String):
             imgArray, a_type, m, w, z = convert_image_to_np_array(base64String)
             for c in range(imgArray.shape[2]):
                 imgArray[:, :, c] = exposure.equalize_hist(imgArray[:, :, c])
-            img64 = convert_processed_np_array_to_base64(imgArray)
-            m = "success: processed (histogram eq.) img and returned as base64"
+            # img64 = convert_processed_np_array_to_base64(imgArray)
+            m = "success: processed (histo. eq.) img and returned as np array"
             logging.info(m)
-            return img64
+            return imgArray
         except ImportError:
             msg = 'base64_conv_numpy module not found.'
+            print(msg)
             logging.warning(msg)
     except ImportError:
         msgg = 'scikit/numpy packages not found. Check virtualenv'
