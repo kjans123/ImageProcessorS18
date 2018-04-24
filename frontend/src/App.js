@@ -27,7 +27,7 @@ var styles = {
         "backgroundColor": "#001A57",
     },
     "paperStyle": {
-        "height": "440px",
+        "height": "460px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -101,7 +101,9 @@ class App extends React.Component {
           "processingTechnique": "",
           "currentImageString": "",
           "downloadExt": "",
-
+          "imgStr": "",
+          "userOutput": "",
+          "confirmMsg": "",
       };
     }
 
@@ -133,17 +135,23 @@ class App extends React.Component {
         reader.onloadend = () => {
             console.log(reader.result);
             this.setState({currentImageString: reader.result});
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
         }
     }
 
     postData = () => {
-        var urlString = "http://vcm-3594.vm.duke.edu:5000/api/heart_rate/get_data/"
+        var urlString = "http://0.0.0.0:5000/simple"
         var data = {
             "user_email": this.state.userID,
             "b64_string": this.state.currentImageString,
             "proc_method": this.state.processingTechnique,
         }
-        console.log(data)
+        axios.post(urlString, data).then( (response) => {
+            console.log(response);
+            this.setState({imgStr: response.data.image_string});
+            this.setState({userOutput: response.data.user_id});
+            console.log(this.state.imgStr)
+        });
     }
 
   render() {
@@ -170,6 +178,8 @@ class App extends React.Component {
             <UploadField onFiles={this.onUpload} align="center">
                 <div style={styles.upFieldStyle}>
                 Upload JPEG or .zip of JPEGs here
+                <br></br>
+                    <img src= {this.state.confirmMsg} alt="" height="50%" width="50%"/>
                 </div>
             </UploadField>
           </Paper>
@@ -200,12 +210,12 @@ class App extends React.Component {
       </Paper>
       <Paper style={styles.paperStyle3}>
           <p style={styles.containerStyle} align="left">
-          User:
+          User: <font color="#E83635">{this.state.userOutput}</font>
           <br></br>
           Previous processes:
           <br></br>
-          <p style={styles.containerStyle} align="center">
-          Insert pics and histograms here as a material ui table
+          <p style={styles.containerStyle} align="left">
+          <img src= {this.state.imgStr} alt="..." height="30%" width="30%"/>
           </p>
           Uploaded:
           <br></br>
