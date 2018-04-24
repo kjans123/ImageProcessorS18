@@ -2,9 +2,9 @@ def test_contr_stretch():
     from contr_strech import contr_stretch
     from base64_conv_numpy import encode_image_string
     import numpy as np
-    imageString = encode_image_string("haha.JPG")
+    imageString = encode_image_string("tiny.jpg")
     proc_image_Array = contr_stretch(imageString)
-    dataArray = np.load('contr_array.txt.npy')
+    dataArray = np.load('contr_test.npy')
     assert proc_image_Array.all() == dataArray.all()
 
 

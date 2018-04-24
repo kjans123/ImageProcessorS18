@@ -29,6 +29,7 @@ def contr_stretch(base64String):
             v1, v2 = np.percentile(imgArray, (0.4, 95))
             imgArray = exposure.rescale_intensity(imgArray, in_range=(v1, v2))
             # imgString = convert_processed_np_array_to_base64(imgC)
+            np.save('contr_test', imgArray)
             m = "success: processed (contr str) img and returned as np array"
             logging.info(m)
             return imgArray
@@ -40,3 +41,22 @@ def contr_stretch(base64String):
         msgg = 'scikit/numpy packages not found. Check virtualenv'
         print(msgg)
         logging.warning(msgg)
+
+if __name__ == "__main__":
+    from skimage.util import img_as_ubyte
+    from skimage import exposure
+    from skimage.morphology import disk
+    from skimage.filters import rank
+    import numpy as np
+    import base64
+    import PIL
+    from PIL import Image
+    from base64_conv_numpy import convert_image_to_np_array
+    from base64_conv_numpy import convert_processed_np_array_to_base64
+    from base64_conv_numpy import encode_image_string
+    imgString = encode_image_string('tiny.jpg')
+    proc_image = contr_stretch(imgString)
+    # img64 = convert_processed_np_array_to_base64(proc_image)
+    with open('test.jpg', 'wb') as image_file:
+        write_image = base64.b64decode(proc_image)
+        image_file.write(write_image)
