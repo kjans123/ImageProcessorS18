@@ -172,7 +172,8 @@ def process():
                     "user_email": email,
                     "proc_method": method,
                     "pre_b64_string": pre_img,
-                    "post_b64_string": post_img,  # last processed image, edit this if we display
+                    "post_b64_string": post_img,
+                    # last processed image, edit this if we display
                     "action_time": time2str(duration),
                     "upload_time": time2str(current_time)
                 }
