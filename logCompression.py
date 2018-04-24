@@ -3,7 +3,7 @@ def logComp(b64_string):
        via Log Compression. Outputs the processed base64 string
 
     :param b64_string: base64 pre-processed image string
-    :returns post_b64: base 64 post-processed image string
+    :returns logCompressed: numpy array post-processed image array
     """
     import logging
 
@@ -28,6 +28,6 @@ def logComp(b64_string):
     loggedArray = np.log(one_matrix + array)
     logCompressed = loggedArray/np.amax(loggedArray)
     logging.info("Numpy array log compressed")
-    post_b64 = convert_processed_np_array_to_base64(logCompressed)
+    # post_b64 = convert_processed_np_array_to_base64(logCompressed)
     logging.info("Processed array converted back to base64")
-    return post_b64
+    return logCompressed

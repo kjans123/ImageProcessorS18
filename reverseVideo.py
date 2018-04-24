@@ -3,7 +3,7 @@ def reverseVid(b64_string):
        via Reverse Video. Outputs the processed base64 string
 
     :param b64_string: base 64 pre-processed image string
-    :returns post_b64: base 64 post-processed image string
+    :returns inverted: numpy array post-processed image array
     :raises ImportError: raises error if skimage or base64_conv_numpy.py
                          not found
     :raises ValueError: raises error if the input string is empty
@@ -29,6 +29,6 @@ def reverseVid(b64_string):
     one_matrix = np.ones(array.shape)
     inverted = one_matrix - array
     logging.info("Numpy array processed by Reverse Video")
-    post_b64 = convert_processed_np_array_to_base64(inverted)
+    # post_b64 = convert_processed_np_array_to_base64(inverted)
     logging.info("Processed array converted back to base64")
-    return post_b64
+    return inverted

@@ -7,7 +7,8 @@ import shutil
 def make_tmp(dictionary):
     """Makes a json file in a tmp folder
 
-    :param dictionary: dict object with post-processed image in b64 string format
+    :param dictionary: dict object with post-processed image
+                       in b64 string format
     """
     logging.basicConfig(filename='back_end.log', format='%(asctime)s \
     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')

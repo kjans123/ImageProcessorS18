@@ -41,4 +41,3 @@ def contr_stretch(base64String):
         msgg = 'scikit/numpy packages not found. Check virtualenv'
         print(msgg)
         logging.warning(msgg)
-

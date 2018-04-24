@@ -9,6 +9,7 @@ def test_conversion():
     # a pre-made function from datetime
     assert dt == str2time(string)
 
+
 def test_exceptions():
     import pytest
     with pytest.raises(TypeError, message="Expecting AttributeError"):

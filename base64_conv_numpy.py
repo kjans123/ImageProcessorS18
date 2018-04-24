@@ -124,7 +124,7 @@ def convert_processed_np_array_to_base64(npArray):
         import os
         from skimage import img_as_ubyte
         h = np.array([])
-        if (npArray is None or npArray.all() == h):
+        if (npArray is None or npArray.all() == h or npArray.size == 0):
             logging.warning("numpy array is EMPTY")
             raise ValueError("empty numpy array")
         img = img_as_ubyte(npArray)
