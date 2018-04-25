@@ -67,6 +67,10 @@ var styles = {
         "padding": "1em",
         "color": "#001A57",
     },
+    "tableStyle": {
+        "padding": "1em",
+        "color": "#001A57",
+    },
     "formStyle": {
         "width": "200px",
     },
@@ -235,7 +239,22 @@ class App extends React.Component {
           Previous processes:
           <br></br>
           <p style={styles.containerStyle} align="left">
-          <img src= {this.state.imgStr} alt="..." height="30%" width="30%"/>
+            <table style={styles.tableStyle}>
+                <tr>
+                    <th>Original Image</th>
+                    <th>Histogram</th>
+                    <th>Processed Image</th>
+                    <th>Histogram</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img src= {this.state.imgStr} alt="..." height="200px" width="200px"/>
+                    </td>
+                    <td>"To be added"</td>
+                    <td>"To be added"</td>
+                    <td>"To be added"</td>
+                </tr>
+            </table>
           </p>
           Uploaded:
           <br></br>
