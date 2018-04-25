@@ -5,14 +5,10 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Input, { InputLabel } from 'material-ui/Input';
+import { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
-import ReactDOM from 'react-dom';
-import DropzoneComponent from 'react-dropzone-component';
 import {UploadField} from '@navjobs/upload';
 import axios from 'axios';
 
@@ -181,9 +177,9 @@ class App extends React.Component {
               style={styles.textFieldStyle}
               placeholder="Enter your email address"
               onChange={this.onTextFieldChange}/>
-          <div style={styles.errorStyle}>
-            {this.state.errorText}
-          </div>
+            <div style={styles.errorStyle}>
+              {this.state.errorText}
+            </div>
           <Paper position="static" style={styles.paperStyle2}>
           <AppBar position="static" style={styles.appBarStyle2}>
               <Toolbar>
@@ -221,7 +217,7 @@ class App extends React.Component {
           <div>
           <Button variant="raised" style={styles.buttonStyle}
               onClick={this.postData}>
-              PROCESS
+              Process
           </Button>
           </div>
       </Paper>
