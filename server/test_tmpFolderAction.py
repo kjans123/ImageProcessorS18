@@ -31,6 +31,10 @@ def test_access_tmp():
     assert sum(dict_object["hi"]) == 6
     assert isinstance(dict_object, dict)
 
-# if we want to check that tmp folder exists
-# as in this is not done via frontend,
-# add: def test_access_no_tmp():
+
+def test_exceptions():
+    import pytest
+    import shutil
+    with pytest.raises(FileNotFoundError):
+        shutil.rmtree('tmp/')
+        access_tmp()

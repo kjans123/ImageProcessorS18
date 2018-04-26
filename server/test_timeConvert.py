@@ -12,7 +12,7 @@ def test_conversion():
 
 def test_exceptions():
     import pytest
-    with pytest.raises(TypeError, message="Expecting AttributeError"):
+    with pytest.raises(TypeError, message="Expecting TypeError"):
         ex = time2str(3)
     with pytest.raises(TypeError, message="Expecting TypeError"):
         ex = str2time(4)
