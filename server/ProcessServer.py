@@ -70,7 +70,7 @@ def process():
     except TypeError:
         return jsonify("email is not string"), 400
         print("Please provide information in string format!")
-    jpgList = glob.glob("/images"+str(email)+"/","*.jpg")
+    jpgList = glob.glob("/images"+str(email)+"/", "*.jpg")
     jpgCount = len(jpgList)
     current_time = datetime.datetime.now()
     processed_list = []
