@@ -110,6 +110,7 @@ def process():
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
+                make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "stretch":
             jpgFileNum = jpgFileNum + 1
@@ -143,6 +144,7 @@ def process():
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
+                make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "logcomp":
             jpgFileNum = jpgFileNum + 1
@@ -175,6 +177,7 @@ def process():
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
+                make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "reverse":
             jpgFileNum = jpgFileNum + 1
@@ -208,6 +211,7 @@ def process():
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
+                make_tmp(new_info)
                 return jsonify(new_info)
 
 
