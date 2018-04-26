@@ -57,6 +57,7 @@ def process():
         check_list_of_string(pre_img)
         isinstance(method, str)
     except TypeError:
+        return jsonify("email is not string"), 400
         print("Please provide information in string format!")
     # if cases that will direct to the correct processing method
     # it would be better to import these methods from a separate file
@@ -68,6 +69,7 @@ def process():
         # add method from main.py
         # save_image
         if method == "histeq":
+
             # Add function for histogram equalization
                 # input is pre_img (depending on scikit or whatever,
                 # may need to convert format then back to a b64 image string)
