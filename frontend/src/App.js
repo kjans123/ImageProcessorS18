@@ -108,25 +108,51 @@ class App extends React.Component {
           "imgStr": "",
           "userOutput": "",
           "confirmMsg": "",
+          "postReady": true,
+          "id": true,
+          "up": true,
+          "proc": true,
       };
     }
 
     handleProcessChange = (event) => {
         this.setState({"processingTechnique": event.target.value});
+        this.setState({"proc": false})
+        if (this.state.id && this.state.up && this.state.proc == false) {
+            this.setState({"postReady": false})
+            console.log("Button enabled")
+        }
+        else {
+            console.log("Button still disabled")
+        }
     }
 
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
     }
 
+    onDownload = () => {
+        if (this.state.downloadExt === "JPEG") {
+            console.log("JPEG")
+        }
+        else if (this.state.downloadExt === "PNG") {
+            console.log("PNG")
+        }
+        else if (this.state.downloadExt === "TIFF") {
+            console.log("TIFF")
+        }
+        else {
+            console.log("nope")
+        }
+    }
+
     onTextFieldChange = (event) => {
         this.setState({"userID": event.target.value});
         if (event.target.value.includes(" ")) {
             this.setState({"errorText": "Invalid email: No spaces allowed"})
-        } else if (event.target.value.includes(".")) {
+        } else if (event.target.value.includes("@" && ".")) {
             this.setState({"errorText": ""})
-        } else if (event.target.value.includes("@")) {
-            this.setState({"errorText": ""})
+            this.setState({"id": false})
         } else {
             this.setState({"errorText": "Invalid email: example@address.com"})
         }
@@ -140,6 +166,7 @@ class App extends React.Component {
             console.log(reader.result);
             this.setState({currentImageString: reader.result});
             this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
+            this.setState({"up": false})
         }
     }
 
@@ -219,7 +246,7 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}
+          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.postReady}
               onClick={this.postData}>
               Process
           </Button>
@@ -280,7 +307,8 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}>
+          <Button variant="raised" style={styles.buttonStyle}
+              onClick={this.onDownload}>
               Download
           </Button>
           </div>
