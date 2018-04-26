@@ -14,6 +14,10 @@ from logCompression import logComp
 from reverseVideo import reverseVid
 from contr_strech import contr_stretch
 from create_histo import create_histo
+from main import create_user
+from main import (add_log, add_contr, add_histo, add_rever)
+from main import save_image
+import glob
 import logging
 
 app = Flask(__name__)
@@ -46,8 +50,8 @@ def process():
         print("No email input")
     check_email = Check_For_User(email)
     if check_email.user_exists is False:
-        return jsonify(str(email) + " was not found. Please re-enter"), 400
-        print(str(email) + " was not found. Please re-enter")
+        cu = create_user(email)
+        print(str(email) + " was not found. User created")
     try:
         pre_img = info["pre_b64_string"]
     except KeyError:
@@ -66,13 +70,22 @@ def process():
     except TypeError:
         return jsonify("email is not string"), 400
         print("Please provide information in string format!")
+    jpgList = glob.glob("/images"+str(email)+"/", "*.jpg")
+    jpgCount = len(jpgList)
     current_time = datetime.datetime.now()
     processed_list = []
     processed_histograms = []
     pre_img_list = []
     pre_img_histograms = []
+    jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
         if method == "histeq":
+            jpgFileNum = jpgFileNum + 1
+            filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
+            iSave = save_image(email, jpgFileNum)
+            iHisto = add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
@@ -94,11 +107,17 @@ def process():
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
                     "action_time": time2str(duration),
-                    "upload_time": time2str(current_time)
+                    "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 return jsonify(new_info)
         elif method == "stretch":
+            jpgFileNum = jpgFileNum + 1
+            filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
+            iSave = save_image(email, jpgFileNum)
+            iContr = add_contr(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = contr_stretch(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
@@ -121,11 +140,17 @@ def process():
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
                     "action_time": time2str(duration),
-                    "upload_time": time2str(current_time)
+                    "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 return jsonify(new_info)
         elif method == "logcomp":
+            jpgFileNum = jpgFileNum + 1
+            filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
+            iSave = save_image(email, jpgFileNum)
+            iLog = add_log(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = logComp(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
@@ -147,11 +172,17 @@ def process():
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
                     "action_time": time2str(duration),
-                    "upload_time": time2str(current_time)
+                    "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 return jsonify(new_info)
         elif method == "reverse":
+            jpgFileNum = jpgFileNum + 1
+            filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
+            iSave = save_image(email, jpgFileNum)
+            iRev = add_rever(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = reverseVid(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
@@ -174,13 +205,13 @@ def process():
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
                     "action_time": time2str(duration),
-                    "upload_time": time2str(current_time)
+                    "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 return jsonify(new_info)
 
 
-@app.route("/download", process=["GET"])
+@app.route("/download", methods=["GET"])
 def download():
     # access tmp folder and output
     output = access_tmp()
