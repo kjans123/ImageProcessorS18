@@ -105,6 +105,7 @@ class App extends React.Component {
           "errorText": "",
           "processingTechnique": "",
           "currentImageString": "",
+          "listImages": ["nothing"],
           "downloadExt": "",
           "imgStr": "",
           "userOutput": "",
@@ -160,16 +161,23 @@ class App extends React.Component {
     }
 
     onUpload = (files) => {
-        const reader = new FileReader()
-        const file = files[0]
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            console.log(reader.result);
-            this.setState({currentImageString: reader.result});
-            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
-            this.setState({"up": 1})
+        const listFiles = [];
+        for (let i = 0; i<files.length; i++) {
+          const reader = new FileReader();
+          reader.readAsDataURL(files[i]);
+          reader.onloadend = () => {
+            this.setState({"currentImageString": reader.result});
+            listFiles.push(this.state.currentImageString);
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            this.setState({"up": 1});
+            this.setState({"listImages": listFiles})
+            console.log(this.state.listImages)
+            console.log(Date.now())
+          }
         }
-    }
+        console.log(this.state.listImages)
+        console.log(Date.now())
+      }
 
     postData = () => {
         var urlString = "http://0.0.0.0:5000/simple"
