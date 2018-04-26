@@ -109,16 +109,16 @@ class App extends React.Component {
           "userOutput": "",
           "confirmMsg": "",
           "postReady": true,
-          "id": true,
-          "up": true,
-          "proc": true,
+          "id": null,
+          "up": null,
+          "proc": null,
       };
     }
 
     handleProcessChange = (event) => {
         this.setState({"processingTechnique": event.target.value});
-        this.setState({"proc": false})
-        if (this.state.id && this.state.up && this.state.proc == false) {
+        var condition = this.state.id + this.state.up + 1
+        if (condition === 3) {
             this.setState({"postReady": false})
             console.log("Button enabled")
         }
@@ -152,7 +152,7 @@ class App extends React.Component {
             this.setState({"errorText": "Invalid email: No spaces allowed"})
         } else if (event.target.value.includes("@" && ".")) {
             this.setState({"errorText": ""})
-            this.setState({"id": false})
+            this.setState({"id": 1})
         } else {
             this.setState({"errorText": "Invalid email: example@address.com"})
         }
@@ -166,7 +166,7 @@ class App extends React.Component {
             console.log(reader.result);
             this.setState({currentImageString: reader.result});
             this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
-            this.setState({"up": false})
+            this.setState({"up": 1})
         }
     }
 
