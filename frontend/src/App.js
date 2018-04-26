@@ -11,6 +11,7 @@ import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import {UploadField} from '@navjobs/upload';
 import axios from 'axios';
+import Dropzone from 'react-dropzone';
 
 var styles = {
     "backgroundStyle": {
@@ -211,22 +212,15 @@ class App extends React.Component {
             <div style={styles.errorStyle}>
               {this.state.errorText}
             </div>
-          <Paper position="static" style={styles.paperStyle2}>
-          <AppBar position="static" style={styles.appBarStyle2}>
-              <Toolbar>
-                  <Typography variant="title" color="inherit">
-                      Upload image below
-                  </Typography>
-              </Toolbar>
-          </AppBar>
-            <UploadField onFiles={this.onUpload} align="center">
-                <div style={styles.upFieldStyle}>
-                Upload JPEG or .zip of JPEGs here
-                <br></br>
-                    <img src= {this.state.confirmMsg} alt="" height="50%" width="50%"/>
-                </div>
-            </UploadField>
-          </Paper>
+          <section>
+          <div className="dropzone">
+          <Dropzone
+            accept="image/jpeg, .zip"
+            onDrop={this.onUpload}>
+            <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
+          </Dropzone>
+          </div>
+          </section>
           <div>
           <br></br>
             <FormControl style={styles.formStyle}>
