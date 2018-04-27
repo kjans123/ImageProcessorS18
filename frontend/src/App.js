@@ -5,16 +5,12 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Input, { InputLabel } from 'material-ui/Input';
+import { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
-import ReactDOM from 'react-dom';
-import DropzoneComponent from 'react-dropzone-component';
-import {UploadField} from '@navjobs/upload';
 import axios from 'axios';
+import Dropzone from 'react-dropzone';
 
 var styles = {
     "backgroundStyle": {
@@ -31,7 +27,7 @@ var styles = {
         "backgroundColor": "#A1B70D",
     },
     "paperStyle": {
-        "height": "500px",
+        "height": "560px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -40,8 +36,8 @@ var styles = {
         "padding": "10px",
     },
     "paperStyle2": {
-        "height": "180px",
-        "width": "325px",
+        "height": "210px",
+        "width": "205px",
         "display": "inline-block",
         "padding": "10px",
         "backgroundColor": "#001A57"
@@ -68,6 +64,10 @@ var styles = {
         "border": "3px",
         "borderStyle": "solid",
         "borderColor": "#001A57",
+        "padding": "1em",
+        "color": "#001A57",
+    },
+    "tableStyle": {
         "padding": "1em",
         "color": "#001A57",
     },
@@ -104,43 +104,80 @@ class App extends React.Component {
           "errorText": "",
           "processingTechnique": "",
           "currentImageString": "",
+          "listImages": [],
           "downloadExt": "",
+          "downloadEnable": true,
           "imgStr": "",
           "userOutput": "",
           "confirmMsg": "",
+          "postReady": true,
+          "id": null,
+          "up": null,
+          "proc": null,
       };
     }
 
     handleProcessChange = (event) => {
         this.setState({"processingTechnique": event.target.value});
+        var condition = this.state.id + this.state.up + 1
+        if (condition === 3) {
+            this.setState({"postReady": false})
+            console.log("Button enabled")
+        }
+        else {
+            console.log("Button still disabled")
+        }
     }
 
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
     }
 
+    onDownload = () => {
+        if (this.state.downloadExt === "JPEG") {
+            console.log("JPEG")
+        }
+        else if (this.state.downloadExt === "PNG") {
+            console.log("PNG")
+        }
+        else if (this.state.downloadExt === "TIFF") {
+            console.log("TIFF")
+        }
+        else {
+            console.log("nope")
+        }
+    }
+
     onTextFieldChange = (event) => {
         this.setState({"userID": event.target.value});
         if (event.target.value.includes(" ")) {
             this.setState({"errorText": "Invalid email: No spaces allowed"})
-        } else if (event.target.value.includes(".")) {
+        } else if (event.target.value.includes("@" && ".")) {
             this.setState({"errorText": ""})
-        } else if (event.target.value.includes("@")) {
-            this.setState({"errorText": ""})
+            this.setState({"id": 1})
         } else {
             this.setState({"errorText": "Invalid email: example@address.com"})
         }
     }
 
     onUpload = (files) => {
-        const reader = new FileReader()
-        const file = files[0]
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            console.log(reader.result);
-            this.setState({currentImageString: reader.result});
-            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
+        console.log(files.length)
+        const listFiles = []
+        for (let i = 0; i<files.length; i++) {
+            const reader = new FileReader();
+            reader.readAsDataURL(files[i]);
+            reader.onloadend = () => {
+            this.setState({"currentImageString": reader.result});
+            listFiles.push(this.state.currentImageString);
+            this.setState({"listImages": listFiles})
+            console.log(this.state.listImages)
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            }
+            reader.onerror = (error) => {
+                this.setState({confirmMsg: "Oops. An upload error has occured."});
+            }
         }
+        this.setState({"up": 1});
     }
 
     postData = () => {
@@ -181,24 +218,20 @@ class App extends React.Component {
               style={styles.textFieldStyle}
               placeholder="Enter your email address"
               onChange={this.onTextFieldChange}/>
-          <div style={styles.errorStyle}>
-            {this.state.errorText}
-          </div>
+            <div style={styles.errorStyle}>
+              {this.state.errorText}
+            </div>
           <Paper position="static" style={styles.paperStyle2}>
-          <AppBar position="static" style={styles.appBarStyle2}>
-              <Toolbar>
-                  <Typography variant="title" color="inherit">
-                      Upload image below
-                  </Typography>
-              </Toolbar>
-          </AppBar>
-            <UploadField onFiles={this.onUpload} align="center">
-                <div style={styles.upFieldStyle}>
-                Upload JPEG or .zip of JPEGs here
-                <br></br>
-                    <img src= {this.state.confirmMsg} alt="" height="50%" width="50%"/>
-                </div>
-            </UploadField>
+          <section>
+          <div className="dropzone" align="center">
+          <Dropzone
+            accept="image/jpeg, .zip"
+            onDrop={this.onUpload}>
+            <p><font color="white">Drop some files here, or click to select files</font></p>
+            <img src= {this.state.confirmMsg} alt="" height="40%" width="80%"/>
+          </Dropzone>
+          </div>
+          </section>
           </Paper>
           <div>
           <br></br>
@@ -219,9 +252,9 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}
+          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.postReady}
               onClick={this.postData}>
-              PROCESS
+              Process
           </Button>
           </div>
       </Paper>
@@ -239,7 +272,22 @@ class App extends React.Component {
           Previous processes:
           <br></br>
           <p style={styles.containerStyle} align="left">
-          <img src= {this.state.imgStr} alt="..." height="30%" width="30%"/>
+            <table style={styles.tableStyle}>
+                <tr>
+                    <th>Original Image</th>
+                    <th>Histogram</th>
+                    <th>Processed Image</th>
+                    <th>Histogram</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img src= {this.state.imgStr} alt="..." height="200px" width="200px"/>
+                    </td>
+                    <td>"To be added"</td>
+                    <td>"To be added"</td>
+                    <td>"To be added"</td>
+                </tr>
+            </table>
           </p>
           Uploaded:
           <br></br>
@@ -265,7 +313,8 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}>
+          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.downloadEnable}
+              onClick={this.onDownload}>
               Download
           </Button>
           </div>

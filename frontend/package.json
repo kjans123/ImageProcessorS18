@@ -8,7 +8,10 @@
     "material-ui": "^1.0.0-beta.42",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-dropzone": "^4.2.9",
     "react-dropzone-component": "^3.2.0",
+    "react-file-base64": "^1.0.3",
+    "react-native-fs": "^2.9.12",
     "react-scripts": "1.1.4"
   },
   "scripts": {
