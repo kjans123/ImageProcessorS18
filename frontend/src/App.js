@@ -106,6 +106,7 @@ class App extends React.Component {
           "currentImageString": "",
           "listImages": [],
           "downloadExt": "",
+          "downloadEnable": true,
           "imgStr": "",
           "userOutput": "",
           "confirmMsg": "",
@@ -312,7 +313,7 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}
+          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.downloadEnable}
               onClick={this.onDownload}>
               Download
           </Button>
