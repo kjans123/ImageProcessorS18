@@ -9,7 +9,6 @@ import { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
-import {UploadField} from '@navjobs/upload';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
@@ -28,7 +27,7 @@ var styles = {
         "backgroundColor": "#A1B70D",
     },
     "paperStyle": {
-        "height": "500px",
+        "height": "560px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -37,8 +36,8 @@ var styles = {
         "padding": "10px",
     },
     "paperStyle2": {
-        "height": "180px",
-        "width": "325px",
+        "height": "210px",
+        "width": "205px",
         "display": "inline-block",
         "padding": "10px",
         "backgroundColor": "#001A57"
@@ -105,6 +104,7 @@ class App extends React.Component {
           "errorText": "",
           "processingTechnique": "",
           "currentImageString": "",
+          "listImages": [],
           "downloadExt": "",
           "imgStr": "",
           "userOutput": "",
@@ -160,15 +160,23 @@ class App extends React.Component {
     }
 
     onUpload = (files) => {
-        const reader = new FileReader()
-        const file = files[0]
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            console.log(reader.result);
-            this.setState({currentImageString: reader.result});
-            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"})
-            this.setState({"up": 1})
+        console.log(files.length)
+        const listFiles = []
+        for (let i = 0; i<files.length; i++) {
+            const reader = new FileReader();
+            reader.readAsDataURL(files[i]);
+            reader.onloadend = () => {
+            this.setState({"currentImageString": reader.result});
+            listFiles.push(this.state.currentImageString);
+            this.setState({"listImages": listFiles})
+            console.log(this.state.listImages)
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            }
+            reader.onerror = (error) => {
+                this.setState({confirmMsg: "Oops. An upload error has occured."});
+            }
         }
+        this.setState({"up": 1});
     }
 
     postData = () => {
@@ -212,15 +220,18 @@ class App extends React.Component {
             <div style={styles.errorStyle}>
               {this.state.errorText}
             </div>
+          <Paper position="static" style={styles.paperStyle2}>
           <section>
-          <div className="dropzone">
+          <div className="dropzone" align="center">
           <Dropzone
             accept="image/jpeg, .zip"
             onDrop={this.onUpload}>
-            <p>Try dropping some files here, or click to select files (.jpg, .png, or .tiff) to upload.</p>
+            <p><font color="white">Drop some files here, or click to select files</font></p>
+            <img src= {this.state.confirmMsg} alt="" height="40%" width="80%"/>
           </Dropzone>
           </div>
           </section>
+          </Paper>
           <div>
           <br></br>
             <FormControl style={styles.formStyle}>
