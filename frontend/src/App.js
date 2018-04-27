@@ -104,7 +104,11 @@ class App extends React.Component {
           "errorText": "",
           "processingTechnique": "",
           "currentImageString": "",
+<<<<<<< HEAD
           "listImages": [],
+=======
+          "listImages": ["nothing"],
+>>>>>>> 5ae963a4ad0557a7b0beaad4fcd46863ad6def4e
           "downloadExt": "",
           "imgStr": "",
           "userOutput": "",
@@ -160,6 +164,7 @@ class App extends React.Component {
     }
 
     onUpload = (files) => {
+<<<<<<< HEAD
         console.log(files.length)
         const listFiles = []
         for (let i = 0; i<files.length; i++) {
@@ -178,6 +183,25 @@ class App extends React.Component {
         }
         this.setState({"up": 1});
     }
+=======
+        const listFiles = [];
+        for (let i = 0; i<files.length; i++) {
+          const reader = new FileReader();
+          reader.readAsDataURL(files[i]);
+          reader.onloadend = () => {
+            this.setState({"currentImageString": reader.result});
+            listFiles.push(this.state.currentImageString);
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            this.setState({"up": 1});
+            this.setState({"listImages": listFiles})
+            console.log(this.state.listImages)
+            console.log(Date.now())
+          }
+        }
+        console.log(this.state.listImages)
+        console.log(Date.now())
+      }
+>>>>>>> 5ae963a4ad0557a7b0beaad4fcd46863ad6def4e
 
     postData = () => {
         var urlString = "http://0.0.0.0:5000/simple"
