@@ -110,7 +110,7 @@ class App extends React.Component {
           "imgStr": "",
           "userOutput": "",
           "confirmMsg": "",
-          "postReady": true,
+          "postReady": "",
           "id": null,
           "up": null,
           "proc": null,
@@ -119,13 +119,28 @@ class App extends React.Component {
 
     handleProcessChange = (event) => {
         this.setState({"processingTechnique": event.target.value});
-        var condition = this.state.id + this.state.up + 1
+        this.setState({"proc": 1})
+    }
+
+    postData = () => {
+        var condition = this.state.id + this.state.up + this.state.proc
         if (condition === 3) {
-            this.setState({"postReady": false})
-            console.log("Button enabled")
+            this.setState({"postReady": ""})
+            var urlString = "http://0.0.0.0:5000/simple"
+            var data = {
+                "user_email": this.state.userID,
+                "b64_string": this.state.currentImageString,
+                "proc_method": this.state.processingTechnique,
+            }
+            axios.post(urlString, data).then( (response) => {
+                console.log(response);
+                this.setState({imgStr: response.data.image_string});
+                this.setState({userOutput: response.data.user_id});
+                console.log(this.state.imgStr)
+            });
         }
         else {
-            console.log("Button still disabled")
+            this.setState({"postReady": "All three fields are required in order for image to be processed"})
         }
     }
 
@@ -180,20 +195,7 @@ class App extends React.Component {
         this.setState({"up": 1});
     }
 
-    postData = () => {
-        var urlString = "http://0.0.0.0:5000/simple"
-        var data = {
-            "user_email": this.state.userID,
-            "b64_string": this.state.currentImageString,
-            "proc_method": this.state.processingTechnique,
-        }
-        axios.post(urlString, data).then( (response) => {
-            console.log(response);
-            this.setState({imgStr: response.data.image_string});
-            this.setState({userOutput: response.data.user_id});
-            console.log(this.state.imgStr)
-        });
-    }
+
 
   render() {
     return (
@@ -227,7 +229,7 @@ class App extends React.Component {
           <Dropzone
             accept="image/jpeg, .zip"
             onDrop={this.onUpload}>
-            <p><font color="white">Drop some files here, or click to select files</font></p>
+            <p><font color="white">Drop some files here, or click to select files <br></br>(.jpg and .zip only)</font></p>
             <img src= {this.state.confirmMsg} alt="" height="40%" width="80%"/>
           </Dropzone>
           </div>
@@ -252,10 +254,13 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.postReady}
+          <Button variant="raised" style={styles.buttonStyle}
               onClick={this.postData}>
               Process
           </Button>
+          </div>
+          <div style={styles.errorStyle}>
+            {this.state.postReady}
           </div>
       </Paper>
       <Paper style={styles.paperStyle3}>
