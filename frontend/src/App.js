@@ -11,6 +11,8 @@ import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
+import fetch_blob from 'react-native-fetch-blob';
+import RNFS from 'react-native-fs';
 
 var styles = {
     "backgroundStyle": {
@@ -151,6 +153,15 @@ class App extends React.Component {
     onDownload = () => {
         if (this.state.downloadExt === "JPEG") {
             console.log("JPEG")
+            const fs = fetch_blob.fs
+            const dirs = fetch_blob.fs.dirs
+            const file_path = dirs.PATH + '/image.jpg'
+            var image_data = json.qr.split('data:image/jpg;base64,');
+            image_data = image_data[1];
+            RNFS.writeFile(file_path, image_data, 'base64')
+            .catch((error) =>{
+                alert(JSON.stringify(error)):
+            }):
         }
         else if (this.state.downloadExt === "PNG") {
             console.log("PNG")
