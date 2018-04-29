@@ -72,13 +72,14 @@ def convert_image_to_np_array(base64image):
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
+        # test
         import base64
         import numpy as np
         import PIL
         from PIL import Image
         import stat
         import os
-        from IO import BytesIO
+        from io import BytesIO
         if base64image is None or base64image == [] or base64image == "":
             logging.warning("base64 image string is EMPTY")
             raise ValueError("empty base64 string")
