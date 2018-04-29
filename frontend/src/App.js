@@ -107,7 +107,7 @@ class App extends React.Component {
           "currentImageString": "",
           "listImages": [],
           "downloadExt": "",
-          "downloadEnable": true,
+          "downloadEnable": "",
           "imgStr": "",
           "userOutput": "",
           "confirmMsg": "",
@@ -164,6 +164,7 @@ class App extends React.Component {
 
     onDownload = () => {
         if (this.state.downloadExt === "JPEG") {
+            this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
             var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
@@ -176,6 +177,7 @@ class App extends React.Component {
             FileSaver.saveAs(blob, "image.jpeg");
         }
         else if (this.state.downloadExt === "PNG") {
+            this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
             var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
@@ -188,6 +190,7 @@ class App extends React.Component {
             FileSaver.saveAs(blob, "image.png");
         }
         else if (this.state.downloadExt === "TIFF") {
+            this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
             var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
@@ -200,7 +203,7 @@ class App extends React.Component {
             FileSaver.saveAs(blob, "image.tiff");
         }
         else {
-            console.log("nope")
+            this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
         }
     }
 
@@ -359,10 +362,13 @@ class App extends React.Component {
             </FormControl>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.downloadEnable}
+          <Button variant="raised" style={styles.buttonStyle}
               onClick={this.onDownload}>
               Download
           </Button>
+          <div style={styles.errorStyle}>
+            {this.state.downloadEnable}
+          </div>
           </div>
       </Paper>
     </body>
