@@ -76,6 +76,7 @@ def convert_image_to_np_array(base64image):
         import numpy as np
         import PIL
         from PIL import Image
+        import stat
         import os
         if base64image is None or base64image == [] or base64image == "":
             logging.warning("base64 image string is EMPTY")
