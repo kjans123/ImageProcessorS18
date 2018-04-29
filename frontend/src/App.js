@@ -11,8 +11,7 @@ import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
-import fetch_blob from 'react-native-fetch-blob';
-import RNFS from 'react-native-fs';
+import FileSaver from 'file-saver';
 
 var styles = {
     "backgroundStyle": {
@@ -128,10 +127,10 @@ class App extends React.Component {
         var condition = this.state.id + this.state.up + this.state.proc
         if (condition === 3) {
             this.setState({"postReady": ""})
-            var urlString = "http://0.0.0.0:5000/simple"
+            var urlString = "http://vcm-3594.vm.duke.edu:5000/process"
             var data = {
                 "user_email": this.state.userID,
-                "b64_string": this.state.currentImageString,
+                "pre_b64_string": this.state.listImages,
                 "proc_method": this.state.processingTechnique,
             }
             axios.post(urlString, data).then( (response) => {
@@ -148,26 +147,57 @@ class App extends React.Component {
 
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
+        if (this.state.downloadExt === "JPEG") {
+            this.setState({"downloadEnable": false})
+            console.log(this.state.downloadEnable)
+        }
+        else if (this.state.downloadExt === "PNG") {
+            this.setState({"downloadEnable": false})
+        }
+        else if (this.state.downloadExt === "TIFF") {
+            this.setState({"downloadEnable": false})
+        }
+        else {
+            this.setState({"downloadEnable": true})
+        }
     }
 
     onDownload = () => {
         if (this.state.downloadExt === "JPEG") {
-            console.log("JPEG")
-            const fs = fetch_blob.fs
-            const dirs = fetch_blob.fs.dirs
-            const file_path = dirs.PATH + '/image.jpg'
-            var image_data = json.qr.split('data:image/jpg;base64,');
-            image_data = image_data[1];
-            RNFS.writeFile(file_path, image_data, 'base64')
-            .catch((error) =>{
-                alert(JSON.stringify(error)):
-            }):
+            var img = this.state.listImages[0]
+            var byteString = atob(img.split(',')[1]);
+            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            var blob = new Blob([ab], {type: mimeString});
+            FileSaver.saveAs(blob, "image.jpeg");
         }
         else if (this.state.downloadExt === "PNG") {
-            console.log("PNG")
+            var img = this.state.listImages[0]
+            var byteString = atob(img.split(',')[1]);
+            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            var blob = new Blob([ab], {type: mimeString});
+            FileSaver.saveAs(blob, "image.png");
         }
         else if (this.state.downloadExt === "TIFF") {
-            console.log("TIFF")
+            var img = this.state.listImages[0]
+            var byteString = atob(img.split(',')[1]);
+            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            var blob = new Blob([ab], {type: mimeString});
+            FileSaver.saveAs(blob, "image.tiff");
         }
         else {
             console.log("nope")
