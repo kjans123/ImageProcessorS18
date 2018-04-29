@@ -88,13 +88,15 @@ def process():
         img = img.split(',',1)
         print(img[0])
         img = img[1]
+        img = img.encode('utf-8')
+        print(img)
         print(type(img))
-        print(str(img[0:300]))
+        #print(str(img[0:300]))
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
-        img = encode_image_string('Output.txt')
-        print(str(img[0:300]))
+        #img = encode_image_string('Output.txt')
+        #print(str(img[0:300]))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
