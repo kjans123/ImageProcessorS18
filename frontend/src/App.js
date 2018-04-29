@@ -102,20 +102,55 @@ class App extends React.Component {
       super();
       this.state = {
           "userID": "",
+          "id": null,
           "errorText": "",
-          "processingTechnique": "",
           "currentImageString": "",
           "listImages": [],
+          "up": null,
+          "confirmMsg": "",
+          "processingTechnique": "",
+          "proc": null,
+          "postReady": "",
           "downloadExt": "",
           "downloadEnable": "",
           "imgStr": "",
-          "userOutput": "",
-          "confirmMsg": "",
-          "postReady": "",
-          "id": null,
-          "up": null,
-          "proc": null,
+          "userOutput": "",      
       };
+    }
+
+    //handles text field changes
+    //displays error message for inadequate submissions
+    onTextFieldChange = (event) => {
+        this.setState({"userID": event.target.value});
+        if (event.target.value.includes(" ")) {
+            this.setState({"errorText": "Invalid email: No spaces allowed"})
+        } else if (event.target.value.includes("@" && ".")) {
+            this.setState({"errorText": ""})
+            this.setState({"id": 1})
+        } else {
+            this.setState({"errorText": "Invalid email: example@address.com"})
+        }
+    }
+
+    //handles image uploads to dropzone and creates array of base64 strings
+    onUpload = (files) => {
+        console.log(files.length)
+        const listFiles = []
+        for (let i = 0; i<files.length; i++) {
+            const reader = new FileReader();
+            reader.readAsDataURL(files[i]);
+            reader.onloadend = () => {
+            this.setState({"currentImageString": reader.result});
+            listFiles.push(this.state.currentImageString);
+            this.setState({"listImages": listFiles})
+            console.log(this.state.listImages)
+            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            }
+            reader.onerror = (error) => {
+                this.setState({confirmMsg: "Oops. An upload error has occured."});
+            }
+        }
+        this.setState({"up": 1});
     }
 
     handleProcessChange = (event) => {
@@ -207,47 +242,13 @@ class App extends React.Component {
         }
     }
 
-    onTextFieldChange = (event) => {
-        this.setState({"userID": event.target.value});
-        if (event.target.value.includes(" ")) {
-            this.setState({"errorText": "Invalid email: No spaces allowed"})
-        } else if (event.target.value.includes("@" && ".")) {
-            this.setState({"errorText": ""})
-            this.setState({"id": 1})
-        } else {
-            this.setState({"errorText": "Invalid email: example@address.com"})
-        }
-    }
-
-    onUpload = (files) => {
-        console.log(files.length)
-        const listFiles = []
-        for (let i = 0; i<files.length; i++) {
-            const reader = new FileReader();
-            reader.readAsDataURL(files[i]);
-            reader.onloadend = () => {
-            this.setState({"currentImageString": reader.result});
-            listFiles.push(this.state.currentImageString);
-            this.setState({"listImages": listFiles})
-            console.log(this.state.listImages)
-            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
-            }
-            reader.onerror = (error) => {
-                this.setState({confirmMsg: "Oops. An upload error has occured."});
-            }
-        }
-        this.setState({"up": 1});
-    }
-
-
-
   render() {
     return (
       <body style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
               <Typography variant="title" color="inherit">
-                  Crunchwrap Pizza Image Processor
+                  Crunchwrap Pizza Image Processor &#127790;
               </Typography>
           </Toolbar>
       </AppBar>
