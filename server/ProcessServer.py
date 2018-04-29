@@ -49,8 +49,8 @@ def process():
     try:
         email = info["user_email"]
     except KeyError:
-        return jsonify("no email input"), 400
         print("No email input")
+        return jsonify("no email input"), 400
     check_email = Check_For_User(email)
     if check_email.user_exists is False:
         cu = create_user(email)
@@ -58,21 +58,20 @@ def process():
     try:
         pre_img = info["pre_b64_string"]
     except KeyError:
-        return jsonify("no pre_image input"), 400
         print("Please provide pre_image base64 string")
+        return jsonify("no pre_image input"), 400
     try:
         method = info["proc_method"]
     except KeyError:
-        return jsonify("no proc_method input"), 400
         print("no processing method selected")
-
+        return jsonify("no proc_method input"), 400
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
         isinstance(method, str)
     except TypeError:
-        return jsonify("email is not string"), 400
         print("Please provide information in string format!")
+        return jsonify("email is not string"), 400
     jpgList = glob.glob("/images"+str(email)+"/", "*.jpg")
     jpgCount = len(jpgList)
     current_time = datetime.datetime.now()
