@@ -84,10 +84,10 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
-        print(img)
-        text_file = open("Output.txt", "w")
-        text_file.write(img)
-        text_file.close()
+        img = img.split(',',1)
+        print img[0]
+        #print img[1]
+        img = img[1]
         img = img.encode('utf-8')
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
