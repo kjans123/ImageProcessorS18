@@ -114,7 +114,7 @@ class App extends React.Component {
           "downloadExt": "",
           "downloadEnable": "",
           "imgStr": "",
-          "userOutput": "",      
+          "userOutput": "",
       };
     }
 
