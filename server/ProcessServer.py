@@ -84,6 +84,7 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
+        img = img.encode('utf-8')
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -97,7 +98,6 @@ def process():
             iSave = save_image(email, jpgFileNum)
             iHisto = add_histo(email)
             # test
-            img = img.encode('utf-8')
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
