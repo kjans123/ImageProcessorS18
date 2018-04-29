@@ -89,7 +89,7 @@ def process():
         print(img[0])
         img = img[1]
         print(img[0:300])
-        img = base64.b32encode(img.encode('utf-8'))
+        img = base64.b64encode(img.encode('utf-8'))
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
@@ -105,7 +105,6 @@ def process():
                 #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iHisto = add_histo(email)
-            # test
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
