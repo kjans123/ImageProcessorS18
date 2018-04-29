@@ -59,7 +59,6 @@ def access_tmp():
     except ImportError:
         print("json package not found!")
         logging.warning("json package is not found!")
-   # try:
     with open(path, 'r') as infile:
         logging.info('Open json file in tmp folder')
         data = json.load(infile)
@@ -68,7 +67,3 @@ def access_tmp():
     dict_object = json.loads(data)
     logging.info('Return the dictionary')
     return dict_object
-# except FileNotFoundError:
-    #print("tmp/data.json is not found")
-    #logging.warning("tmp/data.json is not found. \
-                   # Try processing images again!")

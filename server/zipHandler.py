@@ -1,6 +1,7 @@
 import os
-from base64_conv_numpy import (encode_image_string, convert_image_to_np_array,
-convert_processed_np_array_to_base64)
+from base64_conv_numpy import (encode_image_string,
+                               convert_image_to_np_array,
+                               convert_processed_np_array_to_base64)
 import numpy as np
 import base64
 import zipfile
@@ -22,8 +23,9 @@ def b64_zip_to_b64_strings(b64_zip):
                         datefmt='%m/%d/%Y %I:%M:%S %p')
     try:
         import os
-        from base64_conv_numpy import (encode_image_string, convert_image_to_np_array,
-        convert_processed_np_array_to_base64)
+        from base64_conv_numpy import (encode_image_string,
+                                       convert_image_to_np_array,
+                                       convert_processed_np_array_to_base64)
         import base64
         import zipfile
         import shutil
@@ -55,6 +57,8 @@ def b64_zip_to_b64_strings(b64_zip):
                 list_of_b64_strings.append(str_imgString)
     logging.info("Done traversing. Appended b64 encoded files \
                  that ended with .jpg or .JPG")
+    os.remove('decoded.zip')
+    logging.info("Remove decoded.zip")
     shutil.rmtree('Temporary')
     logging.info("Remove directory Temporary")
     logging.info("Return the list of b64 strings")
@@ -79,8 +83,9 @@ def b64_strings_to_b64_zip(b64_strings, ext):
                         datefmt='%m/%d/%Y %I:%M:%S %p')
     try:
         import os
-        from base64_conv_numpy import (encode_image_string, convert_image_to_np_array,
-        convert_processed_np_array_to_base64)
+        from base64_conv_numpy import (encode_image_string,
+                                       convert_image_to_np_array,
+                                       convert_processed_np_array_to_base64)
         from checkListOfString import check_list_of_string as check_list
         import base64
         import zipfile
@@ -101,9 +106,7 @@ def b64_strings_to_b64_zip(b64_strings, ext):
         logging.info("Checked list of strings")
         for i, string in enumerate(b64_strings):
             image_out_name = 'image' + str(i) + ext
-            # in a better version, we would pass in a list with original image name
-            with open(os.path.join(temp_folder,image_out_name), 'wb') as img:
-                # may need to add the os.path.sep in front of path name
+            with open(os.path.join(temp_folder, image_out_name), 'wb') as img:
                 bytes_object = string.encode('utf-8')
                 img.write(base64.b64decode(bytes_object))
         logging.info("Cycled through image strings to create images")
@@ -115,7 +118,7 @@ def b64_strings_to_b64_zip(b64_strings, ext):
     zipWrite = zipfile.ZipFile(zfName, 'w')
     for root, dirs, files in os.walk(temp_folder):
         for f in files:
-            zipWrite.write(os.path.join(root,f))
+            zipWrite.write(os.path.join(root, f))
     logging.info('processed.zip created')
     zipWrite.close()
     shutil.rmtree(temp_folder)
