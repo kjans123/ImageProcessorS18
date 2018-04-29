@@ -72,6 +72,7 @@ def process():
         extension = info["file_type"]
     except KeyError:
         print("Please provide file_type")
+        return jsonify("no file type provided"), 400
     if extension not in ['.jpg', '.JPG', '.png', '.PNG', '.tif', '.TIF']:
         raise ValueError("Please provide a file extension of type \
                          .jpg, .png, or .tif")
