@@ -78,6 +78,7 @@ def process():
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
+        #nolonger list of string (yes this screw pep8 on purpose)
         isinstance(method, str)
     except TypeError:
         print("Please provide information in string format!")
@@ -105,12 +106,18 @@ def process():
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
         print(img[0])
-        #print (img[1])
         img = img[1]
-        img = base64.b64encode(img)
+        img = img.encode('utf-8')
         text_file = open("Output.txt", "w")
-        text_file.write(str(img))
+        str_img = img.decode('utf-8')
+        text_file.write(str_img)
         text_file.close()
+        #img = encode_image_string('Output.txt')
+        #print(str(img[0:300]))
+        with open("Output.txt", "r") as text_in:
+            text = text_in.read()
+        textBytes = text.encode('utf-8')
+        img = textBytes
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -123,7 +130,6 @@ def process():
                 #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iHisto = add_histo(email)
-            # test
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)

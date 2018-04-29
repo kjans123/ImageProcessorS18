@@ -72,22 +72,26 @@ def convert_image_to_np_array(base64image):
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
+        # test
         import base64
         import numpy as np
         import PIL
         from PIL import Image
+        import stat
         import os
+        from io import BytesIO
         if base64image is None or base64image == [] or base64image == "":
             logging.warning("base64 image string is EMPTY")
             raise ValueError("empty base64 string")
-        s = base64.b64decode(base64image)
-        with open('temp.JPG', 'wb') as f:
-            f.write(s)
-            f.close()
-            i = Image.open('temp.JPG')
-            a = np.asarray(i, dtype=np.float64)
-            a = np.true_divide(a, 255)
-        os.remove('temp.JPG')
+        #s = base64.b64decode(base64image)
+        #with open('temp.JPG', 'wb') as f:
+            #f.write(s)
+        #f.close()
+        #os.chmod('temp.JPG',stat.S_IRWXU)
+        i = Image.open(BytesIO(base64.b64decode(base64image)))
+        a = np.asarray(i, dtype=np.float64)
+        a = np.true_divide(a, 255)
+        #os.remove('temp.JPG')
         a_type = a.dtype
         shape_tuple = a.shape
         m = shape_tuple[0]
