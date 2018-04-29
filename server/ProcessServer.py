@@ -89,7 +89,7 @@ def process():
         print(img[0])
         #print (img[1])
         img = img[1]
-        img = base64.b32encode(img)
+        img = base64.b32encode(img.encode('utf-8'))
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
