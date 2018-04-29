@@ -94,6 +94,7 @@ def process():
         text_file.write(str(img))
         text_file.close()
         img = encode_image_string('Output.txt')
+        print(str(img[0:300]))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
