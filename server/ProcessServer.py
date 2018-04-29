@@ -90,12 +90,13 @@ def process():
         img = img[1]
         img = base64.b64encode(img.encode('utf-8'))
         print(type(img))
-        with open('test_hahahaha.jpg', 'wb') as img_in:
-            img_in.write(base64.b64decode(img))
+        #with open('test_hahahaha.jpg', 'wb') as img_in:
+            #img_in.write(base64.b64decode(img))
         print(str(img[0:300]))
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
+        img = encode_image_string('Output.txt')
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
