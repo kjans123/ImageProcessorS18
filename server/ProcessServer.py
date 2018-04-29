@@ -86,9 +86,9 @@ def process():
     for i, img in enumerate(pre_img):
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                # test 
-                os.makedirs(('/images/'+str(email)))
+                # test
                 os.chmod('/images/',stat.S_IWOTH)
+                os.makedirs(('/images/'+str(email)))
                 os.chmod(('/images/'+str(email)),stat.S_IWOTH)
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
