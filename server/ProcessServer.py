@@ -19,6 +19,7 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
+from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 import glob
 import logging
 
