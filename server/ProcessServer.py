@@ -85,7 +85,7 @@ def process():
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
-        print img[0]
+        print(img[0])
         #print img[1]
         img = img[1]
         img = img.encode('utf-8')
