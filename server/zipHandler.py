@@ -11,8 +11,10 @@ def b64_zip_to_b64_strings(b64_zip):
     """"Function that takes in a b64 encoded zip and outputs
        a list of b64 image strings
 
+    :param b64_zip: b64 encoded zip string
     :raises ImportError: raises error when missing the following:
                          os, base64_conv_numpy, base64, zipfile
+    :returns list_of_b64_strings: returns a list of b64 image strings
     """
     import logging
     logging.basicConfig(filename="back_end.log",
@@ -69,7 +71,7 @@ def b64_strings_to_b64_zip(b64_strings, ext):
                          are not found: os, base64_conv_numpy,
                          checkListOfString, base64, zipfile, shutil
     :raises TypeError: Error raised if b64_strings is not a list of strings
-    :returns -------:
+    :returns b64_proc_zip_string: Returns b64 encoded zip string
     """
     import logging
     logging.basicConfig(filename="back_end.log",
@@ -119,12 +121,9 @@ def b64_strings_to_b64_zip(b64_strings, ext):
     shutil.rmtree(temp_folder)
     logging.info('Temporary folder removed')
     b64_proc_zip = encode_image_string(zfName)
-    #with open(zfName, 'rb') as fin:
-     #   b64_proc_zip = base64.b64encode(fin)
     logging.info("zip file base64 encoded")
     b64_proc_zip_string = b64_proc_zip.decode('utf-8')
     logging.info("Convert b64 bytes of zip to string")
-    #os.remove(zfName)
-    #TEMPORARY COMMENT OUT
+    os.remove(zfName)
     logging.info("zip file deleted")
     return b64_proc_zip_string
