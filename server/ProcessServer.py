@@ -23,6 +23,7 @@ from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 import glob
 import logging
 import os
+import base64
 import stat
 
 app = Flask(__name__)
@@ -86,9 +87,9 @@ def process():
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
         print(img[0])
-        print (img[1])
+        #print (img[1])
         img = img[1]
-        img = img.encode('utf-8')
+        img = base64.b32encode(img)
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
