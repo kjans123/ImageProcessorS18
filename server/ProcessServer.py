@@ -71,6 +71,7 @@ def process():
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
+        #nolonger list of string (yes this screw pep8 on purpose)
         isinstance(method, str)
     except TypeError:
         print("Please provide information in string format!")
@@ -98,6 +99,10 @@ def process():
         text_file.close()
         #img = encode_image_string('Output.txt')
         #print(str(img[0:300]))
+        with open("Output.txt", "r") as text_in:
+            text = text_in.read()
+        textBytes = text.encode('utf-8')
+        img = textBytes
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
