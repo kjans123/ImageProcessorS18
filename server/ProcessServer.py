@@ -82,7 +82,7 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
-        if method == "histeq":
+        if method == "Histogram Equalization":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -115,7 +115,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "stretch":
+        elif method == "Contrast Stretching":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -149,7 +149,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "logcomp":
+        elif method == "Log Compression":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -182,7 +182,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "reverse":
+        elif method == "Reverse Video":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
