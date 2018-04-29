@@ -87,8 +87,8 @@ def process():
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
         print(img[0])
-        #print (img[1])
         img = img[1]
+        print(img[0:300])
         img = base64.b32encode(img.encode('utf-8'))
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
