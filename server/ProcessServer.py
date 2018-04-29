@@ -19,8 +19,11 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
+from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 import glob
 import logging
+import os
+import stat
 
 app = Flask(__name__)
 CORS(app)
@@ -48,8 +51,8 @@ def process():
     try:
         email = info["user_email"]
     except KeyError:
-        return jsonify("no email input"), 400
         print("No email input")
+        return jsonify("no email input"), 400
     check_email = Check_For_User(email)
     if check_email.user_exists is False:
         cu = create_user(email)
@@ -57,23 +60,23 @@ def process():
     try:
         pre_img = info["pre_b64_string"]
     except KeyError:
-        return jsonify("no pre_image input"), 400
         print("Please provide pre_image base64 string")
+        return jsonify("no pre_image input"), 400
     try:
         method = info["proc_method"]
     except KeyError:
-        return jsonify("no proc_method input"), 400
         print("no processing method selected")
-
+        return jsonify("no proc_method input"), 400
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
         isinstance(method, str)
     except TypeError:
-        return jsonify("email is not string"), 400
         print("Please provide information in string format!")
-    jpgList = glob.glob("/images"+str(email)+"/", "*.jpg")
+        return jsonify("email is not string"), 400
+    jpgList = glob.glob("/images"+str(email)+"/.*")
     jpgCount = len(jpgList)
+    print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
     processed_histograms = []
@@ -81,7 +84,12 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
-        if method == "histeq":
+        if method == "Histogram Equalization":
+            if jpgFileNum == 0:
+                # test 
+                os.makedirs(('/images/'+str(email)))
+                os.chmod('/images/',stat.S_IWOTH)
+                os.chmod(('/images/'+str(email)),stat.S_IWOTH)
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -114,7 +122,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "stretch":
+        elif method == "Contrast Stretching":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -148,7 +156,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "logcomp":
+        elif method == "Log Compression":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
@@ -181,7 +189,7 @@ def process():
                 }
                 make_tmp(new_info)
                 return jsonify(new_info)
-        elif method == "reverse":
+        elif method == "Reverse Video":
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
