@@ -86,12 +86,11 @@ def process():
     for i, img in enumerate(pre_img):
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                # test
                 os.chmod('images',stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
                 os.chmod(('images/'+str(email)),stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
-            filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             a=open(filename,'w')
             #with open(filename, "wb") as image_out:
                 #image_out.write(base64.b64decode(img))
