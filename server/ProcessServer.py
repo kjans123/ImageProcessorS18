@@ -69,6 +69,13 @@ def process():
         print("no processing method selected")
         return jsonify("no proc_method input"), 400
     try:
+        extension = info["file_type"]
+    except KeyError:
+        print("Please provide file_type")
+    if extension not in ['.jpg', '.JPG', '.png', '.PNG', '.tif', '.TIF']:
+        raise ValueError("Please provide a file extension of type \
+                         .jpg, .png, or .tif")
+    try:
         isinstance(email, str)
         check_list_of_string(pre_img)
         isinstance(method, str)
@@ -84,12 +91,23 @@ def process():
     pre_img_list = []
     pre_img_histograms = []
     jpgFileNum = jpgCount
+    ##Lee added code here
+    first_split = pre_img[0].split(',', 1)
+    header = first_split[0]
+    if 'zip' in header: #this is pseudo code
+        pre_img = b64_zip_to_b64_strings(first_split[1])
+    elif 'jpg' in header:
+        # do nothing. Apparently, if I leave this empty, pep8 throws a fit.
+        pre_img = pre_img
+    else:
+        raise ValueError("Input is not a b64 zip or jpg list!")
+    ##end Marianne addition
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
         print(img[0])
         #print (img[1])
         img = img[1]
-        img = base64.b32encode(img)
+        img = base64.b64encode(img)
         text_file = open("Output.txt", "w")
         text_file.write(str(img))
         text_file.close()
@@ -116,7 +134,27 @@ def process():
             processed_histograms.append(histogram_of_post_img)
             pre_img_histograms.append(histogram_of_pre_img)
             return_size = (str(m)+str(w) + ' pixels')
-            if i == len(pre_img) - 1:
+            if i == len(pre_img) - 1 and i > 0:
+                # we need to zip
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img_list,
+                    "post_b64_string": processed_list,
+                    "pre_histogram": pre_img_histograms,
+                    "post_histograms": processed_histograms,
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time),
+                    "pic_size": return_size,
+                    "b64_zip_out": zipped_list
+                }
+                make_tmp(new_info)
+                return jsonify(new_info)
+            elif i == len(pre_img) - 1 and i == 0:
+                # we don't need to zip. single image
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
                 new_info = {
@@ -157,7 +195,27 @@ def process():
             pre_img_histograms.append(histogram_of_pre_img)
             return_size = (str(m)+str(w) + ' pixels')
             return_size = (str(m)+str(w) + ' pixels')
-            if i == len(pre_img) - 1:
+            if i == len(pre_img) - 1 and i > 0:
+                # we need to zip
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img_list,
+                    "post_b64_string": processed_list,
+                    "pre_histogram": pre_img_histograms,
+                    "post_histograms": processed_histograms,
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time),
+                    "pic_size": return_size,
+                    "b64_zip_out": zipped_list
+                }
+                make_tmp(new_info)
+                return jsonify(new_info)
+            elif i == len(pre_img) - 1 and i == 0:
+                # we don't need to zip. single image
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
                 new_info = {
@@ -197,7 +255,27 @@ def process():
             processed_histograms.append(histogram_of_post_img)
             pre_img_histograms.append(histogram_of_pre_img)
             return_size = (str(m)+str(w) + ' pixels')
-            if i == len(pre_img) - 1:
+            if i == len(pre_img) - 1 and i > 0:
+                # we need to zip
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
+                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img_list,
+                    "post_b64_string": processed_list,
+                    "pre_histogram": pre_img_histograms,
+                    "post_histograms": processed_histograms,
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time),
+                    "pic_size": return_size,
+                    "b64_zip_out": zipped_list
+                }
+                make_tmp(new_info)
+                return jsonify(new_info)
+            elif i == len(pre_img) - 1 and i == 0:
+                # we don't need to zip. single image
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
                 new_info = {
@@ -237,10 +315,29 @@ def process():
             processed_histograms.append(histogram_of_post_img)
             pre_img_histograms.append(histogram_of_pre_img)
             return_size = (str(m)+str(w) + ' pixels')
-            if i == len(pre_img) - 1:
+            if i == len(pre_img) - 1 and i > 0:
+                # we need to zip
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                logging.info("Create json to be sent to frontend for preview")
+                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                new_info = {
+                    "user_email": email,
+                    "proc_method": method,
+                    "pre_b64_string": pre_img_list,
+                    "post_b64_string": processed_list,
+                    "pre_histogram": pre_img_histograms,
+                    "post_histograms": processed_histograms,
+                    "action_time": time2str(duration),
+                    "upload_time": time2str(current_time),
+                    "pic_size": return_size,
+                    "b64_zip_out": zipped_list
+                }
+                make_tmp(new_info)
+                return jsonify(new_info)
+            elif i == len(pre_img) - 1 and i == 0:
+                # we don't need to zip. single image
+                new_time = datetime.datetime.now()
+                duration = new_time - current_time
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
