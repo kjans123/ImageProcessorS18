@@ -9,6 +9,8 @@ from tmpFolderAction import make_tmp, access_tmp
 from base64_conv_numpy import encode_image_string
 from base64_conv_numpy import convert_image_to_np_array
 from base64_conv_numpy import convert_processed_np_array_to_base64
+from zipHandler import (b64_zip_to_b64_strings,
+                        b64_strings_to_b64_zip)
 from histo_equal import histo_equal
 from logCompression import logComp
 from reverseVideo import reverseVid
