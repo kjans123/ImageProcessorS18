@@ -22,6 +22,7 @@ from main import save_image
 from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 import glob
 import logging
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -83,6 +84,8 @@ def process():
     jpgFileNum = jpgCount
     for i, img in enumerate(pre_img):
         if method == "Histogram Equalization":
+            if jpgFileNum == 0:
+                os.makedirs('/images/'+str(email))
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             with open(filename, "wb") as image_out:
