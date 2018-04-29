@@ -23,6 +23,7 @@ from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 import glob
 import logging
 import os
+import stat
 
 app = Flask(__name__)
 CORS(app)
@@ -85,6 +86,8 @@ def process():
     for i, img in enumerate(pre_img):
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
+                os.chmod('/images/',stat.S_IWOTH)
+                os.chmod(('/images/'+str(email)),stat.S_IWOTH)
                 os.makedirs(('/images/'+str(email)))
             jpgFileNum = jpgFileNum + 1
             filename = '/images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
