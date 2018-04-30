@@ -109,13 +109,12 @@ def process():
         pre_img = pre_img
     else:
         raise ValueError("Input is not a b64 zip or jpg list!")
-    ##end Marianne addition
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
         img = img[1]
         print(type(img))
         print(img[0:200])
-        img = img.encode('ASCII')
+        img = img.encode('ascii')
         print(type(img))
         #img = base64.b64encode(img)
         print(str(img[0:200]))
