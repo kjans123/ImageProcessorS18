@@ -116,9 +116,9 @@ def process():
         img = img[1]
         print(type(img))
         print(img[0:200])
+        img = img.encode('utf-8')
         img = base64.b64encode(img)
         print(str(img[0:200]))
-        #img = img.encode('utf-8')
         #text_file = open("Output.txt", "w")
         #str_img = img.decode('utf-8')
         #text_file.write(str_img)
