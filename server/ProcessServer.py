@@ -78,7 +78,8 @@ def process():
         header = info["header"]
     except KeyError:
         print("no header string")
-        return jsonify("no header string"), 400
+        header = "jpeg"
+        #return jsonify("no header string"), 400
     if extension == 'JPEG':
         extension = '.jpg'
     elif extension == 'PNG':
