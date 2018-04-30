@@ -130,11 +130,12 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            hist_img64 = base64.b64encode(hist_img64).decode('ascii')
             processed_list.append(getHeader(extension) + str(hist_img64))
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
-            return_size = (str(m)+str(w) + ' pixels')
+            return_size = (str(m)+'X'+str(w) + ' pixels')
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
@@ -191,8 +192,7 @@ def process():
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
-            return_size = (str(m)+str(w) + ' pixels')
-            return_size = (str(m)+str(w) + ' pixels')
+            return_size = (str(m)+'X'+str(w) + ' pixels')
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
@@ -249,7 +249,7 @@ def process():
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
-            return_size = (str(m)+str(w) + ' pixels')
+            return_size = (str(m)+'X'+str(w) + ' pixels')
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
@@ -306,7 +306,7 @@ def process():
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
-            return_size = (str(m)+str(w) + ' pixels')
+            return_size = (str(m)+'X'+str(w) + ' pixels')
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
