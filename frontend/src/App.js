@@ -105,6 +105,7 @@ class App extends React.Component {
           "id": null,
           "errorText": "",
           "currentImageString": "",
+          "header": "",
           "listImages": [],
           "up": null,
           "confirmMsg": "",
@@ -142,9 +143,15 @@ class App extends React.Component {
             reader.readAsDataURL(files[i]);
             reader.onloadend = () => {
             this.setState({"currentImageString": reader.result.split(',')[1]});
+            this.setState({"header": reader.result.split(',')[0]});
+            this.setState({"wComma": this.state.header.concat(",")})
+            this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
+            console.log(this.state.wComma)
+            console.log(this.state.wHeader)
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
-            console.log(this.state.listImages)
+            console.log(this.state.listImages[0])
+            console.log(this.state.header)
             this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
             }
             reader.onerror = (error) => {
@@ -169,6 +176,7 @@ class App extends React.Component {
                 "pre_b64_string": this.state.listImages,
                 "proc_method": this.state.processingTechnique,
                 "file_type": this.state.downloadExt,
+                "header": this.state.header,
             }
             console.log(data)
             axios.post(urlString, data).then( (response) => {
@@ -387,7 +395,7 @@ class App extends React.Component {
                 </tr>
                 <tr>
                     <td>
-                        <img src= {this.state.imgStr} alt="..." height="200px" width="200px"/>
+                        <img src= {this.state.wHeader} alt="..." height="200px" width="200px"/>
                     </td>
                     <td>"To be added"</td>
                     <td>"To be added"</td>
