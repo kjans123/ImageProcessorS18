@@ -15,13 +15,14 @@ CORS(app)
 def process():
     r = request.get_json()
     pre_img = r["pre_b64_string"]
-    decoded_string = base64.b64decode(pre_img)
-    with open('temp2.jpg', 'wb') as f:
-        f.write(decoded_string)
-    f.close()
-    os.chmod('temp2.jpg', stat.S_IRWXU)
-    i = Image.open('temp2.jpg')
-    msgString = "IT WORKS!!"
+    for i in len(range(pre_img)):
+        decoded_string = base64.b64decode(pre_img[i])
+        with open('temp2.jpg', 'wb') as f:
+            f.write(decoded_string)
+        f.close()
+        os.chmod('temp2.jpg', stat.S_IRWXU)
+        i = Image.open('temp2.jpg')
+        msgString = "IT WORKS!!"
     return_dict = {
         "work_msg": msgString
                   }
