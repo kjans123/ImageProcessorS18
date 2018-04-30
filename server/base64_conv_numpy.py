@@ -84,6 +84,7 @@ def convert_image_to_np_array(base64image):
             logging.warning("base64 image string is EMPTY")
             raise ValueError("empty base64 string")
         s = base64.b64decode(base64image)
+        print("type of s:", type(s))
         with open('temp.JPG', 'wb') as f:
             f.write(s)
         f.close()
