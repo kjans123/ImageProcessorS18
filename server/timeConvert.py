@@ -9,7 +9,8 @@ def time2str(dt):
     :returns timeString: returns the converted datetime string
     """
     now = datetime.datetime.now()
-    if isinstance(dt, type(now)):
+    if (isinstance(dt, type(now)) is True or
+       isinstance(dt, datetime.timedelta) is True):
         return dt.isoformat()
     else:
         raise TypeError("Please provide datetime object!")
