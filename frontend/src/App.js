@@ -117,6 +117,7 @@ class App extends React.Component {
           "downloadEnable": "",
           //response variables
           "userEmail": "",
+          "procMethod": "",
           "uploadTime": "",
           "actionTime": "",
           "picSize": "",
@@ -157,8 +158,8 @@ class App extends React.Component {
             */
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
-            console.log(this.state.listImages[0])
-            console.log(this.state.header)
+            //console.log(this.state.listImages[0])
+            //console.log(this.state.header)
             this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
             }
             reader.onerror = (error) => {
@@ -185,19 +186,17 @@ class App extends React.Component {
                 "file_type": this.state.downloadExt,
                 "header": this.state.header,
             }
-            console.log(data)
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
                 var displayPictures = []
                 //data from backend for display
+                this.setState({"userEmail": response.data.user_email});
+                console.log(this.state.userEmail)
+                this.setState({"procMethod": response.data.proc_method});
+                this.setState({"uploadTime": response.data.upload_time});
+                this.setState({"actionTime": response.data.action_time});
+                this.setState({"picSize": response.data.pic_size});
                 /*
-                this.setState({userEmail: response.new_info.user_email});
-                // need info from previous processes
-                this.setState({uploadTime: response.new_info.upload_time});
-                this.setState({actionTime: response.new_info.action_time});
-                this.setState({picSize: response.new_info.pic_size});
-                //may not need this
-                this.setState({procMethod: response.new_info.proc_method});
                 //push for pic table display
                 for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
                 displayPictures.push({
@@ -406,7 +405,7 @@ class App extends React.Component {
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
-          Previous processes:
+          Previous processes: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
           <p style={styles.containerStyle} align="left">
             <table style={styles.tableStyle}>
