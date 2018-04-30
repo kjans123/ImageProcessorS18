@@ -28,7 +28,7 @@ var styles = {
         "backgroundColor": "#A1B70D",
     },
     "paperStyle": {
-        "height": "560px",
+        "height": "660px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -112,6 +112,7 @@ class App extends React.Component {
           "proc": null,
           "postReady": "",
           "downloadExt": "",
+          "ext": null,
           "downloadEnable": "",
           "imgStr": "",
           "userOutput": "",
@@ -140,7 +141,7 @@ class App extends React.Component {
             const reader = new FileReader();
             reader.readAsDataURL(files[i]);
             reader.onloadend = () => {
-            this.setState({"currentImageString": reader.result});
+            this.setState({"currentImageString": reader.result.split(',')[1]});
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
             console.log(this.state.listImages)
@@ -159,29 +160,39 @@ class App extends React.Component {
     }
 
     postData = () => {
-        var condition = this.state.id + this.state.up + this.state.proc
-        if (condition === 3) {
+        var condition = this.state.id + this.state.up + this.state.proc + this.state.ext
+        if (condition === 4) {
             this.setState({"postReady": ""})
             var urlString = "http://vcm-3594.vm.duke.edu:5000/process"
             var data = {
                 "user_email": this.state.userID,
                 "pre_b64_string": this.state.listImages,
                 "proc_method": this.state.processingTechnique,
+                "file_type": this.state.downloadExt,
             }
+            console.log(data)
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
-                this.setState({imgStr: response.data.image_string});
-                this.setState({userOutput: response.data.user_id});
-                console.log(this.state.imgStr)
+                /*this.setState({userEmail: response.new_info.user_email});
+                this.setState({procMethod: response.new_info.proc_method});
+                this.setState({preB64Str: response.new_info.pre_b64_string});
+                this.setState({postB64Str: response.new_info.post_b64_string});
+                this.setState({preHist: response.new_info.pre_histogram});
+                this.setState({postHist: response.new_info.post_histograms});
+                this.setState({actionTime: response.new_info.action_time});
+                this.setState({uploadTime: response.new_info.upload_time});
+                this.setState({picSize: response.new_info.pic_size});
+                console.log(this.state.imgStr)*/
             });
         }
         else {
-            this.setState({"postReady": "All three fields are required in order for image to be processed"})
+            this.setState({"postReady": "All four fields are required in order for image to be processed"})
         }
     }
 
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
+        this.setState({"ext": 1})
         if (this.state.downloadExt === "JPEG") {
             this.setState({"downloadEnable": false})
             console.log(this.state.downloadEnable)
@@ -198,6 +209,27 @@ class App extends React.Component {
     }
 
     onDownload = () => {
+        var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
+        axios.get(urlGetString).then( (response) => {
+                console.log(response);
+                this.setState({listOrNo: response.new_info.post_b64_string})
+                this.setState({singleImage: response.new_info.post_b64_string})
+                this.setState({zipImage: response.new_info.b64_zip_out})
+                if (this.state.listOrNo.length > 1) {
+                    this.setState({downloadEnable: ""});
+                    var img = this.state.listImages[0]
+                    var byteString = atob(img.split(',')[1]);
+                    var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+                    var ab = new ArrayBuffer(byteString.length);
+                    var ia = new Uint8Array(ab);
+                    for (var i = 0; i < byteString.length; i++) {
+                        ia[i] = byteString.charCodeAt(i);
+                    }
+                    var blob = new Blob([ab], {type: mimeString});
+                    FileSaver.saveAs(blob, "image.jpeg");
+                }
+
+            })
         if (this.state.downloadExt === "JPEG") {
             this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
@@ -235,7 +267,7 @@ class App extends React.Component {
                 ia[i] = byteString.charCodeAt(i);
             }
             var blob = new Blob([ab], {type: mimeString});
-            FileSaver.saveAs(blob, "image.tiff");
+            FileSaver.saveAs(blob, "image.tif");
         }
         else {
             this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
@@ -274,7 +306,13 @@ class App extends React.Component {
           <Dropzone
             accept="image/jpeg, .zip"
             onDrop={this.onUpload}>
-            <p><font color="white">Drop some files here, or click to select files <br></br>(.jpg and .zip only)</font></p>
+            <p>
+            <font color="white">
+            Drop some files here, or click to select files
+            <br></br>
+            (.jpg and .zip only)
+            </font>
+            </p>
             <img src= {this.state.confirmMsg} alt="" height="40%" width="80%"/>
           </Dropzone>
           </div>
@@ -297,6 +335,24 @@ class App extends React.Component {
               <MenuItem value={"Reverse Video"}>Reverse Video</MenuItem>
             </Select>
             </FormControl>
+          <div style={{"color": "#001A57"}}>
+          <br></br>
+          <p><b>What file type would you like to download your image as after processing?</b></p>
+          <FormControl style={styles.formStyle2}>
+          <InputLabel style={{"color": "#001A57"}}><b>File Type</b></InputLabel>
+          <Select
+              value={this.state.downloadExt}
+              onChange={this.handleFileChange}
+              >
+              <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"JPEG"}>JPEG</MenuItem>
+            <MenuItem value={"PNG"}>PNG</MenuItem>
+            <MenuItem value={"TIFF"}>TIFF</MenuItem>
+          </Select>
+          </FormControl>
+          </div>
           </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
@@ -317,7 +373,7 @@ class App extends React.Component {
           </Toolbar>
       </AppBar>
           <p style={styles.containerStyle} align="left">
-          User: <font color="#E83635">{this.state.userOutput}</font>
+          User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
           Previous processes:
           <br></br>
@@ -339,33 +395,16 @@ class App extends React.Component {
                 </tr>
             </table>
           </p>
-          Uploaded:
+          Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
-          Process Time:
+          Process Time: <font color="#E83635">{this.state.actionTime}</font>
           <br></br>
-          Size:
+          Size: <font color="#E83635">{this.state.picSize}</font>
           </p>
-          <div style={{"color": "#001A57"}}>
-          Download as: &ensp;
-            <FormControl style={styles.formStyle2}>
-            <InputLabel style={{"color": "#001A57"}}><b>File Type</b></InputLabel>
-            <Select
-                value={this.state.downloadExt}
-                onChange={this.handleFileChange}
-                >
-                <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"JPEG"}>JPEG</MenuItem>
-              <MenuItem value={"PNG"}>PNG</MenuItem>
-              <MenuItem value={"TIFF"}>TIFF</MenuItem>
-            </Select>
-            </FormControl>
-          </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
               onClick={this.onDownload}>
-              Download
+              Download Images
           </Button>
           <div style={styles.errorStyle}>
             {this.state.downloadEnable}
