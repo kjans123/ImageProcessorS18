@@ -130,6 +130,7 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            hist_img64 = str(hist_img64)
             hist_img64 = hist_img64.encode('utf-8')
             hist_img64 = base64.b64encode(hist_img64).decode('utf-8')
             processed_list.append(getHeader(extension) + str(hist_img64))
