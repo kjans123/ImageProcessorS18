@@ -49,7 +49,7 @@ def process():
     logging.basicConfig(filename='back_end.log', format='%(asctime)s \
     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info("Begin app route to /process")
-    info = request.json 
+    info = request.json
     try:
         email = info["user_email"]
     except KeyError:
@@ -74,6 +74,11 @@ def process():
     except KeyError:
         print("Please provide file_type")
         return jsonify("no file type provided"), 400
+    try:
+        header = info["header"]
+    except KeyError:
+        print("no header string")
+        return jsonify("no header string"), 400
     if extension == 'JPEG':
         extension = '.jpg'
     elif extension == 'PNG':
@@ -99,26 +104,23 @@ def process():
     pre_img_list = []
     pre_img_histograms = []
     jpgFileNum = jpgCount
-    ##Lee added code here
-    first_split = pre_img[0].split(',', 1)
-    header = first_split[0]
-    if 'zip' in header: #this is pseudo code
-        pre_img = b64_zip_to_b64_strings(first_split[1])
+    if 'zip' in header:
+        pre_img = b64_zip_to_b64_strings(pre_img)
     elif 'jpeg' in header:
-        # do nothing. Apparently, if I leave this empty, pep8 throws a fit.
         pre_img = pre_img
     else:
         raise ValueError("Input is not a b64 zip or jpg list!")
-    for i, img in enumerate(pre_img):
-        img = img.split(',',1)
-        img = img[1]
-        print(type(img))
-        print(img[0:200])
-        print(img[-1])
+    for i in range(len(pre_img)):
+        img = pre_img[i]
+        #img = img.split(',',1)
+        #img = img[1]
+        #print(type(img))
+        #print(img[0:200])
+        #print(img[-1])
         #img = img.encode('ascii')
-        print(type(img))
+        #print(type(img))
         #img = base64.b64encode(img)
-        print(str(img[0:200]))
+        #print(str(img[0:200]))
         #text_file = open("Output.txt", "w")
         #str_img = img.decode('utf-8')
         #text_file.write(str_img)
