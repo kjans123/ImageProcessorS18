@@ -115,6 +115,7 @@ def process():
         #print(img[0])
         img = img[1]
         print(type(img))
+        print(img[0:200])
         #img = img.encode('utf-8')
         #text_file = open("Output.txt", "w")
         #str_img = img.decode('utf-8')
