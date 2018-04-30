@@ -73,9 +73,14 @@ def process():
     except KeyError:
         print("Please provide file_type")
         return jsonify("no file type provided"), 400
-    if extension not in ['.jpg', '.JPG', '.png', '.PNG', '.tif', '.TIF']:
-        raise ValueError("Please provide a file extension of type \
-                         .jpg, .png, or .tif")
+    if extension == 'JPEG':
+        extension = '.jpg'
+    elif extension == 'PNG':
+        extension == '.png'
+    elif extension == 'TIFF':
+        extension == '.tif'
+    else:
+        raise ValueError("Did not select an appropriate extension!")
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
