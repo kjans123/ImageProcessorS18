@@ -149,7 +149,7 @@ def process():
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(img)
             histogram_of_pre_img = create_histo(imgArray)
-            histogram_of_post_img = create_histo(hist_equal_image)
+            histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + img)
