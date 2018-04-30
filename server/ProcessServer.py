@@ -108,11 +108,13 @@ def process():
         #pre_img = b64_zip_to_b64_strings(pre_img)
         pass
     elif 'jpeg' in header:
-        pre_img = pre_img
+        pass
     else:
         raise ValueError("Input is not a b64 zip or jpg list!")
     for i in range(len(pre_img)):
         img = pre_img[i]
+        print(type(img))
+        print(img[0:200])
         #img = img.split(',',1)
         #img = img[1]
         #print(type(img))
