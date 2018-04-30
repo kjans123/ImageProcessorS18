@@ -101,10 +101,9 @@ def process():
     ##Lee added code here
     first_split = pre_img[0].split(',', 1)
     header = first_split[0]
-    print(header)
     if 'zip' in header: #this is pseudo code
         pre_img = b64_zip_to_b64_strings(first_split[1])
-    elif 'jpg' in header:
+    elif 'jpeg' in header:
         # do nothing. Apparently, if I leave this empty, pep8 throws a fit.
         pre_img = pre_img
     else:
