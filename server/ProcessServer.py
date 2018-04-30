@@ -131,6 +131,8 @@ def process():
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             hist_img64 = str(hist_img64)
+            hist_img64 = hist_img64[2:]
+            hist_img64 = hist_img64[:-1]
             print(hist_img64[0:100])
             # hist_img64 = hist_img64.encode('utf-8')
             # hist_img64 = base64.b64encode(hist_img64).decode('utf-8')
