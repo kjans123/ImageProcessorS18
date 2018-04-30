@@ -105,7 +105,7 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     if 'zip' in header:
-        #pre_img = b64_zip_to_b64_strings(pre_img)
+        pre_img = b64_zip_to_b64_strings(pre_img)
         pass
     elif 'jpeg' in header:
         pass
@@ -113,6 +113,7 @@ def process():
         raise ValueError("Input is not a b64 zip or jpg list!")
     for i in range(len(pre_img)):
         img = pre_img[i]
+        print(img[0:100])
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
