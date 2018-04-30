@@ -13,9 +13,10 @@ CORS(app)
 
 @app.route("/process", methods=["POST"])
 def process():
+    # r
     r = request.get_json()
     pre_img = r["pre_b64_string"]
-    for i in len(range(pre_img)):
+    for i in range(len(pre_img)):
         decoded_string = base64.b64decode(pre_img[i])
         with open('temp2.jpg', 'wb') as f:
             f.write(decoded_string)
