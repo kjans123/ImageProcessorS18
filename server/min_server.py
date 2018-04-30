@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-# from flask_cors import CORS
+from flask_cors import CORS
 import base64
 import numpy as np
 import PIL
@@ -8,7 +8,7 @@ import stat
 import os
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 
 @app.route("/process", methods=["POST"])
