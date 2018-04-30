@@ -146,19 +146,17 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
             elif i == len(pre_img) - 1 and i == 0:
                 # we don't need to zip. single image
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                print(duration)
-                print(str(duration))
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -171,7 +169,7 @@ def process():
                     "pic_size": return_size
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
         elif method == "Contrast Stretching":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -206,13 +204,13 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
             elif i == len(pre_img) - 1 and i == 0:
                 # we don't need to zip. single image
                 new_time = datetime.datetime.now()
@@ -224,12 +222,12 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
         elif method == "Log Compression":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -263,13 +261,13 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
             elif i == len(pre_img) - 1 and i == 0:
                 # we don't need to zip. single image
                 new_time = datetime.datetime.now()
@@ -281,12 +279,12 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
         elif method == "Reverse Video":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -320,13 +318,13 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
             elif i == len(pre_img) - 1 and i == 0:
                 # we don't need to zip. single image
                 new_time = datetime.datetime.now()
@@ -338,12 +336,12 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
                 make_tmp(new_info)
-                return jsonify(new_info)
+                return jsonify(new_info),200
 
 
 @app.route("/download", methods=["GET"])
