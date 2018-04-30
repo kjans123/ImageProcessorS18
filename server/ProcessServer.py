@@ -49,7 +49,7 @@ def process():
     logging.basicConfig(filename='back_end.log', format='%(asctime)s \
     %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info("Begin app route to /process")
-    info = request.get_json()
+    info = request.json 
     try:
         email = info["user_email"]
     except KeyError:
