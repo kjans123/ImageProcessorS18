@@ -78,8 +78,7 @@ def process():
         header = info["header"]
     except KeyError:
         print("no header string")
-        header = "jpeg"
-        #return jsonify("no header string"), 400
+        return jsonify("no header string"), 400
     if extension == 'JPEG':
         extension = '.jpg'
     elif extension == 'PNG':
@@ -148,14 +147,14 @@ def process():
             iSave = save_image(email, jpgFileNum)
             iHisto = add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
-            #hist_image = histo_equal(imgArray)
-            #histogram_of_pre_img = create_histo(imgArray)
-            #histogram_of_post_img = create_histo(hist_equal_image)
-            #hist_img64 = convert_processed_np_array_to_base64(hist_image)
-            #processed_list.append(getHeader(extension) + hist_img64)
-            pre_img_list.append(getHeader(extension) + pre_img)
-            #processed_histograms.append(getHeader() + histogram_of_post_img)
-            #pre_img_histograms.append(getHeader() + histogram_of_pre_img)
+            hist_image = histo_equal(img)
+            histogram_of_pre_img = create_histo(imgArray)
+            histogram_of_post_img = create_histo(hist_equal_image)
+            hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            processed_list.append(getHeader(extension) + hist_img64)
+            pre_img_list.append(getHeader(extension) + img)
+            processed_histograms.append(getHeader() + histogram_of_post_img)
+            pre_img_histograms.append(getHeader() + histogram_of_pre_img)
             return_size = (str(m)+str(w) + ' pixels')
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
