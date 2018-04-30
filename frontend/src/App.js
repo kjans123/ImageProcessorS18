@@ -115,8 +115,11 @@ class App extends React.Component {
           "downloadExt": "",
           "ext": null,
           "downloadEnable": "",
-          "imgStr": "",
-          "userOutput": "",
+          //response variables
+          "userEmail": "",
+          "uploadTime": "",
+          "actionTime": "",
+          "picSize": "",
           "outputTable": [],
       };
     }
@@ -145,10 +148,13 @@ class App extends React.Component {
             reader.onloadend = () => {
             this.setState({"currentImageString": reader.result.split(',')[1]});
             this.setState({"header": reader.result.split(',')[0]});
+            //will need header for output
+            /*
             this.setState({"wComma": this.state.header.concat(",")})
             this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
             console.log(this.state.wComma)
             console.log(this.state.wHeader)
+            */
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
             console.log(this.state.listImages[0])
