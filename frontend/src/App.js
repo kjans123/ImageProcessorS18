@@ -117,6 +117,7 @@ class App extends React.Component {
           "downloadEnable": "",
           "imgStr": "",
           "userOutput": "",
+          "outputTable": [],
       };
     }
 
@@ -181,16 +182,32 @@ class App extends React.Component {
             console.log(data)
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
-                /*this.setState({userEmail: response.new_info.user_email});
-                this.setState({procMethod: response.new_info.proc_method});
-                this.setState({preB64Str: response.new_info.pre_b64_string});
-                this.setState({postB64Str: response.new_info.post_b64_string});
-                this.setState({preHist: response.new_info.pre_histogram});
-                this.setState({postHist: response.new_info.post_histograms});
-                this.setState({actionTime: response.new_info.action_time});
+                var displayPictures = []
+                //data from backend for display
+                /*
+                this.setState({userEmail: response.new_info.user_email});
+                // need info from previous processes
                 this.setState({uploadTime: response.new_info.upload_time});
+                this.setState({actionTime: response.new_info.action_time});
                 this.setState({picSize: response.new_info.pic_size});
-                console.log(this.state.imgStr)*/
+                //may not need this
+                this.setState({procMethod: response.new_info.proc_method});
+                //push for pic table display
+                for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
+                displayPictures.push({
+                    "pre": response.new_info.pre_b64_string[i],
+                    "preHist": response.new_info.pre_histogram[i],
+                    "post": response.new_info.post_b64_string[i],
+                    "postHist": response.new_info.post_histograms[i]
+                });
+                console.log(displayPictures)
+                this.setState({"outputTable": displayPictures})
+            }
+                this.setState({preB64Str: response.new_info.pre_b64_string});
+                this.setState({preHist: response.new_info.pre_histogram});
+                this.setState({postB64Str: response.new_info.post_b64_string});
+                this.setState({postHist: response.new_info.post_histograms});
+                */
             });
         }
         else {
@@ -393,14 +410,18 @@ class App extends React.Component {
                     <th>Processed Image</th>
                     <th>Histogram</th>
                 </tr>
-                <tr>
-                    <td>
-                        <img src= {this.state.wHeader} alt="..." height="200px" width="200px"/>
-                    </td>
-                    <td>"To be added"</td>
-                    <td>"To be added"</td>
-                    <td>"To be added"</td>
-                </tr>
+                /*
+                {this.state.outputTable.map(e =>{
+                    return(
+                        <tr>
+                            <td><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.post} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                        </tr>
+                    );
+                })}
+                */
             </table>
           </p>
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
