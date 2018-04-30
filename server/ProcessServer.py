@@ -113,27 +113,6 @@ def process():
         raise ValueError("Input is not a b64 zip or jpg list!")
     for i in range(len(pre_img)):
         img = pre_img[i]
-        print(type(img))
-        print(img[0:200])
-        #img = img.split(',',1)
-        #img = img[1]
-        #print(type(img))
-        #print(img[0:200])
-        #print(img[-1])
-        #img = img.encode('ascii')
-        #print(type(img))
-        #img = base64.b64encode(img)
-        #print(str(img[0:200]))
-        #text_file = open("Output.txt", "w")
-        #str_img = img.decode('utf-8')
-        #text_file.write(str_img)
-        #text_file.close()
-        #img = encode_image_string('Output.txt')
-        #print(str(img[0:300]))
-        #with open("Output.txt", "r") as text_in:
-            #text = text_in.read()
-        #textBytes = text.encode('utf-8')
-        #img = textBytes
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -141,9 +120,8 @@ def process():
                 os.chmod(('images/'+str(email)),stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-            a=open(filename,'w')
-            #with open(filename, "wb") as image_out:
-                #image_out.write(base64.b64decode(img))
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iHisto = add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
@@ -179,6 +157,8 @@ def process():
                 # we don't need to zip. single image
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
+                print(duration)
+                print(type(duration))
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -193,17 +173,14 @@ def process():
                 make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "Contrast Stretching":
+            if jpgFileNum == 0:
+                os.chmod('images',stat.S_IRWXU)
+                os.makedirs(('images/'+str(email)))
+                os.chmod(('images/'+str(email)),stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
-            if method == "Histogram Equalization":
-                if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
-                    os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
-                jpgFileNum = jpgFileNum + 1
-                filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
+            filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iContr = add_contr(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
@@ -254,17 +231,14 @@ def process():
                 make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "Log Compression":
+            if jpgFileNum == 0:
+                os.chmod('images',stat.S_IRWXU)
+                os.makedirs(('images/'+str(email)))
+                os.chmod(('images/'+str(email)),stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
-            if method == "Histogram Equalization":
-                if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
-                    os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
-                jpgFileNum = jpgFileNum + 1
-                filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
+            filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iLog = add_log(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
@@ -314,17 +288,14 @@ def process():
                 make_tmp(new_info)
                 return jsonify(new_info)
         elif method == "Reverse Video":
+            if jpgFileNum == 0:
+                os.chmod('images',stat.S_IRWXU)
+                os.makedirs(('images/'+str(email)))
+                os.chmod(('images/'+str(email)),stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
-            if method == "Histogram Equalization":
-                if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
-                    os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
-                jpgFileNum = jpgFileNum + 1
-                filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
+            filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            with open(filename, "wb") as image_out:
+                image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
             iRev = add_rever(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
