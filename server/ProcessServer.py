@@ -112,19 +112,20 @@ def process():
     ##end Marianne addition
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
-        print(img[0])
+        #print(img[0])
         img = img[1]
-        img = img.encode('utf-8')
-        text_file = open("Output.txt", "w")
-        str_img = img.decode('utf-8')
-        text_file.write(str_img)
-        text_file.close()
+        print(type(img))
+        #img = img.encode('utf-8')
+        #text_file = open("Output.txt", "w")
+        #str_img = img.decode('utf-8')
+        #text_file.write(str_img)
+        #text_file.close()
         #img = encode_image_string('Output.txt')
         #print(str(img[0:300]))
-        with open("Output.txt", "r") as text_in:
-            text = text_in.read()
-        textBytes = text.encode('utf-8')
-        img = textBytes
+        #with open("Output.txt", "r") as text_in:
+            #text = text_in.read()
+        #textBytes = text.encode('utf-8')
+        #img = textBytes
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
