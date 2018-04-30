@@ -112,11 +112,10 @@ def process():
     ##end Marianne addition
     for i, img in enumerate(pre_img):
         img = img.split(',',1)
-        #print(img[0])
         img = img[1]
         print(type(img))
         print(img[0:200])
-        img = img.encode('utf-8')
+        img = img.encode('ASCII')
         img = base64.b64encode(img)
         print(str(img[0:200]))
         #text_file = open("Output.txt", "w")
