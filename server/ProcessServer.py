@@ -89,7 +89,7 @@ def process():
         raise ValueError("Did not select an appropriate extension!")
     try:
         isinstance(email, str)
-        check_list_of_string(pre_img)
+        #check_list_of_string(pre_img)
         #nolonger list of string (yes this screw pep8 on purpose)
         isinstance(method, str)
     except TypeError:
@@ -105,7 +105,8 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     if 'zip' in header:
-        pre_img = b64_zip_to_b64_strings(pre_img)
+        #pre_img = b64_zip_to_b64_strings(pre_img)
+        pass
     elif 'jpeg' in header:
         pre_img = pre_img
     else:
