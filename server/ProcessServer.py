@@ -158,7 +158,7 @@ def process():
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
                 print(duration)
-                print(type(duration))
+                print(str(duration))
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -166,7 +166,7 @@ def process():
                     "post_b64_string": processed_list,
                     "pre_histogram": pre_img_histograms,
                     "post_histograms": processed_histograms,
-                    "action_time": time2str(duration),
+                    "action_time": str(duration),
                     "upload_time": time2str(current_time),
                     "pic_size": return_size
                 }
