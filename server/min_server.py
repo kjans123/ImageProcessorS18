@@ -22,6 +22,7 @@ def process():
     os.chmod('temp2.jpg', stat.S_IRWXU)
     i = Image.open('temp2.jpg')
     msgString = "IT WORKS!!"
+    print(msgString)
     return_dict = {
         "work_msg": msgString
                   }
