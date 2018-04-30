@@ -114,7 +114,8 @@ def process():
         img = img[1]
         print(type(img))
         print(img[0:200])
-        img = img.encode('ascii')
+        print(img[-1])
+        #img = img.encode('ascii')
         print(type(img))
         #img = base64.b64encode(img)
         print(str(img[0:200]))
