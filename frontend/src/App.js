@@ -200,14 +200,15 @@ class App extends React.Component {
                 //push for pic table display
                 for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
                 displayPictures.push({
-                    "pre": response.new_info.pre_b64_string[i],
-                    "preHist": response.new_info.pre_histogram[i],
-                    "post": response.new_info.post_b64_string[i],
-                    "postHist": response.new_info.post_histograms[i]
+                    "pre": response.data.pre_b64_string[i],
+                    "preHist": response.data.pre_histogram[i],
+                    "post": response.data.post_b64_string[i],
+                    "postHist": response.data.post_histograms[i]
                 });
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
             }
+                //hopefully won't need this if for loop works
                 this.setState({preB64Str: response.new_info.pre_b64_string});
                 this.setState({preHist: response.new_info.pre_histogram});
                 this.setState({postB64Str: response.new_info.post_b64_string});
