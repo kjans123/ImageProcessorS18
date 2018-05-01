@@ -37,7 +37,7 @@ def b64_zip_to_b64_strings(b64_zip):
     with open('decoded.zip', 'wb') as zf:
         # test
         # bytes_b64_zip = b64_zip.encode('utf-8')
-        print('zip: '+ b64_zip)
+        print('zip: '+ b64_zip[0:100])
         zf.write(base64.b64decode(b64_zip))
         logging.info("File called decoded.zip was created.")
     zip_ref = zipfile.ZipFile('decoded.zip', 'r')
@@ -67,6 +67,7 @@ def b64_zip_to_b64_strings(b64_zip):
     shutil.rmtree('Temporary')
     logging.info("Remove directory Temporary")
     logging.info("Return the list of b64 strings")
+    print(len(list_of_b64_strings))
     return list_of_b64_strings
 
 
