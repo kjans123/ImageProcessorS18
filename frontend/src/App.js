@@ -209,16 +209,10 @@ class App extends React.Component {
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
             }
-            *//*
-                this.setState({preB64Str: response.data.pre_b64_string[0]});
-
-                this.setState({preHist: response.data.pre_histogram[0]});
-                */
+            */
                 this.setState({postB64Str: response.data.post_b64_string[0]});
                 console.log(this.state.postB64Str)
-                /*
-                this.setState({postHist: response.data.post_histograms[0]});
-                */
+
             });
         }
         else {
