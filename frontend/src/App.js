@@ -69,7 +69,6 @@ var styles = {
         "color": "#001A57",
     },
     "tableStyle": {
-        "padding": "1em",
         "color": "#001A57",
     },
     "formStyle": {
@@ -196,14 +195,14 @@ class App extends React.Component {
                 this.setState({"procMethod": response.data.proc_method});
                 this.setState({"uploadTime": response.data.upload_time});
                 this.setState({"actionTime": response.data.action_time});
-                this.setState({"picSize": response.data.pic_size});
                 //push for pic table display
                 for (let i=0; i < response.data.pre_b64_string.length; i++) {
                 displayPictures.push({
                     "pre": response.data.pre_b64_string[i],
                     "preHist": response.data.pre_histogram[i],
                     "post": response.data.post_b64_string[i],
-                    "postHist": response.data.post_histograms[i]
+                    "postHist": response.data.post_histograms[i],
+                    "size": response.data.pic_size[i],
                 });
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
@@ -409,6 +408,7 @@ class App extends React.Component {
                     <th>Histogram</th>
                     <th>Processed Image</th>
                     <th>Histogram</th>
+                    <th>Picture Size</th>
                 </tr>
                 {this.state.outputTable.map(e =>{
                     return(
@@ -417,6 +417,7 @@ class App extends React.Component {
                             <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
                             <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
                             <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><font color="#E83635" size="3">{e.size}</font></td>
                         </tr>
                     );
                 })}
