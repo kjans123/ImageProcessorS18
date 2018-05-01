@@ -80,12 +80,13 @@ def process():
     except KeyError:
         print("no header string")
         return jsonify("no header string"), 400
+    print(extension)
     if extension == 'JPEG':
         extension = '.jpg'
     elif extension == 'PNG':
-        extension == '.png'
+        extension = '.png'
     elif extension == 'TIFF':
-        extension == '.tif'
+        extension = '.tif'
     else:
         raise ValueError("Did not select an appropriate extension!")
     try:
@@ -134,6 +135,7 @@ def process():
             hist_img64 = bytes_to_string(hist_img64)
             histogram_of_pre_img = bytes_to_string(histogram_of_pre_img)
             histogram_of_post_img = bytes_to_string (histogram_of_post_img)
+            print(extension)
             processed_list.append(getHeader(extension) + str(hist_img64))
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
