@@ -97,6 +97,10 @@ def process():
     else:
         print("Please provide information in string format!")
         return jsonify("Please provide information in string format!"), 400
+    if os.path.exists("images/"):
+        pass
+    else:
+        os.mkdir("images/")
     jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = len(jpgList)
     current_time = datetime.datetime.now()
