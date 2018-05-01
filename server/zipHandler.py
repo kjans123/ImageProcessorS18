@@ -107,8 +107,8 @@ def b64_strings_to_b64_zip(b64_strings, ext):
         for i, string in enumerate(b64_strings):
             image_out_name = 'image' + str(i) + ext
             with open(os.path.join(temp_folder, image_out_name), 'wb') as img:
-                bytes_object = string.encode('utf-8')
-                img.write(base64.b64decode(bytes_object))
+                #bytes_object = string.encode('utf-8')
+                img.write(base64.b64decode(string))
         logging.info("Cycled through image strings to create images")
     else:
         msg = "Please provide a list of strings"
