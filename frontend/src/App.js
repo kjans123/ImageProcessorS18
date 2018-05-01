@@ -28,7 +28,7 @@ var styles = {
         "backgroundColor": "#A1B70D",
     },
     "paperStyle": {
-        "height": "560px",
+        "height": "660px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -105,6 +105,7 @@ class App extends React.Component {
           "id": null,
           "errorText": "",
           "currentImageString": "",
+          "header": "",
           "listImages": [],
           "up": null,
           "confirmMsg": "",
@@ -112,9 +113,16 @@ class App extends React.Component {
           "proc": null,
           "postReady": "",
           "downloadExt": "",
+          "ext": null,
           "downloadEnable": "",
-          "imgStr": "",
-          "userOutput": "",      
+          //response variables
+          "userEmail": "",
+          "procMethod": "",
+          "uploadTime": "",
+          "actionTime": "",
+          "picSize": "",
+          "outputTable": [],
+          "postB64Str": null,
       };
     }
 
@@ -140,10 +148,19 @@ class App extends React.Component {
             const reader = new FileReader();
             reader.readAsDataURL(files[i]);
             reader.onloadend = () => {
-            this.setState({"currentImageString": reader.result});
+            this.setState({"currentImageString": reader.result.split(',')[1]});
+            this.setState({"header": reader.result.split(',')[0]});
+            //will need header for output
+            /*
+            this.setState({"wComma": this.state.header.concat(",")})
+            this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
+            console.log(this.state.wComma)
+            console.log(this.state.wHeader)
+            */
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
-            console.log(this.state.listImages)
+            //console.log(this.state.listImages[0])
+            //console.log(this.state.header)
             this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
             }
             reader.onerror = (error) => {
@@ -159,29 +176,53 @@ class App extends React.Component {
     }
 
     postData = () => {
-        var condition = this.state.id + this.state.up + this.state.proc
-        if (condition === 3) {
+        var condition = this.state.id + this.state.up + this.state.proc + this.state.ext
+        if (condition === 4) {
             this.setState({"postReady": ""})
             var urlString = "http://vcm-3594.vm.duke.edu:5000/process"
             var data = {
                 "user_email": this.state.userID,
                 "pre_b64_string": this.state.listImages,
                 "proc_method": this.state.processingTechnique,
+                "file_type": this.state.downloadExt,
+                "header": this.state.header,
             }
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
-                this.setState({imgStr: response.data.image_string});
-                this.setState({userOutput: response.data.user_id});
-                console.log(this.state.imgStr)
+                var displayPictures = []
+                //data from backend for display
+                this.setState({"userEmail": response.data.user_email});
+                console.log(this.state.userEmail)
+                this.setState({"procMethod": response.data.proc_method});
+                this.setState({"uploadTime": response.data.upload_time});
+                this.setState({"actionTime": response.data.action_time});
+                this.setState({"picSize": response.data.pic_size});
+                /*
+                //push for pic table display
+                for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
+                displayPictures.push({
+                    "pre": response.data.pre_b64_string[i],
+                    "preHist": response.data.pre_histogram[i],
+                    "post": response.data.post_b64_string[i],
+                    "postHist": response.data.post_histograms[i]
+                });
+                console.log(displayPictures)
+                this.setState({"outputTable": displayPictures})
+            }
+            */
+                this.setState({postB64Str: response.data.post_b64_string[0]});
+                console.log(this.state.postB64Str)
+
             });
         }
         else {
-            this.setState({"postReady": "All three fields are required in order for image to be processed"})
+            this.setState({"postReady": "All four fields are required in order for image to be processed"})
         }
     }
 
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
+        this.setState({"ext": 1})
         if (this.state.downloadExt === "JPEG") {
             this.setState({"downloadEnable": false})
             console.log(this.state.downloadEnable)
@@ -198,6 +239,27 @@ class App extends React.Component {
     }
 
     onDownload = () => {
+        var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
+        axios.get(urlGetString).then( (response) => {
+                console.log(response);
+                this.setState({listOrNo: response.new_info.post_b64_string})
+                this.setState({singleImage: response.new_info.post_b64_string})
+                this.setState({zipImage: response.new_info.b64_zip_out})
+                if (this.state.listOrNo.length > 1) {
+                    this.setState({downloadEnable: ""});
+                    var img = this.state.listImages[0]
+                    var byteString = atob(img.split(',')[1]);
+                    var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+                    var ab = new ArrayBuffer(byteString.length);
+                    var ia = new Uint8Array(ab);
+                    for (var i = 0; i < byteString.length; i++) {
+                        ia[i] = byteString.charCodeAt(i);
+                    }
+                    var blob = new Blob([ab], {type: mimeString});
+                    FileSaver.saveAs(blob, "image.jpeg");
+                }
+
+            })
         if (this.state.downloadExt === "JPEG") {
             this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
@@ -235,7 +297,7 @@ class App extends React.Component {
                 ia[i] = byteString.charCodeAt(i);
             }
             var blob = new Blob([ab], {type: mimeString});
-            FileSaver.saveAs(blob, "image.tiff");
+            FileSaver.saveAs(blob, "image.tif");
         }
         else {
             this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
@@ -274,7 +336,13 @@ class App extends React.Component {
           <Dropzone
             accept="image/jpeg, .zip"
             onDrop={this.onUpload}>
-            <p><font color="white">Drop some files here, or click to select files <br></br>(.jpg and .zip only)</font></p>
+            <p>
+            <font color="white">
+            Drop some files here, or click to select files
+            <br></br>
+            (.jpg and .zip only)
+            </font>
+            </p>
             <img src= {this.state.confirmMsg} alt="" height="40%" width="80%"/>
           </Dropzone>
           </div>
@@ -297,6 +365,24 @@ class App extends React.Component {
               <MenuItem value={"Reverse Video"}>Reverse Video</MenuItem>
             </Select>
             </FormControl>
+          <div style={{"color": "#001A57"}}>
+          <br></br>
+          <p><b>What file type would you like to download your image as after processing?</b></p>
+          <FormControl style={styles.formStyle2}>
+          <InputLabel style={{"color": "#001A57"}}><b>File Type</b></InputLabel>
+          <Select
+              value={this.state.downloadExt}
+              onChange={this.handleFileChange}
+              >
+              <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"JPEG"}>JPEG</MenuItem>
+            <MenuItem value={"PNG"}>PNG</MenuItem>
+            <MenuItem value={"TIFF"}>TIFF</MenuItem>
+          </Select>
+          </FormControl>
+          </div>
           </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
@@ -316,10 +402,11 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
+      <img src= {this.state.postB64Str} alt= "" height="50%" width="50%"/>
           <p style={styles.containerStyle} align="left">
-          User: <font color="#E83635">{this.state.userOutput}</font>
+          User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
-          Previous processes:
+          Process: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
           <p style={styles.containerStyle} align="left">
             <table style={styles.tableStyle}>
@@ -329,43 +416,31 @@ class App extends React.Component {
                     <th>Processed Image</th>
                     <th>Histogram</th>
                 </tr>
-                <tr>
-                    <td>
-                        <img src= {this.state.imgStr} alt="..." height="200px" width="200px"/>
-                    </td>
-                    <td>"To be added"</td>
-                    <td>"To be added"</td>
-                    <td>"To be added"</td>
-                </tr>
+
+                /*
+                {this.state.outputTable.map(e =>{
+                    return(
+                        <tr>
+                            <td><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.post} alt= "" height="50%" width="50%"/></td>
+                            <td><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                        </tr>
+                    );
+                })}
+                */
             </table>
           </p>
-          Uploaded:
+          Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
-          Process Time:
+          Process Time: <font color="#E83635">{this.state.actionTime}</font>
           <br></br>
-          Size:
+          Size: <font color="#E83635">{this.state.picSize}</font>
           </p>
-          <div style={{"color": "#001A57"}}>
-          Download as: &ensp;
-            <FormControl style={styles.formStyle2}>
-            <InputLabel style={{"color": "#001A57"}}><b>File Type</b></InputLabel>
-            <Select
-                value={this.state.downloadExt}
-                onChange={this.handleFileChange}
-                >
-                <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"JPEG"}>JPEG</MenuItem>
-              <MenuItem value={"PNG"}>PNG</MenuItem>
-              <MenuItem value={"TIFF"}>TIFF</MenuItem>
-            </Select>
-            </FormControl>
-          </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
               onClick={this.onDownload}>
-              Download
+              Download Images
           </Button>
           <div style={styles.errorStyle}>
             {this.state.downloadEnable}
