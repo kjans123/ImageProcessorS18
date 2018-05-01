@@ -102,6 +102,7 @@ def process():
     print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
+    just_for_zip_list = []
     processed_histograms = []
     pre_img_list = []
     pre_img_histograms = []
@@ -115,7 +116,6 @@ def process():
         raise ValueError("Input is not a b64 zip or jpg list!")
     for i in range(len(pre_img)):
         img = pre_img[i]
-        print(img[0:100])
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
                 os.chmod('images',stat.S_IRWXU)
@@ -132,10 +132,10 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            just_for_zip_list.append(hist_img64)
             hist_img64 = bytes_to_string(hist_img64)
             histogram_of_pre_img = bytes_to_string(histogram_of_pre_img)
             histogram_of_post_img = bytes_to_string (histogram_of_post_img)
-            print(extension)
             processed_list.append(getHeader(extension) + str(hist_img64))
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
@@ -145,7 +145,7 @@ def process():
                 # we need to zip
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                zipped_list = b64_strings_to_b64_zip(just_for_zip_list, extension)
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
