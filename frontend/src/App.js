@@ -186,7 +186,6 @@ class App extends React.Component {
                         "postHist": response.data.post_histograms[i],
                         "size": response.data.pic_size[i],
                     });
-                    //console.log(displayPictures)
                     this.setState({"outputTable": displayPictures})
                     this.setState({"downloadEnable": false})
                     }
