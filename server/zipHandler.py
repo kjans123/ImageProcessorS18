@@ -29,6 +29,7 @@ def b64_zip_to_b64_strings(b64_zip):
         import base64
         import zipfile
         import shutil
+        from bytes_to_string import bytes_to_string
     except ImportError:
         msg = "Please make sure you have all packages."
         print(msg)
@@ -54,6 +55,7 @@ def b64_zip_to_b64_strings(b64_zip):
         for f in files:
             if f.endswith(('.jpg', '.JPG')):
                 imgString = encode_image_string(os.path.join(root, f))
+                imgString = bytes_to_string(imgString)
                 # str_imgString = imgString.decode('utf-8')
                 list_of_b64_strings.append(imgString)
     logging.info("Done traversing. Appended b64 encoded files \
