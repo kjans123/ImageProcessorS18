@@ -194,6 +194,21 @@ class App extends React.Component {
     }
 
     onDownload = () => {
+        if (this.state.listImages.length === 1) {
+            //code for one file here
+            this.setState({"noDownload": ""})
+
+            if (this.state.downloadExt === "JPEG") {
+
+            }
+        }
+        else if (this.state.listImages.length > 1) {
+            //code for zip making here
+            this.setState({"noDownload": ""})
+        }
+        else {
+            this.setState({"noDownload": "You cannot download images you have not even uploaded yet"})
+        }
         /*var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
         axios.get(urlGetString).then( (response) => {
                 console.log(response);
