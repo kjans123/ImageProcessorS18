@@ -412,7 +412,7 @@ class App extends React.Component {
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
-          Previous processes: <font color="#E83635">{this.state.procMethod}</font>
+          Process: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
           <p style={styles.containerStyle} align="left">
             <table style={styles.tableStyle}>
