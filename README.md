@@ -8,8 +8,25 @@
 * Maybe some screenshots if we're feeling fancy
 
 ### Getting Started
+First you will need to clone this repository to your local machine. Install all of the required python dependencies using:
+```
+pip install -r requirements.txt
+```
+and make sure to activate your virtual environment before continuing.
+* Database
+To get started running the database....
 
-* Put instructions for making stuff happen here
+* Server
+In order to run the server, make sure that you are within the server folder before beginning.
+```
+cd server
+```
+You can run the server on your local computer using gunicorn:
+```
+gunicorn --bind 0.0.0.0:5000 ProcessServer:app
+```
+* App
+The...
 
 ### License
 
