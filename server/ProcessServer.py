@@ -118,6 +118,7 @@ def process():
         raise ValueError("Input is not a b64 zip or jpg list!")
     for i in range(len(pre_img)):
         img = pre_img[i]
+        print(img[0:100])
         print(type(img))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
