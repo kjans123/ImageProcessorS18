@@ -122,7 +122,6 @@ def process():
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-            # is this file being used?
             with open(filename, "wb") as image_out:
                 image_out.write(base64.b64decode(img))
             save_image(email, jpgFileNum)

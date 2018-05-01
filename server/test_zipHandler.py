@@ -37,10 +37,3 @@ def test_zip2str():
     num_of_diff = 0.5*len([i for i in range(len(str_imgString[0]))
                            if str_imgString[0][i] != b64_str[0][i]])
     assert num_of_diff/len(b64_str[0]) < 0.01*len(b64_str[0])
-
-
-def test_except():
-    import pytest
-    with pytest.raises(TypeError):
-        not_a_list = "greetings"
-        output = str2zip(not_a_list, ".jpg")
