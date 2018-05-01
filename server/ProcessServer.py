@@ -19,6 +19,7 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
+from main import get_user_pre_pics_count
 from giveMeHeader import getHeader
 from bytes_to_string import bytes_to_string
 import glob
@@ -101,8 +102,9 @@ def process():
         pass
     else:
         os.mkdir("images/")
-    jpgList = glob.glob("images/"+str(email)+"/*")
-    jpgCount = len(jpgList)
+    # jpgList = glob.glob("images/"+str(email)+"/*")
+    jpgCount = get_user_pre_pics_count(email)
+    print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
     just_for_zip_list = []

@@ -40,6 +40,20 @@ def save_image(user_email, image_num):
     user.save()
 
 
+def get_user_pre_pics_count(user_email):
+
+    """"Function that gets the number of pre-proc
+        images a user has stored on database
+
+    :param user_email: finds user with specified email
+    :returns image_count: gets the number of images the user
+                          has uploaded
+    """
+    user = models.User.objects.raw({"_id": user_email}).first()
+    image_list = user.stored_pic
+    image_count = len(image_list)
+    return image_count
+
 def add_histo(user_email):
 
     """"function that adds one to number of times a particular user
