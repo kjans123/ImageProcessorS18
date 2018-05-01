@@ -122,6 +122,7 @@ class App extends React.Component {
           "actionTime": "",
           "picSize": "",
           "outputTable": [],
+          "postB64Str": null,
       };
     }
 
@@ -208,11 +209,15 @@ class App extends React.Component {
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
             }
-                //hopefully won't need this if for loop works
-                this.setState({preB64Str: response.new_info.pre_b64_string});
-                this.setState({preHist: response.new_info.pre_histogram});
-                this.setState({postB64Str: response.new_info.post_b64_string});
-                this.setState({postHist: response.new_info.post_histograms});
+            *//*
+                this.setState({preB64Str: response.data.pre_b64_string[0]});
+
+                this.setState({preHist: response.data.pre_histogram[0]});
+                */
+                this.setState({postB64Str: response.data.post_b64_string[0]});
+                console.log(this.state.postB64Str)
+                /*
+                this.setState({postHist: response.data.post_histograms[0]});
                 */
             });
         }
@@ -403,6 +408,7 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
+      <img src= {this.state.postB64Str} alt= "" height="50%" width="50%"/>
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
@@ -416,6 +422,7 @@ class App extends React.Component {
                     <th>Processed Image</th>
                     <th>Histogram</th>
                 </tr>
+
                 /*
                 {this.state.outputTable.map(e =>{
                     return(
