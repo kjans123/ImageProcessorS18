@@ -21,6 +21,7 @@ from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
 from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 from giveMeHeader import getHeader
+from bytes_to_string import bytes_to_string
 import glob
 import logging
 import os
@@ -130,12 +131,7 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
-            hist_img64 = str(hist_img64)
-            hist_img64 = hist_img64[2:]
-            hist_img64 = hist_img64[:-1]
-            print(hist_img64[0:100])
-            # hist_img64 = hist_img64.encode('utf-8')
-            # hist_img64 = base64.b64encode(hist_img64).decode('utf-8')
+            hist_img64 = bytes_to_string(hist_img64)
             processed_list.append(getHeader(extension) + str(hist_img64))
             pre_img_list.append(getHeader(extension) + img)
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
