@@ -96,8 +96,6 @@ class App extends React.Component {
           "uploadTime": "",
           "actionTime": "",
           "outputTable": [],
-          "wComma": null,
-          "wHeader": null,
       };
     }
 
@@ -125,13 +123,11 @@ class App extends React.Component {
             reader.onloadend = () => {
             this.setState({"currentImageString": reader.result.split(',')[1]});
             this.setState({"header": reader.result.split(',')[0]});
-            //will need header for output
-
-            this.setState({"wComma": this.state.header.concat(",")})
-            this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
+            //might need header later
+            //this.setState({"wComma": this.state.header.concat(",")})
+            //this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
             //console.log(this.state.wComma)
             //console.log(this.state.wHeader)
-
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
             //console.log(this.state.listImages[0])
@@ -208,13 +204,13 @@ class App extends React.Component {
                     this.setState({downloadEnable: ""});
                     var img = this.state.listImages[0]
                     var byteString = atob(img.split(',')[1]);
-                    var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+                    var imageType = img.split(',')[0].split(':')[1].split(';')[0]
                     var ab = new ArrayBuffer(byteString.length);
                     var ia = new Uint8Array(ab);
                     for (var i = 0; i < byteString.length; i++) {
                         ia[i] = byteString.charCodeAt(i);
                     }
-                    var blob = new Blob([ab], {type: mimeString});
+                    var blob = new Blob([ab], {type: imageType});
                     FileSaver.saveAs(blob, "image.jpeg");
                 }
             })
@@ -222,39 +218,39 @@ class App extends React.Component {
             this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
-            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
             var ab = new ArrayBuffer(byteString.length);
             var ia = new Uint8Array(ab);
             for (var i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
             }
-            var blob = new Blob([ab], {type: mimeString});
+            var blob = new Blob([ab], {type: imageType});
             FileSaver.saveAs(blob, "image.jpeg");
         }
         else if (this.state.downloadExt === "PNG") {
             this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
-            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
             var ab = new ArrayBuffer(byteString.length);
             var ia = new Uint8Array(ab);
             for (var i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
             }
-            var blob = new Blob([ab], {type: mimeString});
+            var blob = new Blob([ab], {type: imageType});
             FileSaver.saveAs(blob, "image.png");
         }
         else if (this.state.downloadExt === "TIFF") {
             this.setState({downloadEnable: ""});
             var img = this.state.listImages[0]
             var byteString = atob(img.split(',')[1]);
-            var mimeString = img.split(',')[0].split(':')[1].split(';')[0]
+            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
             var ab = new ArrayBuffer(byteString.length);
             var ia = new Uint8Array(ab);
             for (var i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
             }
-            var blob = new Blob([ab], {type: mimeString});
+            var blob = new Blob([ab], {type: imageType});
             FileSaver.saveAs(blob, "image.tif");
         }
         else {
