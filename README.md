@@ -5,8 +5,7 @@
 ### Description
 
 * The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg images or a .zip archive of images in order for the user to run histogram equalization, log compression, constrast stretching, or reverse video operations on the image(s) they upload. This repository includes starter code for a ReactJSX app frontend that allows image upload, download, and display; starter code for a Mongo Database to store user information; and server code that processes the selected images and returns them to the frontend.
-![image text](https://user-images.githubusercontent.com/24235476/39473111-2f73adf8-4d1b-11e8-8d19-27a584e2de02.png)
-<img src="https://user-images.githubusercontent.com/24235476/39473111-2f73adf8-4d1b-11e8-8d19-27a584e2de02.png" width="200">
+<img src="https://user-images.githubusercontent.com/24235476/39473111-2f73adf8-4d1b-11e8-8d19-27a584e2de02.png" width="400">
 
 ### Getting Started
 First you will need to clone this repository to your local machine. Install all of the required python dependencies using:
