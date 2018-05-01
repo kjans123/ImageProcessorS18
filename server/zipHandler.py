@@ -36,7 +36,7 @@ def b64_zip_to_b64_strings(b64_zip):
     with open('decoded.zip', 'wb') as zf:
         # test
         # bytes_b64_zip = b64_zip.encode('utf-8')
-        zf.write(base64.b64decode(bytes_b64_zip))
+        zf.write(base64.b64decode(b64_zip))
         logging.info("File called decoded.zip was created.")
     zip_ref = zipfile.ZipFile('decoded.zip', 'r')
     path = 'Temporary/'
