@@ -96,6 +96,8 @@ class App extends React.Component {
           "uploadTime": "",
           "actionTime": "",
           "outputTable": [],
+          "wComma": null,
+          "wHeader": null,
       };
     }
 
@@ -124,12 +126,12 @@ class App extends React.Component {
             this.setState({"currentImageString": reader.result.split(',')[1]});
             this.setState({"header": reader.result.split(',')[0]});
             //will need header for output
-            /*
+
             this.setState({"wComma": this.state.header.concat(",")})
             this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
-            console.log(this.state.wComma)
-            console.log(this.state.wHeader)
-            */
+            //console.log(this.state.wComma)
+            //console.log(this.state.wHeader)
+
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
             //console.log(this.state.listImages[0])
@@ -147,6 +149,13 @@ class App extends React.Component {
         this.setState({"processingTechnique": event.target.value});
         this.setState({"proc": 1})
     }
+
+
+        handleFileChange = (event) => {
+            this.setState({"downloadExt": event.target.value});
+            this.setState({"ext": 1})
+            //set up something for download enable/disable
+        }
 
     postData = () => {
         var condition = this.state.id + this.state.up + this.state.proc + this.state.ext
@@ -188,26 +197,8 @@ class App extends React.Component {
         }
     }
 
-    handleFileChange = (event) => {
-        this.setState({"downloadExt": event.target.value});
-        this.setState({"ext": 1})
-        if (this.state.downloadExt === "JPEG") {
-            this.setState({"downloadEnable": false})
-            console.log(this.state.downloadEnable)
-        }
-        else if (this.state.downloadExt === "PNG") {
-            this.setState({"downloadEnable": false})
-        }
-        else if (this.state.downloadExt === "TIFF") {
-            this.setState({"downloadEnable": false})
-        }
-        else {
-            this.setState({"downloadEnable": true})
-        }
-    }
-
     onDownload = () => {
-        var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
+        /*var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
         axios.get(urlGetString).then( (response) => {
                 console.log(response);
                 this.setState({listOrNo: response.new_info.post_b64_string})
@@ -226,7 +217,6 @@ class App extends React.Component {
                     var blob = new Blob([ab], {type: mimeString});
                     FileSaver.saveAs(blob, "image.jpeg");
                 }
-
             })
         if (this.state.downloadExt === "JPEG") {
             this.setState({downloadEnable: ""});
@@ -270,6 +260,7 @@ class App extends React.Component {
         else {
             this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
         }
+        */
     }
 
   render() {
