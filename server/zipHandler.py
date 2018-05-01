@@ -54,7 +54,7 @@ def b64_zip_to_b64_strings(b64_zip):
     logging.info("Traverse files with os.walk")
     for root, dirs, files in os.walk('Temporary'):
         for f in files:
-            if f.endswith(('.jpg', '.JPG')):
+            if f.endswith(('.jpg', '.JPG')) and str(f).find('._') == -1:
                 print(f)
                 imgString = encode_image_string(os.path.join(root, f))
                 imgString = bytes_to_string(imgString)
