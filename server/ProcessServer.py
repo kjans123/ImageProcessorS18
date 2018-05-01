@@ -96,7 +96,7 @@ def process():
         isinstance(method, str)
     except TypeError:
         print("Please provide information in string format!")
-        return jsonify("email is not string"), 400
+        return jsonify("info is not string"), 400
     jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = len(jpgList)
     print(jpgCount)
@@ -109,6 +109,7 @@ def process():
     pre_img_histograms = []
     jpgFileNum = jpgCount
     if 'zip' in header:
+        pre_img = pre_img[0]
         pre_img = b64_zip_to_b64_strings(pre_img)
         pass
     elif 'jpeg' in header:
