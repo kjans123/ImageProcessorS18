@@ -34,7 +34,8 @@ def b64_zip_to_b64_strings(b64_zip):
         print(msg)
         logging.warning(msg)
     with open('decoded.zip', 'wb') as zf:
-        bytes_b64_zip = b64_zip.encode('utf-8')
+        # test
+        # bytes_b64_zip = b64_zip.encode('utf-8')
         zf.write(base64.b64decode(bytes_b64_zip))
         logging.info("File called decoded.zip was created.")
     zip_ref = zipfile.ZipFile('decoded.zip', 'r')
@@ -53,8 +54,8 @@ def b64_zip_to_b64_strings(b64_zip):
         for f in files:
             if f.endswith(('.jpg', '.JPG')):
                 imgString = encode_image_string(os.path.join(root, f))
-                str_imgString = imgString.decode('utf-8')
-                list_of_b64_strings.append(str_imgString)
+                # str_imgString = imgString.decode('utf-8')
+                list_of_b64_strings.append(imgString)
     logging.info("Done traversing. Appended b64 encoded files \
                  that ended with .jpg or .JPG")
     os.remove('decoded.zip')
