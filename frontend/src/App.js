@@ -275,11 +275,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-      <body style={styles.backgroundStyle}>
+      <div style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
               <Typography variant="title" color="inherit">
-                  Crunchwrap Pizza Image Processor &#127790;
+                  Crunchwrap Pizza Image Processor &ensp;
+                  <span role="img" aria-label={'emoji'}>&#127790;</span>
               </Typography>
           </Toolbar>
       </AppBar>
@@ -371,13 +372,14 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
-          <p style={styles.containerStyle} align="left">
+          <div style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
           Process: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
-          <p style={styles.containerStyle} align="center">
+          <div style={styles.containerStyle} align="center">
             <table style={styles.tableStyle}>
+              <tbody>
                 <tr>
                     <th><b><u>Original Image</u></b></th>
                     <th><b><u>Histogram</u></b></th>
@@ -396,12 +398,13 @@ class App extends React.Component {
                         </tr>
                     );
                 })}
+              </tbody>
             </table>
-          </p>
+          </div>
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
           Process Time: <font color="#E83635">{this.state.actionTime}</font>
-          </p>
+          </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
               onClick={this.onDownload}>
@@ -412,7 +415,7 @@ class App extends React.Component {
           </div>
           </div>
       </Paper>
-    </body>
+    </div>
     </div>
     );
   }
