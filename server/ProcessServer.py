@@ -89,10 +89,14 @@ def process():
     else:
         raise ValueError("Did not select an appropriate extension!")
     if isinstance(email, str) and isinstance(method, str):
-        #Don't need to check_list_of_string(pre_img)?
-        pass
+        if check_list_of_string(pre_img):
+            pass
+        else:
+            print("list of pre_img is not string")
+            return jsonify("list of pre_img is not string!"), 400
     else:
-        raise TypeError("Please provide information in string format!")
+        print("Please provide information in string format!")
+        return jsonify("Please provide information in string format!"), 400
     jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = len(jpgList)
     current_time = datetime.datetime.now()
@@ -122,7 +126,6 @@ def process():
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-            # is this file being used?
             with open(filename, "wb") as image_out:
                 image_out.write(base64.b64decode(img))
             save_image(email, jpgFileNum)
