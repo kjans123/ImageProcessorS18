@@ -85,7 +85,6 @@ def process():
     try:
         isinstance(email, str)
         check_list_of_string(pre_img)
-        #nolonger list of string (yes this screw pep8 on purpose)
         isinstance(method, str)
     except TypeError:
         print("Please provide information in string format!")
@@ -99,40 +98,39 @@ def process():
     pre_img_list = []
     pre_img_histograms = []
     jpgFileNum = jpgCount
-    ##Lee added code here
     first_split = pre_img[0].split(',', 1)
     header = first_split[0]
-    if 'zip' in header: #this is pseudo code
+    if 'zip' in header:
         pre_img = b64_zip_to_b64_strings(first_split[1])
     elif 'jpeg' in header:
-        # do nothing. Apparently, if I leave this empty, pep8 throws a fit.
-        pre_img = pre_img
+        # Already in correct format. Does not need to be unzipped.
+        pass
     else:
         raise ValueError("Input is not a b64 zip or jpg list!")
-    ##end Marianne addition
     for i, img in enumerate(pre_img):
-        img = img.split(',',1)
-        print(img[0])
+        img = img.split(',', 1)
         img = img[1]
         img = img.encode('utf-8')
-        text_file = open("Output.txt", "w")
-        str_img = img.decode('utf-8')
-        text_file.write(str_img)
-        text_file.close()
+        #^ This should still result in the same input. Once confirmed, delete commented out lines.
+        #Yes, pep8 hates this
+        #text_file = open("Output.txt", "w")
+        #str_img = img.decode('utf-8')
+        #text_file.write(str_img)
+        #text_file.close()
         #img = encode_image_string('Output.txt')
         #print(str(img[0:300]))
-        with open("Output.txt", "r") as text_in:
-            text = text_in.read()
-        textBytes = text.encode('utf-8')
-        img = textBytes
+        #with open("Output.txt", "r") as text_in:
+        #    text = text_in.read()
+        #textBytes = text.encode('utf-8')
+        #img = textBytes
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                os.chmod('images',stat.S_IRWXU)
+                os.chmod('images', stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
-                os.chmod(('images/'+str(email)),stat.S_IRWXU)
+                os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-            a=open(filename,'w')
+            a = open(filename, 'w')
             #with open(filename, "wb") as image_out:
                 #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
@@ -140,7 +138,9 @@ def process():
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
+            #pep8 broken. What is hist_equal_image?
             histogram_of_post_img = create_histo(hist_equal_image)
+            ##
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + pre_img)
@@ -187,12 +187,12 @@ def process():
             jpgFileNum = jpgFileNum + 1
             if method == "Histogram Equalization":
                 if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
+                    os.chmod('images', stat.S_IRWXU)
                     os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
+                    os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
+                a = open(filename, 'w')
                 #with open(filename, "wb") as image_out:
                     #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
@@ -248,12 +248,12 @@ def process():
             jpgFileNum = jpgFileNum + 1
             if method == "Histogram Equalization":
                 if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
+                    os.chmod('images', stat.S_IRWXU)
                     os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
+                    os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
+                a = open(filename, 'w')
                 #with open(filename, "wb") as image_out:
                     #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)
@@ -308,12 +308,12 @@ def process():
             jpgFileNum = jpgFileNum + 1
             if method == "Histogram Equalization":
                 if jpgFileNum == 0:
-                    os.chmod('images',stat.S_IRWXU)
+                    os.chmod('images', stat.S_IRWXU)
                     os.makedirs(('images/'+str(email)))
-                    os.chmod(('images/'+str(email)),stat.S_IRWXU)
+                    os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a=open(filename,'w')
+                a = open(filename, 'w')
                 #with open(filename, "wb") as image_out:
                     #image_out.write(base64.b64decode(img))
             iSave = save_image(email, jpgFileNum)

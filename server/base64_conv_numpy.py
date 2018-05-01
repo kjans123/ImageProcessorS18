@@ -87,7 +87,7 @@ def convert_image_to_np_array(base64image):
         with open('temp.JPG', 'wb') as f:
             f.write(s)
         f.close()
-        os.chmod('temp.JPG',stat.S_IRWXU)
+        os.chmod('temp.JPG', stat.S_IRWXU)
         i = Image.open('temp.JPG')
         a = np.asarray(i, dtype=np.float64)
         a = np.true_divide(a, 255)
