@@ -19,7 +19,6 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
-from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 from giveMeHeader import getHeader
 from bytes_to_string import bytes_to_string
 import glob
@@ -58,7 +57,7 @@ def process():
         return jsonify("no email input"), 400
     check_email = Check_For_User(email)
     if check_email.user_exists is False:
-        cu = create_user(email)
+        create_user(email)
         print(str(email) + " was not found. User created")
     try:
         pre_img = info["pre_b64_string"]
@@ -99,7 +98,6 @@ def process():
         return jsonify("info is not string"), 400
     jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = len(jpgList)
-    print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
     just_for_zip_list = []
@@ -122,15 +120,16 @@ def process():
         print(type(img))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                os.chmod('images',stat.S_IRWXU)
+                os.chmod('images', stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
-                os.chmod(('images/'+str(email)),stat.S_IRWXU)
+                os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            # is this file being used?
             with open(filename, "wb") as image_out:
                 image_out.write(base64.b64decode(img))
-            iSave = save_image(email, jpgFileNum)
-            iHisto = add_histo(email)
+            save_image(email, jpgFileNum)
+            add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(img)
             histogram_of_pre_img = create_histo(imgArray)
@@ -372,6 +371,9 @@ def process():
 
 @app.route("/download", methods=["GET"])
 def download():
+    """"Function that accesses tmp folder to download
+        an image or zip for a user.
+    """
     # access tmp folder and output
     output = access_tmp()
     return jsonify(output)
