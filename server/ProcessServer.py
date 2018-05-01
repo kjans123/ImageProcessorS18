@@ -102,7 +102,6 @@ def process():
         pass
     else:
         os.mkdir("images/")
-    # jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = get_user_pre_pics_count(email)
     print(jpgCount)
     current_time = datetime.datetime.now()
@@ -127,7 +126,7 @@ def process():
         print(type(img))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                os.chmod('images', stat.S_IRWXU)
+                os.chmod('images/', stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
