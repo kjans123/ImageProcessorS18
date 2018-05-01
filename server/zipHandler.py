@@ -37,6 +37,7 @@ def b64_zip_to_b64_strings(b64_zip):
     with open('decoded.zip', 'wb') as zf:
         # test
         # bytes_b64_zip = b64_zip.encode('utf-8')
+        print('zip: ' + b64b64_zip)
         zf.write(base64.b64decode(b64_zip))
         logging.info("File called decoded.zip was created.")
     zip_ref = zipfile.ZipFile('decoded.zip', 'r')
@@ -54,6 +55,7 @@ def b64_zip_to_b64_strings(b64_zip):
     for root, dirs, files in os.walk('Temporary'):
         for f in files:
             if f.endswith(('.jpg', '.JPG')):
+                print(f)
                 imgString = encode_image_string(os.path.join(root, f))
                 imgString = bytes_to_string(imgString)
                 # str_imgString = imgString.decode('utf-8')
