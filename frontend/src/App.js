@@ -185,7 +185,7 @@ class App extends React.Component {
                 });
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
-            }
+                }
             });
         }
         else {
