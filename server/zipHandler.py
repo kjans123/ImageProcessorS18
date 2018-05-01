@@ -101,7 +101,7 @@ def b64_strings_to_b64_zip(b64_strings, ext):
         logging.info("Remove directory")
     temp_folder = 'imgs_directory'
     os.mkdir(temp_folder)
-    logging.info("Created temporary directory temp_folder to store images")
+    logging.info("Created temporary directory img_directory to store images")
     if check_list(b64_strings):
         logging.info("Checked list of strings")
         for i, string in enumerate(b64_strings):
@@ -113,6 +113,8 @@ def b64_strings_to_b64_zip(b64_strings, ext):
     else:
         msg = "Please provide a list of strings"
         logging.warning(msg)
+        shutil.rmtree(temp_folder)
+        logging.info("Before raising exception, removing img_directory")
         raise TypeError(msg)
     zfName = 'processed.zip'
     zipWrite = zipfile.ZipFile(zfName, 'w')
