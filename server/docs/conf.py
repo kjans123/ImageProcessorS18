@@ -15,7 +15,8 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-sys.path.append('/home/kj123/ImageProcessorS18/venv/lib/python3.5/site-packages')
+m = '/home/kj123/ImageProcessorS18/venv/lib/python3.5/site-packages'
+sys.path.append(m)
 # -- Project information -----------------------------------------------------
 
 project = 'ImageProcessorS18'
