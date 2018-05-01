@@ -103,6 +103,7 @@ def process():
     current_time = datetime.datetime.now()
     processed_list = []
     just_for_zip_list = []
+    return_size_list = []
     processed_histograms = []
     pre_img_list = []
     pre_img_histograms = []
@@ -141,6 +142,7 @@ def process():
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
             return_size = (str(m)+'X'+str(w) + ' pixels')
+            return_size_list.append(return_size)
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
@@ -155,7 +157,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size,
+                    "pic_size": return_size_list,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
@@ -173,7 +175,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size
+                    "pic_size": return_size_list
                 }
                 make_tmp(new_info)
                 return jsonify(new_info),200
@@ -193,6 +195,7 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            just_for_zip_list.append(hist_img64)
             hist_img64 = bytes_to_string(hist_img64)
             histogram_of_pre_img = bytes_to_string(histogram_of_pre_img)
             histogram_of_post_img = bytes_to_string (histogram_of_post_img)
@@ -201,11 +204,12 @@ def process():
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
             return_size = (str(m)+'X'+str(w) + ' pixels')
+            return_size_list.append(return_size)
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                zipped_list = b64_strings_to_b64_zip(just_for_zip_list, extension)
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -215,7 +219,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size,
+                    "pic_size": return_size_list,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
@@ -233,7 +237,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size
+                    "pic_size": return_size_list
                 }
                 make_tmp(new_info)
                 return jsonify(new_info),200
@@ -253,6 +257,7 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            just_for_zip_list.append(hist_img64)
             hist_img64 = bytes_to_string(hist_img64)
             histogram_of_pre_img = bytes_to_string(histogram_of_pre_img)
             histogram_of_post_img = bytes_to_string (histogram_of_post_img)
@@ -261,11 +266,12 @@ def process():
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
             return_size = (str(m)+'X'+str(w) + ' pixels')
+            return_size_list.append(return_size)
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                zipped_list = b64_strings_to_b64_zip(just_for_zip_list, extension)
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -275,7 +281,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size,
+                    "pic_size": return_size_list,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
@@ -293,7 +299,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size
+                    "pic_size": return_size_list
                 }
                 make_tmp(new_info)
                 return jsonify(new_info),200
@@ -313,6 +319,7 @@ def process():
             histogram_of_pre_img = create_histo(imgArray)
             histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
+            just_for_zip_list.append(hist_img64)
             hist_img64 = bytes_to_string(hist_img64)
             histogram_of_pre_img = bytes_to_string(histogram_of_pre_img)
             histogram_of_post_img = bytes_to_string (histogram_of_post_img)
@@ -321,11 +328,12 @@ def process():
             processed_histograms.append(getHeader() + str(histogram_of_post_img))
             pre_img_histograms.append(getHeader() + str(histogram_of_pre_img))
             return_size = (str(m)+'X'+str(w) + ' pixels')
+            return_size_list.append(return_size)
             if i == len(pre_img) - 1 and i > 0:
                 # we need to zip
                 new_time = datetime.datetime.now()
                 duration = new_time - current_time
-                zipped_list = b64_strings_to_b64_zip(processed_list, extension)
+                zipped_list = b64_strings_to_b64_zip(just_for_zip_list, extension)
                 new_info = {
                     "user_email": email,
                     "proc_method": method,
@@ -335,7 +343,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size,
+                    "pic_size": return_size_list,
                     "b64_zip_out": getHeader(".zip") + zipped_list
                 }
                 make_tmp(new_info)
@@ -353,7 +361,7 @@ def process():
                     "post_histograms": processed_histograms,
                     "action_time": str(duration),
                     "upload_time": time2str(current_time),
-                    "pic_size": return_size
+                    "pic_size": return_size_list
                 }
                 make_tmp(new_info)
                 return jsonify(new_info),200
