@@ -119,9 +119,7 @@ class App extends React.Component {
           "procMethod": "",
           "uploadTime": "",
           "actionTime": "",
-          "picSize": "",
           "outputTable": [],
-          "postB64Str": null,
       };
     }
 
@@ -186,12 +184,12 @@ class App extends React.Component {
                 "file_type": this.state.downloadExt,
                 "header": this.state.header,
             }
+            console.log(data)
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
                 var displayPictures = []
                 //data from backend for display
                 this.setState({"userEmail": response.data.user_email});
-                console.log(this.state.userEmail)
                 this.setState({"procMethod": response.data.proc_method});
                 this.setState({"uploadTime": response.data.upload_time});
                 this.setState({"actionTime": response.data.action_time});
@@ -404,11 +402,11 @@ class App extends React.Component {
           <p style={styles.containerStyle} align="left">
             <table style={styles.tableStyle}>
                 <tr>
-                    <th>Original Image</th>
-                    <th>Histogram</th>
-                    <th>Processed Image</th>
-                    <th>Histogram</th>
-                    <th>Picture Size</th>
+                    <th><b><u>Original Image</u></b></th>
+                    <th><b><u>Histogram</u></b></th>
+                    <th><b><u>Processed Image</u></b></th>
+                    <th><b><u>Histogram</u></b></th>
+                    <th><b><u>Picture Size</u></b></th>
                 </tr>
                 {this.state.outputTable.map(e =>{
                     return(
@@ -417,7 +415,7 @@ class App extends React.Component {
                             <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
                             <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
                             <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><font color="#E83635" size="3">{e.size}</font></td>
+                            <td align="center"><font color="#E83635" size="3"><b>{e.size}</b></font></td>
                         </tr>
                     );
                 })}
@@ -426,8 +424,6 @@ class App extends React.Component {
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
           Process Time: <font color="#E83635">{this.state.actionTime}</font>
-          <br></br>
-          Size: <font color="#E83635">{this.state.picSize}</font>
           </p>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
