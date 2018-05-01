@@ -44,7 +44,7 @@ var styles = {
         "backgroundColor": "#001A57"
     },
     "paperStyle3": {
-        "height": "1000px",
+        "height": "9000px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -197,9 +197,8 @@ class App extends React.Component {
                 this.setState({"uploadTime": response.data.upload_time});
                 this.setState({"actionTime": response.data.action_time});
                 this.setState({"picSize": response.data.pic_size});
-                /*
                 //push for pic table display
-                for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
+                for (let i=0; i < response.data.pre_b64_string.length; i++) {
                 displayPictures.push({
                     "pre": response.data.pre_b64_string[i],
                     "preHist": response.data.pre_histogram[i],
@@ -209,10 +208,6 @@ class App extends React.Component {
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
             }
-            */
-                this.setState({postB64Str: response.data.post_b64_string[0]});
-                console.log(this.state.postB64Str)
-
             });
         }
         else {
@@ -402,7 +397,6 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
-      <img src= {this.state.postB64Str} alt= "" height="50%" width="50%"/>
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
@@ -416,19 +410,16 @@ class App extends React.Component {
                     <th>Processed Image</th>
                     <th>Histogram</th>
                 </tr>
-
-                /*
                 {this.state.outputTable.map(e =>{
                     return(
                         <tr>
-                            <td><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.post} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
                         </tr>
                     );
                 })}
-                */
             </table>
           </p>
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
