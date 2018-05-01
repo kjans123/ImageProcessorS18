@@ -56,7 +56,7 @@ def process():
         return jsonify("no email input"), 400
     check_email = Check_For_User(email)
     if check_email.user_exists is False:
-        cu = create_user(email)
+        create_user(email)
         print(str(email) + " was not found. User created")
     try:
         pre_img = info["pre_b64_string"]
@@ -76,21 +76,19 @@ def process():
     if extension == 'JPEG':
         extension = '.jpg'
     elif extension == 'PNG':
-        extension == '.png'
+        extension = '.png'
     elif extension == 'TIFF':
-        extension == '.tif'
+        extension = '.tif'
     else:
         raise ValueError("Did not select an appropriate extension!")
-    try:
-        isinstance(email, str)
-        check_list_of_string(pre_img)
-        isinstance(method, str)
-    except TypeError:
-        print("Please provide information in string format!")
-        return jsonify("email is not string"), 400
+    if check_list_of_string(pre_img):
+        pass
+    elif isinstance(email, str) and isinstance(method, str):
+        pass
+    else:
+        raise TypeError("Please provide information in string format!")
     jpgList = glob.glob("images/"+str(email)+"/*")
     jpgCount = len(jpgList)
-    print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
     processed_histograms = []
@@ -354,6 +352,9 @@ def process():
 
 @app.route("/download", methods=["GET"])
 def download():
+    """"Function that accesses tmp folder to download
+        an image or zip for a user.
+    """
     # access tmp folder and output
     output = access_tmp()
     return jsonify(output)
