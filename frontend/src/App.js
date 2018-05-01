@@ -16,19 +16,15 @@ import FileSaver from 'file-saver';
 var styles = {
     "backgroundStyle": {
         "backgroundImage": "url(https://user-images.githubusercontent.com/24235476/38747932-7ffdd550-3f1a-11e8-8ecf-ad2c3f6d3d69.jpg)",
-        "backgroundRepeat": "round",
+        "backgroundRepeat": "repeat",
         "backgroundSize": "200px 200px",
     },
     "appBarStyle": {
         "marginBottom": "10px",
         "backgroundColor": "#001A57",
     },
-    "appBarStyle2": {
-        "marginBottom": "10px",
-        "backgroundColor": "#A1B70D",
-    },
     "paperStyle": {
-        "height": "660px",
+        "height": "auto",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -42,15 +38,6 @@ var styles = {
         "display": "inline-block",
         "padding": "10px",
         "backgroundColor": "#001A57"
-    },
-    "paperStyle3": {
-        "height": "9000px",
-        "width": "1000px",
-        "marginLeft": "200px",
-        "marginTop": "30px",
-        "textAlign": "center",
-        "display": "inline-block",
-        "padding": "10px",
     },
     "textFieldStyle": {
         "marginTop": "10px",
@@ -83,17 +70,6 @@ var styles = {
         "backgroundColor": "#E83635",
         "color": "white",
     },
-    "headerStyle": {
-        "border": "3px",
-        "borderStyle": "solid",
-        "borderColor": "white",
-        "color": "white",
-    },
-    "upFieldStyle": {
-        "backgroundColor": "gray",
-        "color": "white",
-        "height": "100px",
-    },
 }
 
 class App extends React.Component {
@@ -120,6 +96,8 @@ class App extends React.Component {
           "uploadTime": "",
           "actionTime": "",
           "outputTable": [],
+          "wComma": null,
+          "wHeader": null,
       };
     }
 
@@ -148,12 +126,12 @@ class App extends React.Component {
             this.setState({"currentImageString": reader.result.split(',')[1]});
             this.setState({"header": reader.result.split(',')[0]});
             //will need header for output
-            /*
+
             this.setState({"wComma": this.state.header.concat(",")})
             this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
-            console.log(this.state.wComma)
-            console.log(this.state.wHeader)
-            */
+            //console.log(this.state.wComma)
+            //console.log(this.state.wHeader)
+
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
             //console.log(this.state.listImages[0])
@@ -171,6 +149,13 @@ class App extends React.Component {
         this.setState({"processingTechnique": event.target.value});
         this.setState({"proc": 1})
     }
+
+
+        handleFileChange = (event) => {
+            this.setState({"downloadExt": event.target.value});
+            this.setState({"ext": 1})
+            //set up something for download enable/disable
+        }
 
     postData = () => {
         var condition = this.state.id + this.state.up + this.state.proc + this.state.ext
@@ -212,26 +197,8 @@ class App extends React.Component {
         }
     }
 
-    handleFileChange = (event) => {
-        this.setState({"downloadExt": event.target.value});
-        this.setState({"ext": 1})
-        if (this.state.downloadExt === "JPEG") {
-            this.setState({"downloadEnable": false})
-            console.log(this.state.downloadEnable)
-        }
-        else if (this.state.downloadExt === "PNG") {
-            this.setState({"downloadEnable": false})
-        }
-        else if (this.state.downloadExt === "TIFF") {
-            this.setState({"downloadEnable": false})
-        }
-        else {
-            this.setState({"downloadEnable": true})
-        }
-    }
-
     onDownload = () => {
-        var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
+        /*var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
         axios.get(urlGetString).then( (response) => {
                 console.log(response);
                 this.setState({listOrNo: response.new_info.post_b64_string})
@@ -250,7 +217,6 @@ class App extends React.Component {
                     var blob = new Blob([ab], {type: mimeString});
                     FileSaver.saveAs(blob, "image.jpeg");
                 }
-
             })
         if (this.state.downloadExt === "JPEG") {
             this.setState({downloadEnable: ""});
@@ -294,15 +260,18 @@ class App extends React.Component {
         else {
             this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
         }
+        */
     }
 
   render() {
     return (
-      <body style={styles.backgroundStyle}>
+      <div className="App">
+      <div style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
               <Typography variant="title" color="inherit">
-                  Crunchwrap Pizza Image Processor &#127790;
+                  Crunchwrap Pizza Image Processor &ensp;
+                  <span role="img" aria-label={'emoji'}>&#127790;</span>
               </Typography>
           </Toolbar>
       </AppBar>
@@ -386,7 +355,7 @@ class App extends React.Component {
             {this.state.postReady}
           </div>
       </Paper>
-      <Paper style={styles.paperStyle3}>
+      <Paper style={styles.paperStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
               <Typography variant="title" color="inherit">
@@ -394,13 +363,14 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
-          <p style={styles.containerStyle} align="left">
+          <div style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
           Process: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
-          <p style={styles.containerStyle} align="left">
+          <div style={styles.containerStyle} align="center">
             <table style={styles.tableStyle}>
+              <tbody>
                 <tr>
                     <th><b><u>Original Image</u></b></th>
                     <th><b><u>Histogram</u></b></th>
@@ -411,20 +381,21 @@ class App extends React.Component {
                 {this.state.outputTable.map(e =>{
                     return(
                         <tr>
-                            <td align="center"><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.pre} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.preHist} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.post} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.postHist} alt= "" height="200px" width="200px"/></td>
                             <td align="center"><font color="#E83635" size="3"><b>{e.size}</b></font></td>
                         </tr>
                     );
                 })}
+              </tbody>
             </table>
-          </p>
+          </div>
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
           Process Time: <font color="#E83635">{this.state.actionTime}</font>
-          </p>
+          </div>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
               onClick={this.onDownload}>
@@ -435,7 +406,8 @@ class App extends React.Component {
           </div>
           </div>
       </Paper>
-    </body>
+    </div>
+    </div>
     );
   }
 }
