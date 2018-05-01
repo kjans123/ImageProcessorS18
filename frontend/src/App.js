@@ -16,19 +16,15 @@ import FileSaver from 'file-saver';
 var styles = {
     "backgroundStyle": {
         "backgroundImage": "url(https://user-images.githubusercontent.com/24235476/38747932-7ffdd550-3f1a-11e8-8ecf-ad2c3f6d3d69.jpg)",
-        "backgroundRepeat": "round",
+        "backgroundRepeat": "repeat",
         "backgroundSize": "200px 200px",
     },
     "appBarStyle": {
         "marginBottom": "10px",
         "backgroundColor": "#001A57",
     },
-    "appBarStyle2": {
-        "marginBottom": "10px",
-        "backgroundColor": "#A1B70D",
-    },
     "paperStyle": {
-        "height": "660px",
+        "height": "auto",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -42,15 +38,6 @@ var styles = {
         "display": "inline-block",
         "padding": "10px",
         "backgroundColor": "#001A57"
-    },
-    "paperStyle3": {
-        "height": "9000px",
-        "width": "1000px",
-        "marginLeft": "200px",
-        "marginTop": "30px",
-        "textAlign": "center",
-        "display": "inline-block",
-        "padding": "10px",
     },
     "textFieldStyle": {
         "marginTop": "10px",
@@ -82,17 +69,6 @@ var styles = {
         "marginBottom": "20px",
         "backgroundColor": "#E83635",
         "color": "white",
-    },
-    "headerStyle": {
-        "border": "3px",
-        "borderStyle": "solid",
-        "borderColor": "white",
-        "color": "white",
-    },
-    "upFieldStyle": {
-        "backgroundColor": "gray",
-        "color": "white",
-        "height": "100px",
     },
 }
 
@@ -298,6 +274,7 @@ class App extends React.Component {
 
   render() {
     return (
+      <div className="App">
       <body style={styles.backgroundStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
@@ -386,7 +363,7 @@ class App extends React.Component {
             {this.state.postReady}
           </div>
       </Paper>
-      <Paper style={styles.paperStyle3}>
+      <Paper style={styles.paperStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
           <Toolbar>
               <Typography variant="title" color="inherit">
@@ -399,7 +376,7 @@ class App extends React.Component {
           <br></br>
           Process: <font color="#E83635">{this.state.procMethod}</font>
           <br></br>
-          <p style={styles.containerStyle} align="left">
+          <p style={styles.containerStyle} align="center">
             <table style={styles.tableStyle}>
                 <tr>
                     <th><b><u>Original Image</u></b></th>
@@ -411,10 +388,10 @@ class App extends React.Component {
                 {this.state.outputTable.map(e =>{
                     return(
                         <tr>
-                            <td align="center"><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
-                            <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.pre} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.preHist} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.post} alt= "" height="200px" width="200px"/></td>
+                            <td align="center"><img src= {e.postHist} alt= "" height="200px" width="200px"/></td>
                             <td align="center"><font color="#E83635" size="3"><b>{e.size}</b></font></td>
                         </tr>
                     );
@@ -436,6 +413,7 @@ class App extends React.Component {
           </div>
       </Paper>
     </body>
+    </div>
     );
   }
 }
