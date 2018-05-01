@@ -44,7 +44,7 @@ var styles = {
         "backgroundColor": "#001A57"
     },
     "paperStyle3": {
-        "height": "1000px",
+        "height": "9000px",
         "width": "1000px",
         "marginLeft": "200px",
         "marginTop": "30px",
@@ -69,7 +69,6 @@ var styles = {
         "color": "#001A57",
     },
     "tableStyle": {
-        "padding": "1em",
         "color": "#001A57",
     },
     "formStyle": {
@@ -120,9 +119,7 @@ class App extends React.Component {
           "procMethod": "",
           "uploadTime": "",
           "actionTime": "",
-          "picSize": "",
           "outputTable": [],
-          "postB64Str": null,
       };
     }
 
@@ -187,32 +184,27 @@ class App extends React.Component {
                 "file_type": this.state.downloadExt,
                 "header": this.state.header,
             }
+            console.log(data)
             axios.post(urlString, data).then( (response) => {
                 console.log(response);
                 var displayPictures = []
                 //data from backend for display
                 this.setState({"userEmail": response.data.user_email});
-                console.log(this.state.userEmail)
                 this.setState({"procMethod": response.data.proc_method});
                 this.setState({"uploadTime": response.data.upload_time});
                 this.setState({"actionTime": response.data.action_time});
-                this.setState({"picSize": response.data.pic_size});
-                /*
                 //push for pic table display
-                for (let i=0; i < response.new_info.pre_b64_string.length; i++) {
+                for (let i=0; i < response.data.pre_b64_string.length; i++) {
                 displayPictures.push({
                     "pre": response.data.pre_b64_string[i],
                     "preHist": response.data.pre_histogram[i],
                     "post": response.data.post_b64_string[i],
-                    "postHist": response.data.post_histograms[i]
+                    "postHist": response.data.post_histograms[i],
+                    "size": response.data.pic_size[i],
                 });
                 console.log(displayPictures)
                 this.setState({"outputTable": displayPictures})
             }
-            */
-                this.setState({postB64Str: response.data.post_b64_string[0]});
-                console.log(this.state.postB64Str)
-
             });
         }
         else {
@@ -402,7 +394,6 @@ class App extends React.Component {
               </Typography>
           </Toolbar>
       </AppBar>
-      <img src= {this.state.postB64Str} alt= "" height="50%" width="50%"/>
           <p style={styles.containerStyle} align="left">
           User: <font color="#E83635">{this.state.userEmail}</font>
           <br></br>
@@ -411,31 +402,28 @@ class App extends React.Component {
           <p style={styles.containerStyle} align="left">
             <table style={styles.tableStyle}>
                 <tr>
-                    <th>Original Image</th>
-                    <th>Histogram</th>
-                    <th>Processed Image</th>
-                    <th>Histogram</th>
+                    <th><b><u>Original Image</u></b></th>
+                    <th><b><u>Histogram</u></b></th>
+                    <th><b><u>Processed Image</u></b></th>
+                    <th><b><u>Histogram</u></b></th>
+                    <th><b><u>Picture Size</u></b></th>
                 </tr>
-
-                /*
                 {this.state.outputTable.map(e =>{
                     return(
                         <tr>
-                            <td><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.post} alt= "" height="50%" width="50%"/></td>
-                            <td><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.pre} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.preHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.post} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><img src= {e.postHist} alt= "" height="50%" width="50%"/></td>
+                            <td align="center"><font color="#E83635" size="3"><b>{e.size}</b></font></td>
                         </tr>
                     );
                 })}
-                */
             </table>
           </p>
           Uploaded: <font color="#E83635">{this.state.uploadTime}</font>
           <br></br>
           Process Time: <font color="#E83635">{this.state.actionTime}</font>
-          <br></br>
-          Size: <font color="#E83635">{this.state.picSize}</font>
           </p>
           <div>
           <Button variant="raised" style={styles.buttonStyle}
