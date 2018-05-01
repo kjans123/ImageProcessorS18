@@ -20,9 +20,10 @@ def create_histo(npArray):
                         format='%(levelname)s %(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=str1)
     try:
-        import matplotlib.pyplot as plt
         import numpy as np
         import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
         import os
         try:
             from base64_conv_numpy import encode_image_string

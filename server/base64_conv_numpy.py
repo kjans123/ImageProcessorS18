@@ -79,19 +79,20 @@ def convert_image_to_np_array(base64image):
         from PIL import Image
         import stat
         import os
-        from io import BytesIO
         if base64image is None or base64image == [] or base64image == "":
             logging.warning("base64 image string is EMPTY")
             raise ValueError("empty base64 string")
         s = base64.b64decode(base64image)
-        with open('temp.JPG', 'wb') as f:
+        # print("type of s:", type(s))
+        with open('temp.jpg', 'wb') as f:
             f.write(s)
         f.close()
-        os.chmod('temp.JPG', stat.S_IRWXU)
-        i = Image.open('temp.JPG')
+        os.chmod('temp.jpg', stat.S_IRWXU)
+        i = Image.open('temp.jpg')
+        print("success: open")
         a = np.asarray(i, dtype=np.float64)
         a = np.true_divide(a, 255)
-        os.remove('temp.JPG')
+        os.remove('temp.jpg')
         a_type = a.dtype
         shape_tuple = a.shape
         m = shape_tuple[0]

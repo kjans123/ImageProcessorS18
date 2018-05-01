@@ -29,13 +29,16 @@ def b64_zip_to_b64_strings(b64_zip):
         import base64
         import zipfile
         import shutil
+        from bytes_to_string import bytes_to_string
     except ImportError:
         msg = "Please make sure you have all packages."
         print(msg)
         logging.warning(msg)
     with open('decoded.zip', 'wb') as zf:
-        bytes_b64_zip = b64_zip.encode('utf-8')
-        zf.write(base64.b64decode(bytes_b64_zip))
+        # test
+        # bytes_b64_zip = b64_zip.encode('utf-8')
+        print('zip: '+ b64_zip[0:100])
+        zf.write(base64.b64decode(b64_zip))
         logging.info("File called decoded.zip was created.")
     zip_ref = zipfile.ZipFile('decoded.zip', 'r')
     path = 'Temporary/'
@@ -51,10 +54,12 @@ def b64_zip_to_b64_strings(b64_zip):
     logging.info("Traverse files with os.walk")
     for root, dirs, files in os.walk('Temporary'):
         for f in files:
-            if f.endswith(('.jpg', '.JPG')):
+            if f.endswith(('.jpg', '.JPG')) and str(f).find('._') == -1:
+                print(f)
                 imgString = encode_image_string(os.path.join(root, f))
-                str_imgString = imgString.decode('utf-8')
-                list_of_b64_strings.append(str_imgString)
+                imgString = bytes_to_string(imgString)
+                # str_imgString = imgString.decode('utf-8')
+                list_of_b64_strings.append(imgString)
     logging.info("Done traversing. Appended b64 encoded files \
                  that ended with .jpg or .JPG")
     os.remove('decoded.zip')
@@ -62,6 +67,7 @@ def b64_zip_to_b64_strings(b64_zip):
     shutil.rmtree('Temporary')
     logging.info("Remove directory Temporary")
     logging.info("Return the list of b64 strings")
+    print(len(list_of_b64_strings))
     return list_of_b64_strings
 
 
@@ -101,21 +107,19 @@ def b64_strings_to_b64_zip(b64_strings, ext):
         logging.info("Remove directory")
     temp_folder = 'imgs_directory'
     os.mkdir(temp_folder)
-    logging.info("Created temporary directory img_directory to store images")
-    if check_list(b64_strings):
-        logging.info("Checked list of strings")
-        for i, string in enumerate(b64_strings):
-            image_out_name = 'image' + str(i) + ext
-            with open(os.path.join(temp_folder, image_out_name), 'wb') as img:
-                bytes_object = string.encode('utf-8')
-                img.write(base64.b64decode(bytes_object))
-        logging.info("Cycled through image strings to create images")
-    else:
-        msg = "Please provide a list of strings"
-        logging.warning(msg)
-        shutil.rmtree(temp_folder)
-        logging.info("Before raising exception, removing img_directory")
-        raise TypeError(msg)
+    logging.info("Created temporary directory temp_folder to store images")
+    # if check_list(b64_strings):
+    # logging.info("Checked list of strings")
+    for i, string in enumerate(b64_strings):
+        image_out_name = 'image' + str(i) + ext
+        with open(os.path.join(temp_folder, image_out_name), 'wb') as img:
+            # bytes_object = string.encode('utf-8')
+            img.write(base64.b64decode(string))
+    logging.info("Cycled through image strings to create images")
+    # else:
+    # msg = "Please provide a list of strings"
+    # logging.warning(msg)
+    # raise TypeError(msg)
     zfName = 'processed.zip'
     zipWrite = zipfile.ZipFile(zfName, 'w')
     for root, dirs, files in os.walk(temp_folder):
