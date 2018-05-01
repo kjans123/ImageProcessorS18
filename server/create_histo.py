@@ -50,6 +50,7 @@ def create_histo(npArray):
             fig.tight_layout()
             plt.savefig('tempPlot.jpg')
             img64 = encode_image_string('tempPlot.jpg')
+            plt.close()
             os.remove('tempPlot.jpg')
             logging.info("success: histogram base64 string created")
             return img64
