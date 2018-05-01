@@ -19,7 +19,6 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
-from zipHandler import (b64_strings_to_b64_zip, b64_zip_to_b64_strings)
 from giveMeHeader import getHeader
 import glob
 import logging
@@ -130,17 +129,13 @@ def process():
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-            a = open(filename, 'w')
-            #with open(filename, "wb") as image_out:
-                #image_out.write(base64.b64decode(img))
-            iSave = save_image(email, jpgFileNum)
-            iHisto = add_histo(email)
+            #filename not being used as variable?
+            save_image(email, jpgFileNum)
+            add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = histo_equal(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
-            #pep8 broken. What is hist_equal_image?
-            histogram_of_post_img = create_histo(hist_equal_image)
-            ##
+            histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + pre_img)
@@ -192,15 +187,12 @@ def process():
                     os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a = open(filename, 'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
-            iSave = save_image(email, jpgFileNum)
-            iContr = add_contr(email)
+            save_image(email, jpgFileNum)
+            add_contr(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = contr_stretch(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
-            histogram_of_post_img = create_histo(hist_equal_image)
+            histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + pre_img)
@@ -253,15 +245,12 @@ def process():
                     os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a = open(filename, 'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
-            iSave = save_image(email, jpgFileNum)
-            iLog = add_log(email)
+            save_image(email, jpgFileNum)
+            add_log(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = logComp(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
-            histogram_of_post_img = create_histo(hist_equal_image)
+            histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + pre_img)
@@ -313,15 +302,12 @@ def process():
                     os.chmod(('images/'+str(email)), stat.S_IRWXU)
                 jpgFileNum = jpgFileNum + 1
                 filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
-                a = open(filename, 'w')
-                #with open(filename, "wb") as image_out:
-                    #image_out.write(base64.b64decode(img))
-            iSave = save_image(email, jpgFileNum)
-            iRev = add_rever(email)
+            save_image(email, jpgFileNum)
+            add_rever(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
             hist_image = reverseVid(imgArray)
             histogram_of_pre_img = create_histo(imgArray)
-            histogram_of_post_img = create_histo(hist_equal_image)
+            histogram_of_post_img = create_histo(hist_image)
             hist_img64 = convert_processed_np_array_to_base64(hist_image)
             processed_list.append(getHeader(extension) + hist_img64)
             pre_img_list.append(getHeader(extension) + pre_img)
