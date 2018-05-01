@@ -10,3 +10,5 @@ db
 *.pytest_cache
 _build/
 _build/*
+*.log
+*tmp/*

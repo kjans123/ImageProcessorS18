@@ -11,4 +11,4 @@ gunicorn
 pymodm
 flask-cors
 scikit-image
-
+requests
