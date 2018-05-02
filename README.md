@@ -13,7 +13,7 @@ The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg ima
   <tr><th>User Input</th><th>Output</th></tr>
 <tr><td><img src="https://user-images.githubusercontent.com/24235476/39538195-fba57750-4e09-11e8-8fbd-b58212e37637.png" width="300"/></td><td><img src="https://user-images.githubusercontent.com/24235476/39538174-ef37ca9a-4e09-11e8-86a5-6020e3c53d75.png" width="300"/></td></tr>
 </table></div>
-<img src="http://i377.photobucket.com/albums/oo215/pamlachace/ezgif.com-video-to-gif_zpskzj4q2yu.gif" width="700"/>
+<img src="http://i377.photobucket.com/albums/oo215/pamlachace/ezgif.com-video-to-gif%201_zpsdn9akivr.gif" width="700"/>
 
 
 ### Getting Started
@@ -63,7 +63,8 @@ this will install all necessary dependencies. Run
 ```
 npm start
 ```
-to launch the app and use it locally. Make sure that the server and database are running, as well, and that you have edited lines 156 and 196 in the App.js file to reflect where you're running your server.
+to launch the app and use it locally. 
+   ***NOTE: Make sure that the server and database are running, as well, and that you have edited lines 156 and 196 in the App.js file to reflect where you're running your server.***
 
 ### License
 
