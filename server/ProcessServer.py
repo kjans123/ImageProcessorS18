@@ -131,8 +131,16 @@ def process():
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+            try:
             with open(filename, "wb") as image_out:
                 image_out.write(base64.b64decode(img))
+            except FileNotFoundError:
+                os.chmod('images/', stat.S_IRWXU)
+                os.makedirs(('images/'+str(email)))
+                os.chmod(('images/'+str(email)), stat.S_IRWXU)
+                filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
+                with open(filename, "wb") as image_out:
+                    image_out.write(base64.b64decode(img))
             save_image(email, jpgFileNum)
             add_histo(email)
             imgArray, a_type, m, w, z = convert_image_to_np_array(img)
