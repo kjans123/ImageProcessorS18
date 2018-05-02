@@ -46,13 +46,16 @@ def access_tmp():
     """Accesses tmp folder for the json and outputs a dictionary \
        to pass to front end
 
+    :returns dict_object: returns a dictonary made from the JSON
+                          file in temp/data.json. Dictionary
+                          will subsquently be sent up to the
+                          frontend for downloading
     :raises ImportError: error raised if json package not found
     :raises OSError: error raised if file path not accessible
     """
     logging.basicConfig(filename='back_end.log', format='%(asctime)s \
      %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
     logging.info('Begin access_tmp')
-    # access tmp folder and output json data
     path = 'tmp/data.json'
     try:
         import json
