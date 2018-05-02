@@ -51,7 +51,7 @@ def get_user_pre_pics_count(user_email):
     """
     user = models.User.objects.raw({"_id": user_email}).first()
     image_list = user.stored_pic
-    image_count = len(image_list)
+    image_count = len(image_list)-1
     return image_count
 
 def add_histo(user_email):
