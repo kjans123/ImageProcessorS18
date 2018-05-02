@@ -64,7 +64,8 @@ this will install all necessary dependencies. Run
 npm start
 ```
 to launch the app and use it locally. 
-   ***NOTE: Make sure that the server and database are running, as well, and that you have edited lines 156 and 196 in the App.js file to reflect where you're running your server.***
+
+***NOTE: Make sure that the server and database are running, as well, and that you have edited lines 156 and 196 in the App.js file to reflect where you're running your server.***
 
 ### License
 
