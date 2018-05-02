@@ -54,6 +54,7 @@ def get_user_pre_pics_count(user_email):
     image_count = len(image_list)-1
     return image_count
 
+
 def add_histo(user_email):
 
     """"function that adds one to number of times a particular user
