@@ -1,6 +1,7 @@
 # ImageProcessorS18 &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE) &middot; [![Build Status](https://travis-ci.org/kjans123/ImageProcessorS18.svg?branch=master)](https://travis-ci.org/kjans123/ImageProcessorS18) &middot; [![Documentation Status](https://readthedocs.org/projects/imageprocessors18-cps/badge/?version=latest)](http://imageprocessors18-cps.readthedocs.io/en/latest/?badge=latest)
 
-### ONLINE README: http://imageprocessors18-cps.readthedocs.io/en/latest/
+### ONLINE Read-The-Docs README: http://imageprocessors18-cps.readthedocs.io/en/latest/
+### ONLINE RFC Document: https://docs.google.com/document/d/1zIfm1slOxkt7Gfgiu5WG25OfD-nz8LZkS0AF_JTfVUc/edit?usp=sharing
 
 ### Description
 
