@@ -16,8 +16,6 @@ The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg ima
 <img src="http://i377.photobucket.com/albums/oo215/pamlachace/ezgif.com-video-to-gif%201_zpsdn9akivr.gif" width="700"/>
 
 
-### Getting Started
-
 ## Initial Setup
 First you will need to clone this repository to your local machine. Install all of the required python dependencies using:
 ```
