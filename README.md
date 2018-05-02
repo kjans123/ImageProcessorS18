@@ -3,18 +3,18 @@
 ### ONLINE Read-The-Docs README: http://imageprocessors18-cps.readthedocs.io/en/latest/
 ### ONLINE RFC Document: https://docs.google.com/document/d/1zIfm1slOxkt7Gfgiu5WG25OfD-nz8LZkS0AF_JTfVUc/edit?usp=sharing
 ### ONLINE Demo: https://youtu.be/i2oXpjaGT1w
-### APP Link: http://determined-cup.surge.sh/
+### APP Link: http://cps_imageprocessors18.surge.sh/
 
 ### Description
 
 The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg images or a .zip archive of images in order for the user to run histogram equalization, log compression, constrast stretching, or reverse video operations on the image(s) they upload. This repository includes starter code for a ReactJSX app frontend that allows image upload, download, and display; starter code for a Mongo Database to store user information; and server code that processes the selected images and returns them to the frontend.
 
 <img src="https://user-images.githubusercontent.com/24235476/39473111-2f73adf8-4d1b-11e8-8d19-27a584e2de02.png" width="700"/>
+<img src="https://user-images.githubusercontent.com/24235476/39543161-7cfde392-4e18-11e8-9f1d-13e687621a8d.png" width="700"/>
 <div align="center"><table align="center">
   <tr><th>User Input</th><th>Output</th></tr>
 <tr><td><img src="https://user-images.githubusercontent.com/24235476/39538195-fba57750-4e09-11e8-8fbd-b58212e37637.png" width="300"/></td><td><img src="https://user-images.githubusercontent.com/24235476/39538174-ef37ca9a-4e09-11e8-86a5-6020e3c53d75.png" width="300"/></td></tr>
 </table></div>
-<img src="http://i377.photobucket.com/albums/oo215/pamlachace/ezgif.com-video-to-gif%201_zpsdn9akivr.gif" width="700"/>
 
 
 ## Initial Setup
@@ -50,11 +50,14 @@ You can run the server on your local computer using gunicorn:
 gunicorn --bind 0.0.0.0:5000 ProcessServer:app
 ```
 ## App
+Use this [link](http://cps_imageprocessors18.surge.sh/) to simply utilize the already deployed version of the app. However, if you wish to make edits and run the app locally follow the proceeding steps:
+
+
 To run the app locally first make sure you are within the frontend folder
 ```
 cd frontend
 ```
-Make sure you have Node.JS installed on your machine. Use this link to install it if you haven't already. Then, run
+Make sure you have Node.JS installed on your machine. Use this [link](https://nodejs.org/en/) to install it if you haven't already. Then, run
 ```
 npm install
 ```
