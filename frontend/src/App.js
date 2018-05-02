@@ -1,17 +1,17 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import Select from 'material-ui/Select';
 import axios from 'axios';
+import Button from 'material-ui/Button';
 import Dropzone from 'react-dropzone';
 import FileSaver from 'file-saver';
+import { FormControl } from 'material-ui/Form';
+import { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
+import Select from 'material-ui/Select';
+import TextField from 'material-ui/TextField';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 
 var styles = {
     "backgroundStyle": {
@@ -78,29 +78,35 @@ class App extends React.Component {
       this.state = {
           "userID": "",
           "id": null,
-          "errorText": "",
           "currentImageString": "",
           "header": "",
           "listImages": [],
           "up": null,
-          "confirmMsg": "",
           "processingTechnique": "",
           "proc": null,
-          "postReady": "",
           "downloadExt": "",
           "ext": null,
-          "downloadEnable": "",
+          "listOrNo": "",
+          "singleImage": [],
+          "zipImage": "",
+          "imageName": "",
+          "downloadEnable": true,
           //response variables
           "userEmail": "",
           "procMethod": "",
           "uploadTime": "",
           "actionTime": "",
           "outputTable": [],
+          //user and error messages
+          "errorText": "",
+          "confirmMsg": "",
+          "postReady": "",
+          "serverError": "",
+          "nullList": "",
+          "getError": "",
       };
     }
 
-    //handles text field changes
-    //displays error message for inadequate submissions
     onTextFieldChange = (event) => {
         this.setState({"userID": event.target.value});
         if (event.target.value.includes(" ")) {
@@ -113,7 +119,6 @@ class App extends React.Component {
         }
     }
 
-    //handles image uploads to dropzone and creates array of base64 strings
     onUpload = (files) => {
         console.log(files.length)
         const listFiles = []
@@ -123,19 +128,12 @@ class App extends React.Component {
             reader.onloadend = () => {
             this.setState({"currentImageString": reader.result.split(',')[1]});
             this.setState({"header": reader.result.split(',')[0]});
-            //might need header later
-            //this.setState({"wComma": this.state.header.concat(",")})
-            //this.setState({"wHeader": this.state.wComma.concat(this.state.currentImageString)})
-            //console.log(this.state.wComma)
-            //console.log(this.state.wHeader)
             listFiles.push(this.state.currentImageString);
             this.setState({"listImages": listFiles})
-            //console.log(this.state.listImages[0])
-            //console.log(this.state.header)
-            this.setState({confirmMsg: "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
+            this.setState({"confirmMsg": "https://user-images.githubusercontent.com/24235476/39205822-cbc38b80-47c9-11e8-93fb-a5122f2b92fb.png"});
             }
             reader.onerror = (error) => {
-                this.setState({confirmMsg: "Oops. An upload error has occured."});
+                this.setState({"confirmMsg": "Oops. An upload error has occured."});
             }
         }
         this.setState({"up": 1});
@@ -147,11 +145,10 @@ class App extends React.Component {
     }
 
 
-        handleFileChange = (event) => {
-            this.setState({"downloadExt": event.target.value});
-            this.setState({"ext": 1})
-            //set up something for download enable/disable
-        }
+    handleFileChange = (event) => {
+        this.setState({"downloadExt": event.target.value});
+        this.setState({"ext": 1})
+    }
 
     postData = () => {
         var condition = this.state.id + this.state.up + this.state.proc + this.state.ext
@@ -166,27 +163,30 @@ class App extends React.Component {
                 "header": this.state.header,
             }
             console.log(data)
-            axios.post(urlString, data).then( (response) => {
-                console.log(response);
-                var displayPictures = []
-                //data from backend for display
-                this.setState({"userEmail": response.data.user_email});
-                this.setState({"procMethod": response.data.proc_method});
-                this.setState({"uploadTime": response.data.upload_time});
-                this.setState({"actionTime": response.data.action_time});
-                //push for pic table display
-                for (let i=0; i < response.data.pre_b64_string.length; i++) {
-                displayPictures.push({
-                    "pre": response.data.pre_b64_string[i],
-                    "preHist": response.data.pre_histogram[i],
-                    "post": response.data.post_b64_string[i],
-                    "postHist": response.data.post_histograms[i],
-                    "size": response.data.pic_size[i],
-                });
-                console.log(displayPictures)
-                this.setState({"outputTable": displayPictures})
-                }
-            });
+            axios.post(urlString, data)
+                .then((response) => {
+                    console.log(response);
+                    var displayPictures = []
+                    this.setState({"userEmail": response.data.user_email});
+                    this.setState({"procMethod": response.data.proc_method});
+                    this.setState({"uploadTime": response.data.upload_time});
+                    this.setState({"actionTime": response.data.action_time});
+                    for (let i=0; i < response.data.pre_b64_string.length; i++) {
+                    displayPictures.push({
+                        "pre": response.data.pre_b64_string[i],
+                        "preHist": response.data.pre_histogram[i],
+                        "post": response.data.post_b64_string[i],
+                        "postHist": response.data.post_histograms[i],
+                        "size": response.data.pic_size[i],
+                    });
+                    this.setState({"outputTable": displayPictures})
+                    this.setState({"downloadEnable": false})
+                    this.setState({"serverError": ""})
+                    }
+                })
+                .catch((error) => {
+                    this.setState({"serverError": "Ooops, seems something went wrong with the server. Check back later."})
+                })
         }
         else {
             this.setState({"postReady": "All four fields are required in order for image to be processed"})
@@ -194,85 +194,79 @@ class App extends React.Component {
     }
 
     onDownload = () => {
-        if (this.state.listImages.length === 1) {
-            //code for one file here
-            this.setState({"noDownload": ""})
-
-            if (this.state.downloadExt === "JPEG") {
-
-            }
-        }
-        else if (this.state.listImages.length > 1) {
-            //code for zip making here
-            this.setState({"noDownload": ""})
-        }
-        else {
-            this.setState({"noDownload": "You cannot download images you have not even uploaded yet"})
-        }
-        /*var urlGetString = "http://vcm-3594.vm.duke.edu:5000/download"
-        axios.get(urlGetString).then( (response) => {
-                console.log(response);
-                this.setState({listOrNo: response.new_info.post_b64_string})
-                this.setState({singleImage: response.new_info.post_b64_string})
-                this.setState({zipImage: response.new_info.b64_zip_out})
-                if (this.state.listOrNo.length > 1) {
-                    this.setState({downloadEnable: ""});
-                    var img = this.state.listImages[0]
-                    var byteString = atob(img.split(',')[1]);
-                    var imageType = img.split(',')[0].split(':')[1].split(';')[0]
+        var urlGetString  = "http://vcm-3594.vm.duke.edu:5000/download"
+        axios.get(urlGetString)
+        .then( (response) => {
+            console.log(response);
+            this.setState({"getError": ""})
+            this.setState({"listOrNo": response.data.post_b64_string})
+            if (this.state.listOrNo.length === 1) {
+                this.setState({"singleImage": response.data.post_b64_string})
+                this.setState({"nullList": ""})
+                var img = this.state.singleImage[0]
+                var byteString = atob(img.split(',')[1]);
+                if (this.state.downloadExt === "JPEG") {
+                    //the following code is based on https://stackoverflow.com/a/12300351
+                    var imageType = "image/jpeg"
+                    this.setState({"imageName": this.state.processingTechnique.concat(".jpg")})
                     var ab = new ArrayBuffer(byteString.length);
                     var ia = new Uint8Array(ab);
                     for (var i = 0; i < byteString.length; i++) {
                         ia[i] = byteString.charCodeAt(i);
                     }
                     var blob = new Blob([ab], {type: imageType});
-                    FileSaver.saveAs(blob, "image.jpeg");
+                    FileSaver.saveAs(blob, this.state.imageName);
                 }
-            })
-        if (this.state.downloadExt === "JPEG") {
-            this.setState({downloadEnable: ""});
-            var img = this.state.listImages[0]
-            var byteString = atob(img.split(',')[1]);
-            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
+                else if (this.state.downloadExt === "PNG") {
+                    var imageType = "image/png"
+                    this.setState({"imageName": this.state.processingTechnique.concat(".png")})
+                    var ab = new ArrayBuffer(byteString.length);
+                    var ia = new Uint8Array(ab);
+                    for (var i = 0; i < byteString.length; i++) {
+                        ia[i] = byteString.charCodeAt(i);
+                    }
+                    var blob = new Blob([ab], {type: imageType});
+                    FileSaver.saveAs(blob, this.state.imageName);
+                }
+                else if (this.state.downloadExt === "TIFF") {
+                    var imageType = "image/tiff"
+                    this.setState({"imageName": this.state.processingTechnique.concat(".tiff")})
+                    var ab = new ArrayBuffer(byteString.length);
+                    var ia = new Uint8Array(ab);
+                    for (var i = 0; i < byteString.length; i++) {
+                        ia[i] = byteString.charCodeAt(i);
+                    }
+                    var blob = new Blob([ab], {type: imageType});
+                    FileSaver.saveAs(blob, this.state.imageName);
+                }
+                else {
+                    console.log("Whoops. Something went haywire.")
+                }
             }
-            var blob = new Blob([ab], {type: imageType});
-            FileSaver.saveAs(blob, "image.jpeg");
-        }
-        else if (this.state.downloadExt === "PNG") {
-            this.setState({downloadEnable: ""});
-            var img = this.state.listImages[0]
-            var byteString = atob(img.split(',')[1]);
-            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
+            else if (this.state.listOrNo.length > 1) {
+                this.setState({"zipImage": response.data.b64_zip_out})
+                var img = this.state.zipImage
+                this.setState({"imageName": this.state.processingTechnique.concat(".zip")})
+                var byteString = atob(img.split(',')[1]);
+                var imageType = "application/zip"
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                var blob = new Blob([ab], {type: imageType});
+                FileSaver.saveAs(blob, this.state.imageName);
+                //end of code based on https://stackoverflow.com/a/12300351
             }
-            var blob = new Blob([ab], {type: imageType});
-            FileSaver.saveAs(blob, "image.png");
-        }
-        else if (this.state.downloadExt === "TIFF") {
-            this.setState({downloadEnable: ""});
-            var img = this.state.listImages[0]
-            var byteString = atob(img.split(',')[1]);
-            var imageType = img.split(',')[0].split(':')[1].split(';')[0]
-            var ab = new ArrayBuffer(byteString.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
+            else {
+                this.setState({"nullList": "Uh oh. Seems like there has been an error. Check back again later."})
             }
-            var blob = new Blob([ab], {type: imageType});
-            FileSaver.saveAs(blob, "image.tif");
-        }
-        else {
-            this.setState({"downloadEnable": "Cannot download a file with no extension. Please select a file type in order to download image."})
-        }
-        */
+        })
+        .catch( (error) => {
+            this.setState({"getError": "Ooops, seems something went wrong with the server. Check back later."})
+        })
     }
+
 
   render() {
     return (
@@ -365,6 +359,9 @@ class App extends React.Component {
           <div style={styles.errorStyle}>
             {this.state.postReady}
           </div>
+          <div style={styles.errorStyle}>
+            {this.state.serverError}
+          </div>
       </Paper>
       <Paper style={styles.paperStyle}>
       <AppBar position="static" style={styles.appBarStyle}>
@@ -408,17 +405,20 @@ class App extends React.Component {
           Process Time: <font color="#E83635">{this.state.actionTime}</font>
           </div>
           <div>
-          <Button variant="raised" style={styles.buttonStyle}
+          <Button variant="raised" style={styles.buttonStyle} disabled={this.state.downloadEnable}
               onClick={this.onDownload}>
               Download Images
           </Button>
           <div style={styles.errorStyle}>
-            {this.state.downloadEnable}
+            {this.state.nullList}
+          </div>
+          <div style={styles.errorStyle}>
+            {this.state.getError}
           </div>
           </div>
       </Paper>
-    </div>
-    </div>
+      </div>
+      </div>
     );
   }
 }
