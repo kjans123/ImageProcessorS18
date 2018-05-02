@@ -132,8 +132,8 @@ def process():
             jpgFileNum = jpgFileNum + 1
             filename = 'images/'+str(email)+'/'+str(jpgFileNum)+'.jpg'
             try:
-            with open(filename, "wb") as image_out:
-                image_out.write(base64.b64decode(img))
+                with open(filename, "wb") as image_out:
+                    image_out.write(base64.b64decode(img))
             except FileNotFoundError:
                 os.chmod('images/', stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
