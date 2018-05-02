@@ -1,17 +1,17 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import Select from 'material-ui/Select';
 import axios from 'axios';
+import Button from 'material-ui/Button';
 import Dropzone from 'react-dropzone';
 import FileSaver from 'file-saver';
+import { FormControl } from 'material-ui/Form';
+import { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
+import Select from 'material-ui/Select';
+import TextField from 'material-ui/TextField';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 
 var styles = {
     "backgroundStyle": {
@@ -417,8 +417,8 @@ class App extends React.Component {
           </div>
           </div>
       </Paper>
-    </div>
-    </div>
+      </div>
+      </div>
     );
   }
 }
