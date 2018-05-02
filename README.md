@@ -17,10 +17,10 @@ pip install -r requirements.txt
 ```
 and make sure to activate your virtual environment before continuing. ```source venv/bin/activate ```
 
-    ***NOTE: if Tkinter throws a Not Found error, you will need to use this command: ``` apt-get install python-tk```***
+   ***NOTE: if Tkinter throws a Not Found error, you will need to use this command: ``` apt-get install python-tk```***
     
 ## Database
-To get started running the database (if you want to run your own database), use in the same directory as the ProcessServer.py file ```(~/ImageProcessorS18/server)```
+To get started running the database (if you want to run your own database), use the below command in the same directory as the ProcessServer.py file ```(~/ImageProcessorS18/server)```
 ```
 sudo docker run -v $PWD/db:/data/db -p 27017:27017 mongo
 ```
