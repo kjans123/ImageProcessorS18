@@ -7,7 +7,7 @@
 
 ### Description
 
-The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg images or a .zip archive of images in order for the user to run histogram equalization, log compression, constrast stretching, or reverse video operations on the image(s) they upload. This repository includes starter code for a ReactJSX app frontend that allows image upload, download, and display; starter code for a Mongo Database to store user information; and server code that processes the selected images and returns them to the frontend.
+The Crunchwrap Pizza Image Processor can be used to take in one or more .jpg images or a .zip archive of .jpg images in order for the user to run histogram equalization, log compression, constrast stretching, or reverse video operations on the image(s) they upload. This repository includes starter code for a ReactJSX app frontend that allows image upload, download, and display; starter code for a Mongo Database to store user information; and server code that processes the selected images and returns them to the frontend.
 
 <img src="https://user-images.githubusercontent.com/24235476/39473111-2f73adf8-4d1b-11e8-8d19-27a584e2de02.png" width="700"/>
 <img src="https://user-images.githubusercontent.com/24235476/39543161-7cfde392-4e18-11e8-9f1d-13e687621a8d.png" width="700"/>
@@ -50,10 +50,10 @@ You can run the server on your local computer using gunicorn:
 gunicorn --bind 0.0.0.0:5000 ProcessServer:app
 ```
 ## App
-Use this [link](http://cps_imageprocessors18.surge.sh/) to simply utilize the already deployed version of the app. However, if you wish to make edits and run the app locally follow the proceeding steps:
+Use this [link](http://cps_imageprocessors18.surge.sh/) to simply utilize the already deployed version of the app. However, if you wish to make edits and run the app locally, follow the next steps:
 
 
-To run the app locally first make sure you are within the frontend folder
+To run the app locally first make sure you are within the ```frontend``` folder
 ```
 cd frontend
 ```
@@ -65,7 +65,7 @@ this will install all necessary dependencies. Run
 ```
 npm start
 ```
-to launch the app and use it locally. 
+to launch the app and use it within your browser. 
 
 ***NOTE: Make sure that the server and database are running, as well, and that you have edited lines 156 and 196 in the App.js file to reflect where you're running your server.***
 
