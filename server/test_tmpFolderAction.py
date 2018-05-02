@@ -36,5 +36,5 @@ def test_exceptions():
     import pytest
     import shutil
     with pytest.raises(FileNotFoundError):
-        shutil.rmtree('tmp/')
+        shutil.rmtree('tmep/')
         access_tmp()

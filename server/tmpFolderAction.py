@@ -51,7 +51,7 @@ def access_tmp():
                           will subsquently be sent up to the
                           frontend for downloading
     :raises ImportError: error raised if json package not found
-    :raises OSError: error raised if file path not accessible
+    :raises FileNotFoundError: error raised if file path not accessible
     """
     logging.basicConfig(filename='back_end.log', format='%(asctime)s \
      %(message)s', datefmt='%m/%d/%Y %I:%M:%S %pi')
@@ -62,11 +62,17 @@ def access_tmp():
     except ImportError:
         print("json package not found!")
         logging.warning("json package is not found!")
-    with open(path, 'r') as infile:
-        logging.info('Open json file in tmp folder')
-        data = json.load(infile)
-        logging.info('Read in data from json')
-    logging.info('Create the dictionary from data string')
-    dict_object = json.loads(data)
-    logging.info('Return the dictionary')
-    return dict_object
+    try:
+        with open(path, 'r') as infile:
+            logging.info('Open json file in tmp folder')
+            data = json.load(infile)
+            logging.info('Read in data from json')
+        logging.info('Create the dictionary from data string')
+        dict_object = json.loads(data)
+        logging.info('Return the dictionary')
+        os.remove(path)
+        return dict_object
+    except FileNotFoundError:
+        m = "temp/data.json was not found!"
+        print(m)
+        logging.warning(m)

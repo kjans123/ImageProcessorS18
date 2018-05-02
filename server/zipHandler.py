@@ -80,7 +80,6 @@ def b64_strings_to_b64_zip(b64_strings, ext):
     :raises ImportError: Error raised when the following modules
                          are not found: os, base64_conv_numpy,
                          checkListOfString, base64, zipfile, shutil
-    :raises TypeError: Error raised if b64_strings is not a list of strings
     :returns b64_proc_zip_string: Returns b64 encoded zip string
     """
     import logging
@@ -108,18 +107,11 @@ def b64_strings_to_b64_zip(b64_strings, ext):
     temp_folder = 'imgs_directory'
     os.mkdir(temp_folder)
     logging.info("Created temporary directory temp_folder to store images")
-    # if check_list(b64_strings):
-    # logging.info("Checked list of strings")
     for i, string in enumerate(b64_strings):
         image_out_name = 'image' + str(i) + ext
         with open(os.path.join(temp_folder, image_out_name), 'wb') as img:
-            # bytes_object = string.encode('utf-8')
             img.write(base64.b64decode(string))
     logging.info("Cycled through image strings to create images")
-    # else:
-    # msg = "Please provide a list of strings"
-    # logging.warning(msg)
-    # raise TypeError(msg)
     zfName = 'processed.zip'
     zipWrite = zipfile.ZipFile(zfName, 'w')
     for root, dirs, files in os.walk(temp_folder):
