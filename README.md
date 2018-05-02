@@ -34,7 +34,7 @@ and on line 33 in the ProcessServer.py file edit
 ```
 connect("mongodb://vcm-3594.vm.duke.edu:27017/image_process_app")
 ```
-with the name you want assign to your database:
+with the name you want assigned to your database:
 ```
 connect("mongodb://vcm-3594.vm.duke.edu:27017/<your_database_name_here>")
 ```
