@@ -13,14 +13,27 @@ First you will need to clone this repository to your local machine. Install all 
 ```
 pip install -r requirements.txt
 ```
-and make sure to activate your virtual environment before continuing.
+and make sure to activate your virtual environment before continuing. ```source venv/bin/activate ```
+    ***Note if Tkinter throws a Not Found error, you will need to use this command: ``` apt-get install python-tk```***
+    
 * Database
-To get started running the database....
+To get started running the database (if you want to run your own database), use in the same directory as the ProcessServer.py file ```(~/ImageProcessorS18/server)```
+```
+sudo docker run -v $PWD/db:/data/db -p 27017:27017 mongo
+```
+and on line 33 in the ProcessServer.py file edit
+```
+connect("mongodb://vcm-3594.vm.duke.edu:27017/image_process_app")
+```
+with the name you want assign to your database:
+```
+connect("mongodb://vcm-3594.vm.duke.edu:27017/<your_database_name_here>")
+```
 
 * Server
-In order to run the server, make sure that you are within the server folder before beginning.
+In order to run the server, make sure that you are within the server folder before starting
 ```
-cd server
+cd ~/ImageProcessorS18/server
 ```
 You can run the server on your local computer using gunicorn:
 ```
