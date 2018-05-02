@@ -19,6 +19,7 @@ from create_histo import create_histo
 from main import create_user
 from main import (add_log, add_contr, add_histo, add_rever)
 from main import save_image
+from main import get_user_pre_pics_count
 from giveMeHeader import getHeader
 from bytes_to_string import bytes_to_string
 import glob
@@ -97,8 +98,12 @@ def process():
     else:
         print("Please provide information in string format!")
         return jsonify("Please provide information in string format!"), 400
-    jpgList = glob.glob("images/"+str(email)+"/*")
-    jpgCount = len(jpgList)
+    if os.path.exists("images/"):
+        pass
+    else:
+        os.mkdir("images/")
+    jpgCount = get_user_pre_pics_count(email)
+    print(jpgCount)
     current_time = datetime.datetime.now()
     processed_list = []
     just_for_zip_list = []
@@ -121,7 +126,7 @@ def process():
         print(type(img))
         if method == "Histogram Equalization":
             if jpgFileNum == 0:
-                os.chmod('images', stat.S_IRWXU)
+                os.chmod('images/', stat.S_IRWXU)
                 os.makedirs(('images/'+str(email)))
                 os.chmod(('images/'+str(email)), stat.S_IRWXU)
             jpgFileNum = jpgFileNum + 1
