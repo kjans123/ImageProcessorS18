@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ```
 and make sure to activate your virtual environment before continuing. ```source venv/bin/activate ```
 
-   ***NOTE: if Tkinter throws a Not Found error, you will need to use this command: ``` apt-get install python-tk```***
+   ***NOTE: if Tkinter throws a Not Found error, you will need to use this command: ``` apt-get install python-tk```. This may happen if the server is being run on a VCM being accessed through a command line window.***
     
 ## Database
 To get started running the database (if you want to run your own database), use the below command in the same directory as the ProcessServer.py file ```(~/ImageProcessorS18/server)```
