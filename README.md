@@ -3,6 +3,7 @@
 ### ONLINE Read-The-Docs README: http://imageprocessors18-cps.readthedocs.io/en/latest/
 ### ONLINE RFC Document: https://docs.google.com/document/d/1zIfm1slOxkt7Gfgiu5WG25OfD-nz8LZkS0AF_JTfVUc/edit?usp=sharing
 ### ONLINE Demo: https://youtu.be/i2oXpjaGT1w
+### APP Link: http://determined-cup.surge.sh/
 
 ### Description
 
