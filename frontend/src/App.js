@@ -144,7 +144,6 @@ class App extends React.Component {
         this.setState({"proc": 1})
     }
 
-
     handleFileChange = (event) => {
         this.setState({"downloadExt": event.target.value});
         this.setState({"ext": 1})
@@ -266,7 +265,6 @@ class App extends React.Component {
             this.setState({"getError": "Ooops, seems something went wrong with the server. Check back later."})
         })
     }
-
 
   render() {
     return (
